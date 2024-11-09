@@ -1,11 +1,13 @@
 <?PHP 
     require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/Classes/Statistiques.php";
     require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/Utils/headerConnection.php";
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/CRUD/CRUDConsulte.php";
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/CRUD/CRUDClassement.php";
 
     //FONCTIONS CREATE
 
     //Fonction à modifier selon les choix d'implémentations
-    function createStatistiques(int $nbPartiesGagnees, int $scoreMaximal, String $tempsJeu, float $ratioVictoire, int $nbSucces): void {
+    function createStatistiques(int $nbPartiesGagnees, int $scoreMaximal, String $tempsJeu, float $ratioVictoire, int $nbSucces, int $idUser): void {
         $connection = connection();
 
         $insertStatsQuery = 
@@ -18,6 +20,9 @@
         $statement->bindParam("ratioVictoire", $ratioVictoire);
         $statement->bindParam("nbSucces", $nbSucces);
         $statement->execute();
+
+        $stats = readStatistiquesByIdUser($idUser);
+        createConsulte($stats->getId(), $idUser);
     }
 
 
@@ -45,6 +50,7 @@
         $statsUser = new Statistiques($data['id'], $data['nbPartiesGagnees'], $data['scoreMaximal'], $data['tempsJeu'], $data['ratioVictoire'], $data['nbSucces']);
         return $statsUser;
     }
+
 
     //FONCTIONS UPDATE
 

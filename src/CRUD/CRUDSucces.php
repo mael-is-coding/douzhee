@@ -30,7 +30,7 @@
 
         $readSucces = 'SELECT * FROM succes WHERE id = :id';
         $statement = $connection->prepare($readSucces);
-        $statement->bindParam(':id', $id);
+        $statement->bindParam(':id', $id, PDO::PARAM_INT);
         $statement->execute();
 
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);

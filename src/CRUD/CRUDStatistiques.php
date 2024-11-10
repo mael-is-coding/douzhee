@@ -14,11 +14,11 @@
         "INSERT INTO statistiques VALUES (nbPartiesGagnees, scoreMaximal, tempsJeu, ratioVictoire, nbSucces)";
 
         $statement = $connection->prepare($insertStatsQuery);
-        $statement->bindParam("nbPartiesGagnees", $nbPartiesGagnees);
-        $statement->bindParam("scoreMaximal", $scoreMaximal);
-        $statement->bindParam("tempsJeu", $tempsJeu);
+        $statement->bindParam("nbPartiesGagnees", $nbPartiesGagnees, PDO::PARAM_INT);
+        $statement->bindParam("scoreMaximal", $scoreMaximal, PDO::PARAM_INT);
+        $statement->bindParam("tempsJeu", $tempsJeu, PDO::PARAM_STR);
         $statement->bindParam("ratioVictoire", $ratioVictoire);
-        $statement->bindParam("nbSucces", $nbSucces);
+        $statement->bindParam("nbSucces", $nbSucces, PDO::PARAM_INT);
         $statement->execute();
 
         $stats = readStatistiquesByIdUser($idUser);
@@ -42,7 +42,7 @@
         WHERE id = (SELECT idStatistiques FROM consulte WHERE idJoueur = idUser)";
         
         $statement = $connection->prepare($readStatsQuery);
-        $statement->bindParam("idUser", $idUser);
+        $statement->bindParam("idUser", $idUser, PDO::PARAM_INT);
         $statement->execute();
 
         $data = $statement->fetch(PDO::FETCH_ASSOC);
@@ -71,7 +71,7 @@
             WHERE id = (SELECT idStatistiques FROM consulte WHERE idJoueur = idUser)';
             
             $statement = $connection->prepare($updateVictory);
-            $statement->bindParam('idUser', $idUser);
+            $statement->bindParam('idUser', $idUser, PDO::PARAM_INT);
             $statement->execute();
 
             updateClassement($idUser, $stats->getNbPartiesGagnees() + 1);
@@ -82,7 +82,7 @@
         (SELECT COUNT(*) FROM participeA WHERE idJoueur = idUser)';
         
         $statement = $connection->prepare($updateRatio);
-        $statement->bindParam('idUser', $idUser);
+        $statement->bindParam('idUser', $idUser, PDO::PARAM_INT);
         $statement->execute();
 
         $partie = readPartieByIdUserAndIdGame($idUser, $idGame); //Fonction qui devra etre codée dans CRUDJouerPartie.php
@@ -92,8 +92,8 @@
             WHERE id = (SELECT idStatistiques FROM consulte WHERE idJoueur = idUser)';
             
             $statement = $connection->prepare($updateBestScore);
-            $statement->bindParam('newScore', $partie->getScoreJoueur());
-            $statement->bindParam('idUser', $idUser);
+            $statement->bindParam('newScore', $partie->getScoreJoueur(), PDO::PARAM_INT);
+            $statement->bindParam('idUser', $idUser, PDO::PARAM_INT);
             $statement->execute();
         }
     }
@@ -109,6 +109,6 @@
 
         $updateSucces = 'UPDATE FROM statistiques SET nbSucces = nbSucces + 1 WHERE id = idUser';
         $statement = $connection->prepare($updateSucces);
-        $statement->bindParam('idUser', $idUser);
+        $statement->bindParam('idUser', $idUser, PDO::PARAM_INT);
         $statement->execute();
     }

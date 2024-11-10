@@ -97,3 +97,18 @@
             $statement->execute();
         }
     }
+
+    /**
+     * Incrémente de 1 le nombre de succès d'un joueur donné
+     * @author Nathan
+     * @param int $idUser
+     * @return void
+     */
+    function updateNbSucces(int $idUser){
+        $connection = connection();
+
+        $updateSucces = 'UPDATE FROM statistiques SET nbSucces = nbSucces + 1 WHERE id = idUser';
+        $statement = $connection->prepare($updateSucces);
+        $statement->bindParam('idUser', $idUser);
+        $statement->execute();
+    }

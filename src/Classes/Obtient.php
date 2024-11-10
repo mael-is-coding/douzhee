@@ -1,4 +1,7 @@
 <?PHP
+    /**
+     * @author Nathan
+     */
     Class Obtient{
         private int $idUser;
         private int $idSucces;

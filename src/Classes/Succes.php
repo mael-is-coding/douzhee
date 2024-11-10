@@ -1,4 +1,7 @@
 <?PHP
+    /**
+     * @author Nathan
+     */
     Class Succes{
         private int $id;
         private String $name;

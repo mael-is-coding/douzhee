@@ -1,12 +1,22 @@
 <?PHP 
     require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/Classes/Classement.php";
     require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/Utils/headerConnection.php";
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/CRUD/CRUDSeTrouve.php";
 
     //FONCTIONS CREATE
 
-    //Fonction à modifier selon les choix d'implémentations
-    function createClassement(int $placeClassement, int $score, String $pseudo): void{
+    /**
+     * @brief Initialise le classement d'un joueur
+     * @author Nathan
+     * @param string $pseudo pseudo du joueur
+     * @param int $idUser identifiant du joueur
+     * @return void
+     */
+    function createClassement(String $pseudo, int $idUser): void{
         $connection = connection();
+
+        $placeClassement = 0;
+        $score = 0;
 
         $insertClassement = 'INSERT INTO classement VALUES (placeClassement, score, pseudo)';
 
@@ -15,13 +25,17 @@
         $statement->bindParam('score', $score);
         $statement->bindParam('pseudo', $pseudo);
         $statement->execute();
+
+        $idClassement = $connection->lastInsertId();
+
+        createSeTrouve($idUser, $idClassement);
     }
 
 
     //FONCTIONS READ
 
     /**
-     * Récupère le classement entier par ordre croissant de position
+     * @brief Récupère le classement entier par ordre croissant de position
      * @author Nathan
      * @return array
      */
@@ -37,10 +51,10 @@
     }
 
     /**
-     * Récupère le classement d'un joueur donné
+     * @brief Récupère le classement d'un joueur donné
      * @author Nathan
-     * @param int $idUser
-     * @return Classement
+     * @param int $idUser identifiant de l'utilisateur
+     * @return Classement instance de Classement
      */
     function readClassementByIdUser(int $idUser): Classement{
         $connection = connection();
@@ -59,10 +73,10 @@
     //FONCTIONS UPDATE
 
     /**
-     * Met à jour le classment d'un joueur et le change de place si possible
+     * @brief Met à jour le classment d'un joueur et le change de place si possible
      * @author Nathan
-     * @param int $idUser
-     * @param int $newScore
+     * @param int $idUser identifiant de l'utilisateur
+     * @param int $newScore nouveau score de l'utilisateur
      * @return void
      */
     function updateClassement(int $idUser, int $newScore): void {

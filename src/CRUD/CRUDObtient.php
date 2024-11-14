@@ -6,10 +6,10 @@
     //FONCTIONS CREATE
 
     /**
-     * Crée un lien entre un succès et un joueur pour indiquer qu'il a validé le succès
+     * @brief Crée un lien entre un succès et un joueur pour indiquer qu'il a validé le succès
      * @author Nathan
-     * @param int $idUser
-     * @param int $idSucces
+     * @param int $idUser identifiant du joueur
+     * @param int $idSucces identifiant du succès obtenu
      * @return void
      */
     function createObtient(int $idUser, int $idSucces){
@@ -29,9 +29,9 @@
     //FONCTIONS READ
 
     /**
-     * Récupère la liaison entre un joueur et ses succès
+     * @brief Récupère la liaison entre un joueur et ses succès
      * @author Nathan
-     * @param int $idUser
+     * @param int $idUser identifiant du joueur
      * @return array
      */
     function readAllSuccesOfAnUser(int $idUser): array{
@@ -47,9 +47,9 @@
     }
 
     /**
-     * Récupère la liaison entre un succès et les joueurs qui l'ont obtenu
+     * @brief Récupère la liaison entre un succès et les joueurs qui l'ont obtenu
      * @author Nathan
-     * @param int $idSucces
+     * @param int $idSucces identifiant du succès
      * @return array
      */
     function readAllUserWinTheSuccesId(int $idSucces): array{

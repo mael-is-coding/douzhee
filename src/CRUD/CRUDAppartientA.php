@@ -5,22 +5,21 @@
     //FONCTIONS CREATE
 
     /**
-     * Crée une liaison entre une partie et un joueur
+     * @brief Crée une liaison entre une partie et un joueur
      * @author Nathan
-     * @param int $idPartie
-     * @param int $idPartieJoue
-     * @param int $idJoueurJoue
+     * @param int $idPartieJoue identifiant de la partie jouée
+     * @param int $idJoueurJoue identifiant du joueur qui joue la partie jouée
      * @return void
      */
-    function createAppartientA(int $idPartie, int $idPartieJoue, int $idJoueurJoue): void{
+    function createAppartientA(int $idPartieJouee, int $idJoueurJouee): void{
         $connection = connection();
 
-        $insertAppartientA = 'INSERT INTO appartientA VALUES (idPartie, idPartieJoue, idJoueurJoue)';
+        $insertAppartientA = 'INSERT INTO appartientA VALUES (idPartieJouee, idJoueurJouee)';
 
         $statement = $connection->prepare($insertAppartientA);
         $statement->bindParam('idPartie', $idPartie, PDO::PARAM_INT);
-        $statement->bindParam('idPartieJoue', $idPartieJoue, PDO::PARAM_INT);
-        $statement->bindParam('idJoueurJoue',$idJoueurJoue, PDO::PARAM_INT);
+        $statement->bindParam('idPartieJoue', $idPartieJouee, PDO::PARAM_INT);
+        $statement->bindParam('idJoueurJoue',$idJoueurJouee, PDO::PARAM_INT);
         $statement->execute();
     }
 
@@ -28,7 +27,7 @@
     //FONCTIONS READ
 
     /**
-     * Récupère toutes les liaisons entre les parties et joueurs
+     * @brief Récupère toutes les liaisons entre les parties et joueurs
      * @author Nathan
      * @return array
      */
@@ -44,9 +43,9 @@
     }
 
     /**
-     * Récupère toutes les liaisons entre un joueur donné et ses parties
+     * @brief Récupère toutes les liaisons entre un joueur donné et ses parties
      * @author Nathan
-     * @param int $idUser
+     * @param int $idUser identifiant du joueur
      * @return array
      */
     function readAppartientAByIdUser(int $idUser): array{
@@ -62,9 +61,9 @@
     }
 
     /**
-     * Récupère toutes les liaisons entre une partie donnée et ses joueurs
+     * @brief Récupère toutes les liaisons entre une partie donnée et ses joueurs
      * @author Nathan
-     * @param int $idPartie
+     * @param int $idPartie identifiant de la partie
      * @return array
      */
     function readAppartientAByIdPartie(int $idPartie): array{

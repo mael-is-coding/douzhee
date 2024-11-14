@@ -5,23 +5,25 @@
     //FONCTIONS CREATE
 
     /**
-     * Crée une nouvelle partie
+     * @brief Création d'une partie avec $nbJoueurs joueurs
      * @author Nathan
+     * @param int $nbJoueurs nombre de joueurs
      * @return void
      */
-    function createPartie(){
+    function createPartie(int $nbJoueurs): void{
         $connection = connection();
 
         $date = date("j:n:g:i:s");
         $statut = 'En commencement';
         $scoreTotal = 0;
 
-        $insertPartie = 'INSERT INTO partie VALUES (date, statut, scoreTotal)';
+        $insertPartie = 'INSERT INTO partie VALUES (datePartie, statut, scoreTotalPartie, nbJoueurs)';
 
         $statement = $connection->prepare($insertPartie);
-        $statement->bindParam('date', $date, PDO::PARAM_STR);
+        $statement->bindParam('datePartie', $date, PDO::PARAM_STR);
         $statement->bindParam('statut', $statut, PDO::PARAM_STR);
-        $statement->bindParam('scoreTotal', $scoreTotal, PDO::PARAM_INT);
+        $statement->bindParam('scoreTotalPartie', $scoreTotal, PDO::PARAM_INT);
+        $statement->bindParam('nbJoueurs', $nbJoueurs, PDO::PARAM_INT);
         $statement->execute();
     }
 
@@ -29,7 +31,7 @@
     //FONCTIONS READ
 
     /**
-     * Récupère toutes les parties
+     * @brief Récupère toutes les parties
      * @author Nathan
      * @return array
      */
@@ -45,7 +47,7 @@
     }
 
     /**
-     * Récupère une partie donnée
+     * @brief Récupère une partie donnée
      * @author Nathan
      * @param int $id
      * @return Partie
@@ -60,11 +62,11 @@
         $statement->execute();
 
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-        return new Partie($results['id'], $results['date'], $results['score'], $results['scoreTotalPartie']);
+        return new Partie($results['id'], $results['date'], $results['score'], $results['scoreTotalPartie'], $results['nbJoueurs']);
     }
 
     /**
-     * Récupère toutes les parties avec le statut donné
+     * @brief Récupère toutes les parties avec le statut donné
      * @author Nathan
      * @param string $statut
      * @return array
@@ -85,7 +87,7 @@
     //FONCTIONS UPDATE
 
     /**
-     * Met à jour le statut d'une partie donnée
+     * @brief Met à jour le statut d'une partie donnée
      * @author Nathan
      * @param string $statut
      * @param int $id 
@@ -103,7 +105,7 @@
     }
 
     /**
-     * Met à jour une partie lors de sa fin
+     * @brief Met à jour une partie lors de sa fin
      * @author Nathan
      * @param int $scoreTotal
      * @param int $id

@@ -7,18 +7,21 @@
         private String $date;
         private String $score;
         private int $scoreTotalPartie;
+        private int $nbJoueurs;
     
         /**
          * @param int $id
          * @param string $date
          * @param string $score
          * @param int $scoreTotalPartie
+         * @param int $nbJoueurs
          */
-        public function __construct(int $id, string $date, string $score, int $scoreTotalPartie) {
+        public function __construct(int $id, string $date, string $score, int $scoreTotalPartie, int $nbJoueurs) {
             $this->id = $id;
             $this->date = $date;
             $this->score = $score;
             $this->scoreTotalPartie = $scoreTotalPartie;
+            $this->nbJoueurs = $nbJoueurs;
         }
 
         /**
@@ -82,6 +85,22 @@
          */
         public function setScoreTotalPartie(int $scoreTotalPartie): self {
             $this->scoreTotalPartie = $scoreTotalPartie;
+            return $this;
+        }
+
+        /**
+         * @return int
+         */
+        public function getNbJoueurs(): int {
+            return $this->nbJoueurs;
+        }
+        
+        /**
+         * @param int $nbJoueurs 
+         * @return self
+         */
+        public function setNbJoueurs(int $nbJoueurs): self {
+            $this->nbJoueurs = $nbJoueurs;
             return $this;
         }
     }

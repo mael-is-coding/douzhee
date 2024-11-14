@@ -5,7 +5,7 @@
     //FONCTIONS READ
 
     /**
-     * Récupère tous les succès
+     * @brief Récupère tous les succès
      * @author Nathan
      * @return array
      */
@@ -20,10 +20,10 @@
     }
 
     /**
-     * Récupère un succès en fonction de son id
+     * @brief Récupère un succès en fonction de son id
      * @author Nathan
-     * @param int $id
-     * @return Succes
+     * @param int $id identifiant du succès
+     * @return Succes instance de Succes
      */
     function readSuccesById(int $id): Succes{
         $connection = connection();

@@ -241,3 +241,81 @@ function deleteJoueur(int $id): bool {
 function isNull(mixed $argument) :bool {
     return $argument == null;
 }
+function getIdUser($email){
+    $connexion = connection();
+    $sql = "Select id from joueur where email = ? ";
+    $stmt = $connexion->prepare($sql);
+    $stmt->bindParam(1,$email);
+    $stmt->execute();
+    $idUser = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $idUser['id'];
+}
+
+function verifUser($email,){
+    $connexion = connection();
+    $sql = "Select email from joueur where email = ?";
+    $stmt = $connexion->prepare($sql);
+    $stmt->bindParam(1,$email);
+    $stmt->execute();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $user;
+
+}
+function getPseudoById($id){
+    $connexion = connection();
+    $sql = "Select pseudonyme from joueur where id =?";
+    $stmt = $connexion->prepare($sql);
+    $stmt->bindParam(1,$id);
+    $stmt->execute();
+    $pseudo = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $pseudo['pseudonyme'];
+}
+function getMoneyById($id){
+    $connexion = connection();
+    $sql = "Select douzCoin from joueur where id =?";
+    $stmt = $connexion->prepare($sql);
+    $stmt->bindParam(1,$id);
+    $stmt->execute();
+    $money = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $money['douzCoin'];
+}
+function verifEmail($email){
+    $connexion = connection();
+    $sql = "Select email from joueur where email = ?";
+    $stmt = $connexion->prepare($sql);
+    $stmt->bindParam(1,$email);
+    $stmt->execute();
+    $count = $stmt->rowCount();
+    return $count > 0;
+}
+function getBioById($id){
+    $connexion = connection();
+    $sql = "Select biographie from joueur where id =?";
+    $stmt = $connexion->prepare($sql);
+    $stmt->bindParam(1,$id);
+    $stmt->execute();
+    $bio = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $bio['biographie'];
+}
+function insertUser($email,$mdp,$pseudonyme){
+    $connexion = connection();
+    $sql = "INSERT INTO joueur (email, pseudonyme, mdp, douzCoin, dateInscription, biographie) VALUES (?, ?, ?,0,CURRENT_DATE,'Douzhee est un jeu conçu par des passionees dans le but de divertir les gens')";
+    $stmt = $connexion->prepare($sql);
+    $hashedPassword = password_hash($mdp, PASSWORD_DEFAULT);
+    $stmt->bindParam(1, $email);
+    $stmt->bindParam(2, $pseudonyme);
+    $stmt->bindParam(3, $hashedPassword);
+    $stmt->execute();
+
+}
+function updatePassword($mdp,$email){
+    $hashedPassword = password_hash($mdp, PASSWORD_DEFAULT);
+    $connexion = connection();
+    $id = getIdUser($email);
+    $sql = "Update joueur set mdp = ?  where id = ?";
+    $stmt = $connexion->prepare($sql);
+    $stmt->bindParam(1,$hashedPassword);
+    $stmt->bindParam(2,$id);
+    $stmt->execute();
+}
+?>

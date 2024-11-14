@@ -1,6 +1,5 @@
 <?php
-
-require_once "../connectionHeader.php";
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/Utils/headerConnection.php";
 
 
 /**
@@ -8,7 +7,7 @@ require_once "../connectionHeader.php";
  * @return bool false si la requête a échoué true sinon
  */
 function createJoueur(string $pseudo, string $mdp, int $douzCoin, string $email, string $bio, string $dateInsc) :bool {
-    $connection = getConnection();
+    $connection = connection();
 
     $InsertQuery = "INSERT INTO Joueur (Pseudonyme, Mdp, DouzCoin, Email, Biographie, DateInscription) VALUES (:pseudo, :mdp, :douzcoin, :email, :bio, :dateInsc)";
 
@@ -43,7 +42,7 @@ function updateJoueur(int $id, string $pseudo = null, string $mdp = null, int $d
     $oldIdPartie = $old_user->getIdPartie();
     
 
-    $connection = getConnection();
+    $connection = connection();
     $UpdateQuery = "UPDATE Joueur SET Pseudonyme = :pseudo, Mdp = :mdp, DouzCoin = :douzCoin, Email = :email, Biographie = :bio, DateInscription = :dateInsc, idPartie = :idPartie WHERE id = $id";
 
     $statement = $connection->prepare($UpdateQuery);
@@ -82,7 +81,7 @@ function updateJoueur(int $id, string $pseudo = null, string $mdp = null, int $d
  * @return bool true si la requête marche, false sinon
  */
 function updatePseudoJoueur(int $id, string $pseudo): bool {
-    $connection = getConnection();
+    $connection = connection();
     $updateQuery = "UPDATE Joueur SET pseudo = :pseudo WHERE id = :id";
 
     $statement = $connection->prepare($updateQuery);
@@ -100,7 +99,7 @@ function updatePseudoJoueur(int $id, string $pseudo): bool {
  * @return bool true si la requête marche, false sinon
  */
 function updateDouzCoin(int $id, string $douzCoin): bool {
-    $connection = getConnection();
+    $connection = connection();
     $updateQuery = "UPDATE Joueur SET douzCoin = :douzCoin WHERE id = :id";
 
     $statement = $connection->prepare($updateQuery);
@@ -119,7 +118,7 @@ function updateDouzCoin(int $id, string $douzCoin): bool {
  * @return bool true si la requête marche, false sinon
  */
 function updateMDP(int $id, string $mdp): bool {
-    $connection = getConnection();
+    $connection = connection();
     $updateQuery = "UPDATE Joueur SET Mdp = :mdp WHERE id = :id";
 
     $statement = $connection->prepare($updateQuery);
@@ -138,7 +137,7 @@ function updateMDP(int $id, string $mdp): bool {
  * @return bool
  */
 function updateEmail(int $id, string $email, string $mdp) {
-    $connection = getConnection();
+    $connection = connection();
     $updateQuery = "UPDATE Joueur SET Mdp = :mdp, Email = :email WHERE id = :id";
 
     $statement = $connection->prepare($updateQuery);
@@ -157,7 +156,7 @@ function updateEmail(int $id, string $email, string $mdp) {
  * @return bool true si la requête marche, false sinon
  */
 function updateBio(int $id, string $bio): bool {
-    $connection = getConnection();
+    $connection = connection();
     $updateQuery = "UPDATE Joueur SET Biographie = :bio WHERE id = :id";
 
     $statement = $connection->prepare($updateQuery);
@@ -174,7 +173,7 @@ function updateBio(int $id, string $bio): bool {
  * @return bool true si la requête marche, false sinon
  */
 function updateJoueurIdPartie(int $id, int $idPartie):bool {
-    $connection = getConnection();
+    $connection = connection();
     $updateQuery = "UPDATE Joueur SET idPartie = :idPartie WHERE id = :id";
 
     $statement = $connection->prepare($updateQuery);
@@ -191,7 +190,7 @@ function updateJoueurIdPartie(int $id, int $idPartie):bool {
  */
 function readJoueur(int $id): ?Joueur {
     
-    $connection = getConnection();
+    $connection = connection();
 
     $SelectQuery = "SELECT * FROM Joueur WHERE id = $id";
 
@@ -227,7 +226,7 @@ function readIdPartieJoueur(int $id): int{
  * @return bool true si la requête marche, false sinon
  */
 function deleteJoueur(int $id): bool {
-    $connection = getConnection();
+    $connection = connection();
     $query = "DELETE FROM Joueur WHERE id = $id";
 
     return $connection->exec($query);

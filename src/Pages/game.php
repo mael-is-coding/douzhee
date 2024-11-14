@@ -4,6 +4,10 @@
     <link rel="stylesheet" href="../../assets/CSS/game.css">   
 </head>
 <body>
+    <div class="lienPartie">
+        <span class="lien">Lien:</span>
+        <button class="copyLien"></button>
+    </div>
     <div class="score">
         <table class="Upper">
             <thead>

@@ -20,6 +20,19 @@ body {
     position: relative; 
 }
 
+.lienPartie{
+    position: absolute;
+    top: 0;
+    padding: 0px;
+    margin: 2px;
+    color: white;
+    text-decoration: none;
+}
+
+.lienPartie button{
+    display: none;
+}
+
 .chat-container {
     bottom: 0;
     right: 0;
@@ -450,17 +463,36 @@ p{
         margin-right: 2%;        
     }
 
+    .lienPartie{
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0px;
+        margin: 2px;
+        color: white;
+        text-decoration: none;
+    }
+
+    .lienPartie button{
+        display: block;
+    }
+
+    .lienPartie span{
+        display: none;
+    }
+
     .versus {
         top: 0;
         right: 0;
-        height: 17%;
-        width: 32%;
+        height: 16%;
+        width: 30%;
         text-align: center;
         color: white;
         position: absolute;
         display: flex;
         flex-direction: column;
-        margin-top: 20px;
+        margin-top: 30px;
+        margin-right: 17px;
     }
 
     .joueur-nom{

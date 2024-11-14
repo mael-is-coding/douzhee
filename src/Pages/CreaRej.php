@@ -2,14 +2,14 @@
     require_once('../Utils/header.php');
     require_once('../CRUD/CRUDPartie.php');
     require_once('../CRUD/CRUDJoueur.php');
-    require_once('../CRUD/CRUDPartieJoueur.php');
 
     $joueurTemp = createJoueur("test", "test", 0, "test", "test", "test");
+    $_SESSION['user_id'] = "test";
 
     if(isset($_POST['nombre_joueur'])) {
         $nombre_joueur = $_POST['nombre_joueur'];
-        $idPartie = createPartie();
-        
+        $idPartie = createPartie($nombre_joueur);
+        $idJoueur = $_SESSION['user_id'];
 
     }
 

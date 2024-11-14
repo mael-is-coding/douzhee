@@ -9,17 +9,15 @@
  */
 function createJoueur(string $pseudo, string $mdp, int $douzCoin, string $email, string $bio, string $dateInsc) :bool {
     $connection = connection();
-
-    $InsertQuery = "INSERT INTO Joueur (Pseudonyme, Mdp, DouzCoin, Email, Biographie, DateInscription) VALUES (:pseudo, :mdp, :douzcoin, :email, :bio, :dateInsc)";
+    $hashedPassword = password_hash($mdp, PASSWORD_DEFAULT);
+    $InsertQuery = "INSERT INTO Joueur (Pseudonyme, Mdp, DouzCoin, Email, Biographie, DateInscription) VALUES (:pseudo, :mdp, 0, :email, 'Douzhee est un jeu conçu par des passionees dans le but de divertir les gens', CURRENT_DATE)";
 
     $statement = $connection->prepare($InsertQuery);
 
     $statement->bindParam("pseudo", $pseudo);
-    $statement->bindParam("mdp", $mdp);
-    $statement->bindParam("douzcoin", $douzCoin);
+    $statement->bindParam("mdp", $hashedPassword);
     $statement->bindParam("email", $email);
     $statement->bindParam("bio", $bio);
-    $statement->bindParam("dateInsc", $dateInsc);
 
     return $statement->execute();
 }
@@ -120,11 +118,12 @@ function updateDouzCoin(int $id, string $douzCoin): bool {
  */
 function updateMDP(int $id, string $mdp): bool {
     $connection = connection();
+    $hashedPassword = password_hash($mdp, PASSWORD_DEFAULT);
     $updateQuery = "UPDATE Joueur SET Mdp = :mdp WHERE id = :id";
 
     $statement = $connection->prepare($updateQuery);
 
-    $statement->bindParam("mdp", $mdp);
+    $statement->bindParam("mdp", $hashedPassword);
     $statement->bindParam("id", $id);
 
     return $statement->execute();

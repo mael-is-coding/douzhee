@@ -5,10 +5,10 @@
     //FONCTIONS CREATE
 
     /**
-     * Crée une liaison entre un joueur et ses statistiques
+     * @brief Crée une liaison entre un joueur et ses statistiques
      * @author Nathan
-     * @param int $idStats
-     * @param int $idUser
+     * @param int $idStats identifiant des statistiques liées au joueur
+     * @param int $idUser identifiant du joueur
      * @return void
      */
     function createConsulte(int $idStats, int $idUser): void{
@@ -26,10 +26,10 @@
     //FONCTIONS READ
 
     /**
-     * récupère la liaison statistiques/joueur d'un joueur donné
+     * @brief Récupère la liaison statistiques/joueur d'un joueur donné
      * @author Nathan
-     * @param int $idUser
-     * @return Consulte
+     * @param int $idUser identifiant du joueur
+     * @return Consulte instance de Consulte
      */
     function readConsulteByIdUser(int $idUser): Consulte{
         $connection = connection();
@@ -45,10 +45,10 @@
     }
 
     /**
-     * récupère la liaison statistiques/joueur de statistiques données
+     * @brief Récupère la liaison statistiques/joueur de statistiques données
      * @author Nathan
-     * @param int $idStats
-     * @return Consulte
+     * @param int $idStats identifiant des statistiques liées au joueur
+     * @return Consulte instance de Consulte
      */
     function readConsulteByIdStats(int $idStats): Consulte{
         $connection = connection();

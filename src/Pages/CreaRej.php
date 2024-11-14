@@ -3,7 +3,17 @@
     require_once('../CRUD/CRUDPartie.php');
     require_once('../CRUD/CRUDJoueur.php');
     require_once('../CRUD/CRUDPartieJoueur.php');
-    
+
+    $joueurTemp = createJoueur("test", "test", 0, "test", "test", "test");
+
+    if(isset($_POST['nombre_joueur'])) {
+        $nombre_joueur = $_POST['nombre_joueur'];
+        $idPartie = createPartie();
+        
+
+    }
+
+
 ?>
     <link rel="stylesheet" href="../../assets/CSS/CreaRej.css">   
 </head>

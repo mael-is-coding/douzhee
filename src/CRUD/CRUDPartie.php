@@ -49,8 +49,8 @@
     /**
      * @brief Récupère une partie donnée
      * @author Nathan
-     * @param int $id
-     * @return Partie
+     * @param int $id identifiant de la partie
+     * @return Partie instance de Partie
      */
     function readPartieById(int $id): Partie{
         $connection = connection();
@@ -68,7 +68,7 @@
     /**
      * @brief Récupère toutes les parties avec le statut donné
      * @author Nathan
-     * @param string $statut
+     * @param string $statut statut des parties recherchées
      * @return array
      */
     function readPartieByStatut(String $statut): array{
@@ -89,8 +89,8 @@
     /**
      * @brief Met à jour le statut d'une partie donnée
      * @author Nathan
-     * @param string $statut
-     * @param int $id 
+     * @param string $statut nouveau statut de la partie
+     * @param int $id identifiant de la partie
      * @return void
      */
     function updateStatut(String $statut, int $id): void{
@@ -107,8 +107,8 @@
     /**
      * @brief Met à jour une partie lors de sa fin
      * @author Nathan
-     * @param int $scoreTotal
-     * @param int $id
+     * @param int $scoreTotal score total de la partie
+     * @param int $id identifiant de la partie
      * @return void
      */
     function updateEndOfGame(int $scoreTotal, int $id): void{

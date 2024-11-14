@@ -6,7 +6,7 @@
     //FONCTIONS CREATE
 
     /**
-     * Crée un lien entre un succès et un joueur pour indiquer qu'il a validé le succès
+     * @brief Crée un lien entre un succès et un joueur pour indiquer qu'il a validé le succès
      * @author Nathan
      * @param int $idUser
      * @param int $idSucces
@@ -29,7 +29,7 @@
     //FONCTIONS READ
 
     /**
-     * Récupère la liaison entre un joueur et ses succès
+     * @brief Récupère la liaison entre un joueur et ses succès
      * @author Nathan
      * @param int $idUser
      * @return array
@@ -47,7 +47,7 @@
     }
 
     /**
-     * Récupère la liaison entre un succès et les joueurs qui l'ont obtenu
+     * @brief Récupère la liaison entre un succès et les joueurs qui l'ont obtenu
      * @author Nathan
      * @param int $idSucces
      * @return array

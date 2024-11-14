@@ -3,9 +3,20 @@
 
     //FONCTIONS CREATE
 
-    //Fonction à modifier selon les choix d'implémentations
-    function createStatistiques(int $nbPartiesGagnees, int $scoreMaximal, String $tempsJeu, float $ratioVictoire, int $nbSucces): void {
+    /**
+     * @brief Initialise les statistiques du joueur
+     * @author Nathan
+     * @param int $idUser identifiant du joueur
+     * @return void
+     */
+    function createStatistiques(int $idUser): void {
         $connection = connection();
+
+        $nbPartiesGagnees = 0;
+        $scoreMaximal = 0;
+        $tempsJeu = 0;
+        $ratioVictoire = 0;
+        $nbSucces = 0;
 
         $insertStatsQuery = "INSERT INTO statistiques VALUES (nbPartiesGagnees, scoreMaximal, tempsJeu, ratioVictoire, nbSucces)";
 
@@ -16,13 +27,17 @@
         $statement->bindParam("ratioVictoire", $ratioVictoire);
         $statement->bindParam("nbSucces", $nbSucces);
         $statement->execute();
+
+        $idStats = $connection->lastInsertId();
+
+        createConsulte($idStats, $idUser);
     }
 
 
     //FONCTIONS READ
 
     /**
-     * Récupère toutes les statistiques d'un utilisateur donné
+     * @brief Récupère toutes les statistiques d'un utilisateur donné
      * @author Nathan
      * @param int $idUser
      * @return Statistiques
@@ -45,7 +60,7 @@
     //FONCTIONS UPDATE
 
     /**
-     * Met à jour toutes les statistiques d'un joueur donné à la fin d'une partie donnée
+     * @brief Met à jour toutes les statistiques d'un joueur donné à la fin d'une partie donnée
      * @author Nathan
      * @param int $idUser
      * @param int $idGame
@@ -56,20 +71,20 @@
         $stats = readStatistiquesByIdUser($idUser);
 
         if(readVictory($connection, $idUser, $idGame)){ //Fonction qui devra etre codée dans CRUDJouerPartie.php
-            $updateVictory = 'UPDATE FROM statistiques SET nbPartiesGagnees = nbPartiesGagnees + 1 WHERE id = (SELECT idStatistiques FROM consulte WHERE idJoueur = idUser)';
+            $updateVictory = 'UPDATE statistiques SET nbPartiesGagnees = nbPartiesGagnees + 1 WHERE id = (SELECT idStatistiques FROM consulte WHERE idJoueur = idUser)';
             $statement = $connection->prepare($updateVictory);
             $statement->bindParam('idUser', $idUser);
             $statement->execute();
         }
 
-        $updateRatio = 'UPDATE FROM statistiques SET ratioVictoire = nbPartieGagnees / (SELECT COUNT(*) FROM participeA WHERE idJoueur = idUser)';
+        $updateRatio = 'UPDATE statistiques SET ratioVictoire = nbPartieGagnees / (SELECT COUNT(*) FROM participeA WHERE idJoueur = idUser)';
         $statement = $connection->prepare($updateRatio);
         $statement->bindParam('idUser', $idUser);
         $statement->execute();
 
         $partie = readPartieByIdUserAndIdGame($idUser, $idGame); //Fonction qui devra etre codée dans CRUDJouerPartie.php
         if($partie->getScoreJoueur() > $stats->getScoreMaximal()){
-            $updateBestScore = 'UPDATE FROM statistiques SET scoreMaximal = newScore WHERE id = (SELECT idStatistiques FROM consulte WHERE idJoueur = idUser)';
+            $updateBestScore = 'UPDATE statistiques SET scoreMaximal = newScore WHERE id = (SELECT idStatistiques FROM consulte WHERE idJoueur = idUser)';
             $statement = $connection->prepare($updateBestScore);
             $statement->bindParam('newScore', $partie->getScoreJoueur());
             $statement->bindParam('idUser', $idUser);

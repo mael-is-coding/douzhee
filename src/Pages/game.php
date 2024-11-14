@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../assets/CSS/game.css">
-    <title>Douzhee</title>
-    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+<?php
+    require_once('../Utils/header.php');
+?>
+    <link rel="stylesheet" href="../../assets/CSS/game.css">   
 </head>
 <body>
     <div class="score">
@@ -310,6 +306,8 @@
         </div>
     </div>
     <button class="chat-toggle" onclick="toggleChat()">💬</button>
+    
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
 
     <script>
         var socket = io(); // Initialiser le socket client pour se connecter au serveur socket.io sur le même domaine 

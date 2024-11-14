@@ -61,10 +61,12 @@ button{
     display: flex;
     align-items: center;
     z-index: 10;
+    text-decoration: none;
 }
 
 #retour p {
     pointer-events: none;
+    color: black;
 }
 
 #retour img{

@@ -1,27 +1,24 @@
 <?php
-    include_once "Session.php";
+    require_once('../Utils/header.php');
+    require_once('../CRUD/CRUDPartie.php');
+    require_once('../CRUD/CRUDJoueur.php');
+    require_once('../CRUD/CRUDPartieJoueur.php');
+    
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Douzhee</title>
-    <link rel="stylesheet" href="../../assets/CSS/CreaRej.css">
+    <link rel="stylesheet" href="../../assets/CSS/CreaRej.css">   
 </head>
 <body>
     <div class="section-haute">
-        <button id="retour">
+        <a href="./index.php" id="retour">
             <img src="../../assets/Images/arrow-back.svg" alt="retour">
             <p>Retour</p>
-        </button>
+        </a>
     </div>
     <div class="section-basse">
         <div class="zone">
             <div class="rejoindre">
                 <h1>Rejoindre une partie</h1>
-                <form action="">
+                <form action="Crearej.php" method="POST">
                     <div class="input-container">
                         <img src="../../assets/Images/icon-mail.png" class="input-icon" alt="icon">
                         <input type="text" placeholder="Code de la partie" required>
@@ -36,7 +33,7 @@
         <div class="zone">
             <div class="creer">
                 <h1>Créer une partie</h1>
-                <form action="">
+                <form action="CreaRej.php" method="POST">
                     <div class="radio-container">
                         <label>Nombre de joueur :</label>
                         <label for="joueur2"><input type="radio" id="joueur2" name="nombre_joueur" value="2" required> 2</label>

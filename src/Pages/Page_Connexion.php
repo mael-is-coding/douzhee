@@ -1,33 +1,27 @@
 <?php
-    require_once("pdo.php");
-  
+    require_once("../CRUD/CRUDJoueur.php");
+    require_once("../Utils/headerInit.php");
 ?>
 
-<!DOCTYPE html>
-<html lang ="fr">
-    <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page de connexion</title>
-    <link rel="stylesheet" href="style_PCIR.css"> 
-    </head>
-    <body>
-        <div class="PCIR">
-            <h2>Connexion</h2>
-            <form action = "Page_Connexion.php" method="POST">
-             <input name="E-mail" type="email" placeholder="E-mail" required value="<?php echo $_SESSION['cacheE-mail'] ?? '';?>">
-             <input name = "Password" type="password" placeholder="Password" required value="<?php echo $_SESSION['cachePassword'] ?? '';?>">
-             <div class="checkbox">
-              <input type ="checkbox" id="check" name="checkbox">
-              <label for="check">Se souvenir de moi</label>
-             </div>
-             <button type="submit">Connexion</button>
-            </form>
-            <a href="Page_Réinitialisation.php">Mot de passe oublié ?</a>
-            <div class = "link">Nouveau ici ? <a href="Page_Inscription.php">Inscrivez vous</a>
+    <link rel="stylesheet" href="../../assets/css/style_PCIR.css"> 
+</head>
+<body>
+    <div class="PCIR">
+        <h2>Connexion</h2>
+        <form action = "Page_Connexion.php" method="POST">
+            <input name="E-mail" type="email" placeholder="E-mail" required value="<?php echo $_SESSION['cacheE-mail'] ?? '';?>">
+            <input name = "Password" type="password" placeholder="Password" required value="<?php echo $_SESSION['cachePassword'] ?? '';?>">
+            <div class="checkbox">
+            <input type ="checkbox" id="check" name="checkbox">
+            <label for="check">Se souvenir de moi</label>
             </div>
+            <button type="submit">Connexion</button>
+        </form>
+        <a href="Page_Réinitialisation.php">Mot de passe oublié ?</a>
+        <div class = "link">Nouveau ici ? <a href="Page_Inscription.php">Inscrivez vous</a>
         </div>
-    </body>
+    </div>
+</body>
 </html>
 <?php
  if ($_SERVER['REQUEST_METHOD'] == 'POST'){

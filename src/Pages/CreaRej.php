@@ -1,19 +1,17 @@
 <?php
-    require_once('../Utils/headerInit.php');
-    require_once('../CRUD/CRUDPartie.php');
-    require_once('../CRUD/CRUDJoueur.php');
+    require_once("../Utils/headerInit.php");
+    require_once("../CRUD/CRUDJoueur.php");
+    require_once("../CRUD/CRUDPartie.php");
 
     //$joueurTemp = createJoueur("test", "test", 0, "test", "test", "test");
-    $_SESSION['user_id'] = "test";
+    $_SESSION['user_id'] = 1;
 
     if(isset($_POST['nombre_joueur'])) {
         $nombre_joueur = $_POST['nombre_joueur'];
-        $idPartie = createPartie($nombre_joueur);
         $idJoueur = $_SESSION['user_id'];
-
+        $lienParite = bin2hex(random_bytes(16));
+        echo $lienParite;
     }
-
-
 ?>
     <link rel="stylesheet" href="../../assets/CSS/CreaRej.css">   
 </head>

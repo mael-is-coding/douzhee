@@ -42,7 +42,6 @@ header {
 }
 
 #profil {
-    background-image: url(imgheader/photodefault.jpg);
     border-radius: 50%; 
     margin-right: 10px;
     background-size: cover;

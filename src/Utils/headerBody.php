@@ -12,7 +12,7 @@ require_once("../CRUD/CRUDJoueur.php");
                 <form action="PageProfil.php" method="GET">
                     <input id="profil" type="submit" value="">
                 </form>
-                <form method="POST" action="logout.php">
+                <form method="POST" action="../Ulogout.php">
                     <button type="submit">Déconnexion</button>
                 </form>
             </div>

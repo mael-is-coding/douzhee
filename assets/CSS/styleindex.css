@@ -43,23 +43,3 @@ input[type="submit"] {
     margin: 30px;
 }
 
-#regles {
-    background-image: url("imageindex/regles.png");
-    
-}
-
-#classement {
-    background-image: url("imageindex/imgclassement.png");
-}
-
-#versusrobot {
-    width: 300px;
-    height: 156.62px;
-    background-image: url("imageindex/imgvsrobot.png");
-}
-
-#versushuman {
-    width: 300px;
-    height: 156.62px;
-    background-image: url("imageindex/imgvshuman.png");
-}

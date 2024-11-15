@@ -1,5 +1,5 @@
 <?php
-    require_once('../Utils/header.php');
+    require_once("../Utils/headerInit.php");
 ?>
     <link rel="stylesheet" href="../../assets/CSS/game.css">   
 </head>

@@ -1,22 +1,16 @@
 <?php
-    require_once('pdo.php');
-    
+    require_once("../CRUD/CRUDJoueur.php");
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PageVerification</title>
-    <link rel="stylesheet" href="style_PCIR.css">
+    <link rel="stylesheet" href="../../assets/css/style_PCIR.css">
 </head>
 <body>
     <div class="PCIR">
-                <h2>Saisir le code</h2>
-                <form action = "PageVerification.php" method="POST">
-                    <input name="codeVerification" type="text" placeholder="Code de vérification" required>
-                    <button type="submit">Valider le code</button>
-                </form>
+        <h2>Saisir le code</h2>
+        <form action = "PageVerification.php" method="POST">
+            <input name="codeVerification" type="text" placeholder="Code de vérification" required>
+            <button type="submit">Valider le code</button>
+        </form>
+    </div>
 </body>
 </html>
 <?php

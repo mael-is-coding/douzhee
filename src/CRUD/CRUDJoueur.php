@@ -251,7 +251,7 @@ function getIdUser($email){
     return $idUser['id'];
 }
 
-function verifUser($email,){
+function verifUser($email){
     $connexion = connection();
     $sql = "Select email from joueur where email = ?";
     $stmt = $connexion->prepare($sql);

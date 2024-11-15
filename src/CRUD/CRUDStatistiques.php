@@ -1,6 +1,6 @@
 <?PHP 
     require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/Classes/Statistiques.php";
-    require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/Utils/headerConnection.php";
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/Utils/connectionSingleton.php";
     require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/CRUD/CRUDConsulte.php";
     require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/CRUD/CRUDClassement.php";
 
@@ -13,7 +13,7 @@
      * @return void
      */
     function createStatistiques(int $idUser): void {
-        $connection = connection();
+        $connection = ConnexionSingleton::getInstance();
 
         $nbPartiesGagnees = 0;
         $scoreMaximal = 0;
@@ -46,7 +46,7 @@
      * @return Statistiques Instance de Statistiques
      */
     function readStatistiquesByIdUser(int $idUser): Statistiques {
-        $connection = connection();
+        $connection = ConnexionSingleton::getInstance();
 
         $readStatsQuery = 
         "SELECT * FROM statistiques 
@@ -73,7 +73,7 @@
      * @return void
      */
     function updateEndOfGame(int $idUser, int $idGame): void{
-        $connection = connection();
+        $connection = ConnexionSingleton::getInstance();
         $stats = readStatistiquesByIdUser($idUser);
 
         if(readVictory($connection, $idUser, $idGame)){ //Fonction qui devra etre codée dans CRUDJouerPartie.php
@@ -107,7 +107,7 @@
      * @return void
      */
     function updateNbSucces(int $idUser){
-        $connection = connection();
+        $connection = ConnexionSingleton::getInstance();
 
         $updateSucces = 'UPDATE statistiques SET nbSucces = nbSucces + 1 WHERE id = idUser';
         $statement = $connection->prepare($updateSucces);

@@ -1,5 +1,6 @@
 <?php
     require_once("../Utils/headerInit.php");
+    require_once("../CRUD/CRUDJoueur.php");
 ?>
     <link rel="stylesheet" href="../../assets/css/styleindex.css">
     <link rel="stylesheet" href="../../assets/css/styleheader.css"> 
@@ -31,6 +32,5 @@
 <?php
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user_id'])){
         header('Location: ../Utils/logout.php');
-        exit();
     }
 ?>

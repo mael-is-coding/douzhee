@@ -24,13 +24,13 @@
 </body>
 </html>
 <?php
- if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     if (!empty($_POST['E-mail']) && !empty($_POST['Password'])){
         $email = $_POST['E-mail'];
         $mdp = $_POST['Password'];
         if (!empty($_POST['checkbox'])){
-          $_SESSION['cacheE-mail'] = $email;
-          $_SESSION['cachePassword'] = $mdp;
+            $_SESSION['cacheE-mail'] = $email;
+            $_SESSION['cachePassword'] = $mdp;
         }else{
             unset($_SESSION['cacheE-mail'], $_SESSION['cachePassword']);
         }
@@ -38,12 +38,12 @@
         if ($trouve){
             $_SESSION['user_id'] = getIdUser($_POST['E-mail']);
             header('Location: index.php');
-        }else{
+            exit;
+        } else {
             echo '<script 
                         type="text/javascript"> window.onload = function () { alert("Mauvais mot de passe ou email"); }
                         </script>';
         }
-     }
- }
-
+    }
+}
 ?>

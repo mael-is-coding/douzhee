@@ -1,6 +1,6 @@
 <?PHP 
     require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/Classes/Consulte.php";
-    require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/Utils/headerConnection.php";
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/Utils/connectionSingleton.php";
 
     //FONCTIONS CREATE
 
@@ -12,7 +12,7 @@
      * @return void
      */
     function createConsulte(int $idStats, int $idUser): void{
-        $connection = connection();
+        $connection = ConnexionSingleton::getInstance();
 
         $insertConsulte = 'INSERT INTO consulte VALUES (idStats, idUser)';
 
@@ -32,7 +32,7 @@
      * @return Consulte instance de Consulte
      */
     function readConsulteByIdUser(int $idUser): Consulte{
-        $connection = connection();
+        $connection = ConnexionSingleton::getInstance();
 
         $readConsulte = 'SELECT * FROM consulte WHERE idJoueur = idUser';
         
@@ -51,7 +51,7 @@
      * @return Consulte instance de Consulte
      */
     function readConsulteByIdStats(int $idStats): Consulte{
-        $connection = connection();
+        $connection = ConnexionSingleton::getInstance();
 
         $readConsulte = 'SELECT * FROM consulte WHERE idStatistiques = idStats';
 

@@ -1,6 +1,6 @@
 <?PHP 
     require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/Classes/Classement.php";
-    require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/Utils/headerConnection.php";
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/Utils/connectionSingleton.php";
     require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/CRUD/CRUDSeTrouve.php";
 
     //FONCTIONS CREATE
@@ -13,7 +13,7 @@
      * @return void
      */
     function createClassement(String $pseudo, int $idUser): void{
-        $connection = connection();
+        $connection = ConnexionSingleton::getInstance();
 
         $placeClassement = 0;
         $score = 0;
@@ -40,7 +40,7 @@
      * @return array
      */
     function readAllClassement(): array{
-        $connection = connection();
+        $connection = ConnexionSingleton::getInstance();
 
         $readAllClassement = 'SELECT * FROM classement ORDER BY placeClassement ASC';
 
@@ -57,7 +57,7 @@
      * @return Classement instance de Classement
      */
     function readClassementByIdUser(int $idUser): Classement{
-        $connection = connection();
+        $connection = ConnexionSingleton::getInstance();
 
         $readClassement = 'SELECT * FROM classement WHERE id = (SELECT idClassement FROM seTrouve WHERE idJoueur = idUser)';
 
@@ -80,7 +80,7 @@
      * @return void
      */
     function updateClassement(int $idUser, int $newScore): void {
-        $connection = connection();
+        $connection = ConnexionSingleton::getInstance();
 
         $getClassementId = "SELECT idClassement FROM seTrouve WHERE idJoueur = idUser";
         $stmt = $connection->prepare($getClassementId);

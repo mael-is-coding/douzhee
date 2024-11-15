@@ -1,6 +1,6 @@
 <?PHP 
     require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/Classes/Obtient.php";
-    require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/Utils/headerConnection.php";
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/Utils/connectionSingleton.php";
     require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/CRUD/CRUDStatistiques.php";
 
     //FONCTIONS CREATE
@@ -13,7 +13,7 @@
      * @return void
      */
     function createObtient(int $idUser, int $idSucces){
-        $connection = connection();
+        $connection = ConnexionSingleton::getInstance();
 
         $insertObtient = 'INSERT INTO obtient VALUES (:idUser, :idSucces)';
 
@@ -35,7 +35,7 @@
      * @return array
      */
     function readAllSuccesOfAnUser(int $idUser): array{
-        $connection = connection();
+        $connection = ConnexionSingleton::getInstance();
 
         $readAllSucces = 'SELECT * FROM obtient WHERE idJoueur = idUser';
 
@@ -53,7 +53,7 @@
      * @return array
      */
     function readAllUserWinTheSuccesId(int $idSucces): array{
-        $connection = connection();
+        $connection = ConnexionSingleton::getInstance();
 
         $readAllUserSucces = 'SELECT * FROM obtient WHERE idSucces = idSucces';
         $statement = $connection->prepare($readAllUserSucces);

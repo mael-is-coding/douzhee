@@ -1,6 +1,6 @@
 <?php
-    require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/Utils/headerConnection.php";
     require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/Classes/Joueur.php";
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/Utils/connectionSingleton.php";
 
 
 /**
@@ -8,7 +8,7 @@
  * @return bool false si la requête a échoué true sinon
  */
 function createJoueur(string $pseudo, string $mdp, int $douzCoin, string $email, string $bio, string $dateInsc) :bool {
-    $connection = connection();
+    $connection = ConnexionSingleton::getInstance();
     $hashedPassword = password_hash($mdp, PASSWORD_DEFAULT);
     $InsertQuery = "INSERT INTO Joueur (Pseudonyme, Mdp, DouzCoin, Email, Biographie, DateInscription) VALUES (:pseudo, :mdp, 0, :email, 'Douzhee est un jeu conçu par des passionees dans le but de divertir les gens', CURRENT_DATE)";
 
@@ -41,7 +41,7 @@ function updateJoueur(int $id, string $pseudo = null, string $mdp = null, int $d
     $oldIdPartie = $old_user->getIdPartie();
     
 
-    $connection = connection();
+    $connection = ConnexionSingleton::getInstance();
     $UpdateQuery = "UPDATE Joueur SET Pseudonyme = :pseudo, Mdp = :mdp, DouzCoin = :douzCoin, Email = :email, Biographie = :bio, DateInscription = :dateInsc, idPartie = :idPartie WHERE id = $id";
 
     $statement = $connection->prepare($UpdateQuery);
@@ -80,7 +80,7 @@ function updateJoueur(int $id, string $pseudo = null, string $mdp = null, int $d
  * @return bool true si la requête marche, false sinon
  */
 function updatePseudoJoueur(int $id, string $pseudo): bool {
-    $connection = connection();
+    $connection = ConnexionSingleton::getInstance();
     $updateQuery = "UPDATE Joueur SET pseudo = :pseudo WHERE id = :id";
 
     $statement = $connection->prepare($updateQuery);
@@ -98,7 +98,7 @@ function updatePseudoJoueur(int $id, string $pseudo): bool {
  * @return bool true si la requête marche, false sinon
  */
 function updateDouzCoin(int $id, string $douzCoin): bool {
-    $connection = connection();
+    $connection = ConnexionSingleton::getInstance();
     $updateQuery = "UPDATE Joueur SET douzCoin = :douzCoin WHERE id = :id";
 
     $statement = $connection->prepare($updateQuery);
@@ -117,7 +117,7 @@ function updateDouzCoin(int $id, string $douzCoin): bool {
  * @return bool true si la requête marche, false sinon
  */
 function updateMDP(int $id, string $mdp): bool {
-    $connection = connection();
+    $connection = ConnexionSingleton::getInstance();
     $hashedPassword = password_hash($mdp, PASSWORD_DEFAULT);
     $updateQuery = "UPDATE Joueur SET Mdp = :mdp WHERE id = :id";
 
@@ -137,7 +137,7 @@ function updateMDP(int $id, string $mdp): bool {
  * @return bool
  */
 function updateEmail(int $id, string $email, string $mdp) {
-    $connection = connection();
+    $connection = ConnexionSingleton::getInstance();
     $updateQuery = "UPDATE Joueur SET Mdp = :mdp, Email = :email WHERE id = :id";
 
     $statement = $connection->prepare($updateQuery);
@@ -156,7 +156,7 @@ function updateEmail(int $id, string $email, string $mdp) {
  * @return bool true si la requête marche, false sinon
  */
 function updateBio(int $id, string $bio): bool {
-    $connection = connection();
+    $connection = ConnexionSingleton::getInstance();
     $updateQuery = "UPDATE Joueur SET Biographie = :bio WHERE id = :id";
 
     $statement = $connection->prepare($updateQuery);
@@ -173,7 +173,7 @@ function updateBio(int $id, string $bio): bool {
  * @return bool true si la requête marche, false sinon
  */
 function updateJoueurIdPartie(int $id, int $idPartie):bool {
-    $connection = connection();
+    $connection = ConnexionSingleton::getInstance();
     $updateQuery = "UPDATE Joueur SET idPartie = :idPartie WHERE id = :id";
 
     $statement = $connection->prepare($updateQuery);
@@ -190,7 +190,7 @@ function updateJoueurIdPartie(int $id, int $idPartie):bool {
  */
 function readJoueur(int $id): ?Joueur {
     
-    $connection = connection();
+    $connection = ConnexionSingleton::getInstance();
 
     $SelectQuery = "SELECT * FROM Joueur WHERE id = $id";
 
@@ -226,7 +226,7 @@ function readIdPartieJoueur(int $id): int{
  * @return bool true si la requête marche, false sinon
  */
 function deleteJoueur(int $id): bool {
-    $connection = connection();
+    $connection = ConnexionSingleton::getInstance();
     $query = "DELETE FROM Joueur WHERE id = $id";
 
     return $connection->exec($query);
@@ -241,8 +241,9 @@ function deleteJoueur(int $id): bool {
 function isNull(mixed $argument) :bool {
     return $argument == null;
 }
+
 function getIdUser($email){
-    $connexion = connection();
+    $connexion = ConnexionSingleton::getInstance();
     $sql = "Select id from joueur where email = ? ";
     $stmt = $connexion->prepare($sql);
     $stmt->bindParam(1,$email);
@@ -251,18 +252,19 @@ function getIdUser($email){
     return $idUser['id'];
 }
 
-function verifUser($email,){
-    $connexion = connection();
-    $sql = "Select email from joueur where email = ?";
+/**
+ * @brief vérifie si un utilisateur existe dans la base de données
+ */
+function verifUser($email) {
+    $connexion = ConnexionSingleton::getInstance();
+    $sql = "SELECT email FROM joueur WHERE email = :email";
     $stmt = $connexion->prepare($sql);
-    $stmt->bindParam(1,$email);
+    $stmt->bindParam('email', $email);
     $stmt->execute();
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    return $user;
-
+    return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 function getPseudoById($id){
-    $connexion = connection();
+    $connexion = ConnexionSingleton::getInstance();
     $sql = "Select pseudonyme from joueur where id =?";
     $stmt = $connexion->prepare($sql);
     $stmt->bindParam(1,$id);
@@ -271,7 +273,7 @@ function getPseudoById($id){
     return $pseudo['pseudonyme'];
 }
 function getMoneyById($id){
-    $connexion = connection();
+    $connexion = ConnexionSingleton::getInstance();
     $sql = "Select douzCoin from joueur where id =?";
     $stmt = $connexion->prepare($sql);
     $stmt->bindParam(1,$id);
@@ -280,7 +282,7 @@ function getMoneyById($id){
     return $money['douzCoin'];
 }
 function verifEmail($email){
-    $connexion = connection();
+    $connexion = ConnexionSingleton::getInstance();
     $sql = "Select email from joueur where email = ?";
     $stmt = $connexion->prepare($sql);
     $stmt->bindParam(1,$email);
@@ -289,7 +291,7 @@ function verifEmail($email){
     return $count > 0;
 }
 function getBioById($id){
-    $connexion = connection();
+    $connexion = ConnexionSingleton::getInstance();
     $sql = "Select biographie from joueur where id =?";
     $stmt = $connexion->prepare($sql);
     $stmt->bindParam(1,$id);
@@ -298,7 +300,7 @@ function getBioById($id){
     return $bio['biographie'];
 }
 function insertUser($email,$mdp,$pseudonyme){
-    $connexion = connection();
+    $connexion = ConnexionSingleton::getInstance();
     $sql = "INSERT INTO joueur (email, pseudonyme, mdp, douzCoin, dateInscription, biographie) VALUES (?, ?, ?,0,CURRENT_DATE,'Douzhee est un jeu conçu par des passionees dans le but de divertir les gens')";
     $stmt = $connexion->prepare($sql);
     $hashedPassword = password_hash($mdp, PASSWORD_DEFAULT);
@@ -310,7 +312,7 @@ function insertUser($email,$mdp,$pseudonyme){
 }
 function updatePassword($mdp,$email){
     $hashedPassword = password_hash($mdp, PASSWORD_DEFAULT);
-    $connexion = connection();
+    $connexion = ConnexionSingleton::getInstance();
     $id = getIdUser($email);
     $sql = "Update joueur set mdp = ?  where id = ?";
     $stmt = $connexion->prepare($sql);

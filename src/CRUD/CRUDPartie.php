@@ -1,6 +1,6 @@
 <?PHP 
     require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/Classes/Partie.php";
-    require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/Utils/headerConnection.php";
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/Utils/connectionSingleton.php";
 
     //FONCTIONS CREATE
 
@@ -11,7 +11,7 @@
      * @return void
      */
     function createPartie(int $nbJoueurs): void{
-        $connection = connection();
+        $connection = ConnexionSingleton::getInstance();
 
         $date = date("j:n:g:i:s");
         $statut = 'En commencement';
@@ -36,7 +36,7 @@
      * @return array
      */
     function readAllPartie(): array{
-        $connection = connection();
+        $connection = ConnexionSingleton::getInstance();
 
         $readParties = 'SELECT * FROM partie ORDER BY date DESC';
 
@@ -53,7 +53,7 @@
      * @return Partie instance de Partie
      */
     function readPartieById(int $id): Partie{
-        $connection = connection();
+        $connection = ConnexionSingleton::getInstance();
 
         $readPartie = 'SELECT * FROM partie WHERE id = id';
 
@@ -72,7 +72,7 @@
      * @return array
      */
     function readPartieByStatut(String $statut): array{
-        $connection = connection();
+        $connection = ConnexionSingleton::getInstance();
 
         $readParties = 'SELECT * FROM partie WHERE statut = statut ORDER BY date DESC';
 
@@ -94,7 +94,7 @@
      * @return void
      */
     function updateStatut(String $statut, int $id): void{
-        $connection = connection();
+        $connection = ConnexionSingleton::getInstance();
 
         $updateStatut = 'UPDATE partie SET statut = statut WHERE id = id';
 
@@ -112,7 +112,7 @@
      * @return void
      */
     function updateEndOfGame(int $scoreTotal, int $id): void{
-        $connection = connection();
+        $connection = ConnexionSingleton::getInstance();
 
         $updatePartie = 'UPDATE partie SET scoreTotalPartie = scoreTotal WHERE id = id';
 

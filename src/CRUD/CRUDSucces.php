@@ -1,6 +1,6 @@
 <?PHP 
     require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/Classes/Succes.php";
-    require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/Utils/headerConnection.php";
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/Utils/connectionSingleton.php";
 
     //FONCTIONS READ
 
@@ -10,7 +10,7 @@
      * @return array
      */
     function readAllSucces(): array{
-        $connection = connection();
+        $connection = ConnexionSingleton::getInstance();
 
         $readSucces = 'SELECT * FROM succes';
 
@@ -26,7 +26,7 @@
      * @return Succes instance de Succes
      */
     function readSuccesById(int $id): Succes{
-        $connection = connection();
+        $connection = ConnexionSingleton::getInstance();
 
         $readSucces = 'SELECT * FROM succes WHERE id = :id';
         $statement = $connection->prepare($readSucces);

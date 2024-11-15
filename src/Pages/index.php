@@ -20,7 +20,7 @@
             <form action="versusrobot.php" method="GET">
                 <input id="versusrobot" type="submit" value="">
             </form>
-            <form action="versushuman.php" method="GET">
+            <form action="CreaRej.php" method="GET">
                 <input id="versushuman" type="submit" value="">
             </form>
         </div>
@@ -30,7 +30,7 @@
 
 <?php
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user_id'])){
-        header('Location: logout.php');
+        header('Location: ../Utils/logout.php');
         exit();
     }
 ?>

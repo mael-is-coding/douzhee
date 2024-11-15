@@ -1,9 +1,9 @@
 <?php
-    require_once('../Utils/header.php');
+    require_once('../Utils/headerInit.php');
     require_once('../CRUD/CRUDPartie.php');
     require_once('../CRUD/CRUDJoueur.php');
 
-    $joueurTemp = createJoueur("test", "test", 0, "test", "test", "test");
+    //$joueurTemp = createJoueur("test", "test", 0, "test", "test", "test");
     $_SESSION['user_id'] = "test";
 
     if(isset($_POST['nombre_joueur'])) {

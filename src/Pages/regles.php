@@ -1,16 +1,13 @@
 <?php
-require_once("header.php");
+    require_once("../Utils/headerInit.php");
 ?>
-<!DOCTYPE html>
-<html lang ="fr">
-    <head>
-    <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Page des règles</title>
-        <link rel="stylesheet" href="style_regles.css">
+        <link rel="stylesheet" href="../../assets/css/style_regles.css">
+        <link rel="stylesheet" href="../../assets/css/styleheader.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     </head>
-    <body>
+<?php
+    require_once("../Utils/headerBody.php");
+?>  
          <div class="container">
             <div class="bulle" id="bulle">
                 <p id="Texte">Première fois ici? Voulez-vous que je vous explique les règles?</p>

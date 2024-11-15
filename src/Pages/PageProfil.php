@@ -7,11 +7,16 @@
 </head>
 <?php
     require_once("../Utils/headerBody.php");
+
+    // On vérifie si les variables de session sont définies
+    if (!isset($_SESSION['bio'])){
+        $_SESSION['bio'] = getBioById($_SESSION['user_id']); // Pour éviter de faire des requêtes inutiles
+    }
 ?>
     <div class="PageProfil">
         <img src="imgheader/photodefault.jpg" alt="Avatar" width="100" height="100" id="avatar">
-        <h2 id="Pseudo"><?php echo getPseudoById($_SESSION['user_id']); ?></h2>
-        <p id="bio"><?php echo getBioById($_SESSION['user_id']); ?></p>
+        <h2 id="Pseudo"><?php echo $_SESSION['pseudo']; ?></h2>
+        <p id="bio"><?php echo $_SESSION['bio']; ?></p>
         <div class="buttons">
             <button onclick="location.href='states.php'">Statistiques</button>
             <button onclick="location.href='perso.php'">Personnalisation</button>

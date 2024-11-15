@@ -18,9 +18,9 @@
         <h2 id="Pseudo"><?php echo $_SESSION['pseudo']; ?></h2>
         <p id="bio"><?php echo $_SESSION['bio']; ?></p>
         <div class="buttons">
-            <button onclick="location.href='states.php'">Statistiques</button>
-            <button onclick="location.href='perso.php'">Personnalisation</button>
-            <button onclick="location.href='succes.php'">Succès</button>
+            <button onclick="location.href='PageStates.php'">Statistiques</button>
+            <button onclick="location.href='PagePersonnalisation.php'">Personnalisation</button>
+            <button onclick="location.href='salutatous.php'">Succès</button>
         </div>
     </div>
 </body>

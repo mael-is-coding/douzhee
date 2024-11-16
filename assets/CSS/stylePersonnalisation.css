@@ -1,0 +1,96 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #E8E2F7;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    margin: 0;
+    padding: 100px 0 0;
+}
+
+.Profil {
+    background-color: #FFF;
+    border-radius: 10px;
+    padding: 30px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #5D3EBD;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+textarea {
+    width: 500px;
+    height: 38px;
+    padding: 10px;
+    border: 1px solid #DDD;
+    border-radius: 5px;
+    font-size: 14px;
+}
+.file-label{
+    background-image: url('../../assets/images/imageavatars/photodefault.jpg');
+    border-radius: 50%; 
+    margin-right: 10px;
+    background-size: cover;
+    border: none;
+    cursor: pointer;
+    width: 56px;
+    height: 56px;
+    display: inline-block;
+    font-size: 30px;
+}
+
+input[type="file"]{
+    display: none;
+}
+
+
+textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.radio-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 5px;
+}
+
+.radio-group input[type="radio"] {
+    margin-right: 5px;
+}
+
+#buttonPers {
+    background-color: #5D3EBD;
+    color: #FFF;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 120px;
+    height: 60px;
+}
+
+#buttonPers:hover {
+    background-color: #4A2F9D;
+}

@@ -8,30 +8,45 @@
 </head>
 <?php
     require_once("../Utils/headerBody.php");
-?>
-        
+?>        
 <body>
     <div class="Profil">
-        <form action="PagePersonnalisation.php" method="POST">
-            <label for="Pseudo">Pseudo</label>
-            <input type="text" id="Pseudo" name="pseudo" placeholder="<?php echo getPseudoById($_SESSION['user_id']) ?>" maxlength="50">
+        <form action="PagePersonnalisation.php" method="POST"  enctype="multipart/form-data">
 
-            <input type="file" name="avatar" id="avatar" accept="image/*">
+            <div class="input-group">
+                <label for="pseudo">Pseudo</label>
+                <input type="text" id="pseudo" name="pseudo" placeholder="<?php echo getPseudoById($_SESSION['user_id']) ?>" maxlength="50">
+            </div>
 
-            <label for="Bio">Bio</label>
-            <input type="text" id="Bio" name="bio" placeholder="<?php echo getBioById($_SESSION['user_id'])?>" maxlength="500">
+             <div class="input-group">
+                <label for="Avatar"class="file-label">+</label>
+                <input type="file" name="avatar" id="Avatar" class="file-input" accept="image/*">
+            </div>
 
-            <label for="Themes">Themes</label>
-            <input type="radio" id="Themes_1" name="themes">
-            <input type="radio" id="Themes_2" name="themes">
-            <input type="radio" id="Themes_3" name="themes">
+            <div class="input-group">
+                <label for="Bio">Bio</label>
+                <input type="text" id="Bio" name="bio" placeholder="<?php echo getBioById($_SESSION['user_id'])?>" maxlength="500">
+            </div>
 
-            <label for="Dés">Dés</label>
-            <input type="radio" id="Des_1" name="des">
-            <input type="radio" id="Des_2" name="des">
-            <input type="radio" id="Des_3" name="des">
+            <div class="input-group">
+                <label for="Themes">Themes</label>
+                <div class="radio-group">
+                    <input type="radio" id="Themes_1" name="themes">
+                    <input type="radio" id="Themes_2" name="themes">
+                    <input type="radio" id="Themes_3" name="themes">
+                </div>
+            </div>
 
-            <button type="submit">Enregistrer les informations</button>
+            <div class="input-group">
+                <label for="Dés">Dés</label>
+                <div class="radio-group">
+                    <input type="radio" id="Des_1" name="des">
+                    <input type="radio" id="Des_2" name="des">
+                    <input type="radio" id="Des_3" name="des">
+                </div>
+            </div>
+            <button id="buttonPers" type="submit">Enregistrer les informations</button>
+        </form>
     </div>
 </body>
 </html>

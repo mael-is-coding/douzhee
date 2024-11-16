@@ -14,12 +14,12 @@
     }
 ?>
     <div class="PageProfil">
-        <img src="imgheader/photodefault.jpg" alt="Avatar" width="100" height="100" id="avatar">
+        <img src="/imgheader/photodefault.jpg" alt="Avatar" width="100" height="100" id="avatar">
         <h2 id="Pseudo"><?php echo $_SESSION['pseudo']; ?></h2>
         <p id="bio"><?php echo $_SESSION['bio']; ?></p>
         <div class="buttons">
             <button onclick="location.href='PageStates.php'">Statistiques</button>
-            <button onclick="location.href='PagePersonnalisation'">Personnalisation</button>
+            <button onclick="location.href='PagePersonnalisation.php'">Personnalisation</button>
             <button onclick="location.href='salutatous.php'">Succès</button>
         </div>
     </div>

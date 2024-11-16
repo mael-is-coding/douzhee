@@ -22,14 +22,14 @@
             <input type="text" id="Bio" name="bio" placeholder="<?php echo getBioById($_SESSION['user_id'])?>" maxlength="500">
 
             <label for="Themes">Themes</label>
-            <input type="checkbox" id="Themes_1" name="themes">
-            <input type="checkbox" id="Themes_2" name="themes">
-            <input type="checkbox" id="Themes_3" name="themes">
+            <input type="radio" id="Themes_1" name="themes">
+            <input type="radio" id="Themes_2" name="themes">
+            <input type="radio" id="Themes_3" name="themes">
 
             <label for="Dés">Dés</label>
-            <input type="checkbox" id="Des_1" name="des">
-            <input type="checkbox" id="Des_2" name="des">
-            <input type="checkbox" id="Des_3" name="des">
+            <input type="radio" id="Des_1" name="des">
+            <input type="radio" id="Des_2" name="des">
+            <input type="radio" id="Des_3" name="des">
 
             <button type="submit">Enregistrer les informations</button>
     </div>

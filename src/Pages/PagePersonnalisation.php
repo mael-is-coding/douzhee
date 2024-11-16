@@ -81,6 +81,17 @@
 
     }if (isset($_POST['themes'])){
         $selected_theme = $_POST['themes'];
+        switch ($selected_theme) {
+            case 'theme1':
+                
+                break;
+            case 'theme2':
+                
+                break;
+            case 'theme3':
+                
+                break;
+        }
     }
 
 }

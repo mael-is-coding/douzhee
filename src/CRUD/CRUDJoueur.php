@@ -81,7 +81,7 @@ function updateJoueur(int $id, string $pseudo = null, string $mdp = null, int $d
  */
 function updatePseudoJoueur(int $id, string $pseudo): bool {
     $connection = ConnexionSingleton::getInstance();
-    $updateQuery = "UPDATE Joueur SET pseudo = :pseudo WHERE id = :id";
+    $updateQuery = "UPDATE Joueur SET pseudonyme = :pseudo WHERE id = :id";
 
     $statement = $connection->prepare($updateQuery);
 

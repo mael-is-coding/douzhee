@@ -16,31 +16,31 @@
 <div class="States">
     <div class="State">
         <h2>Parties Jouées :</h2>
-        <span>12</span>
+        <?php echo $statsUser->getNbPartiesJoues() ?>
     </div>
     <div class="State">
         <h2>Parties Gagnées <img src="../../assets/images/imageStates/nbPartiesGagnes.png"></img> :</h2>
-        <span>8</span>
+        <?php echo $statsUser->getNbPartiesGagnees()?>
     </div>
     <div class="State">
         <h2>Ratio Victoire :</h2>
-        <span><?php $statsUser->getRatioVictoire() ?></span>
+        <?php echo $statsUser->getRatioVictoire() ?>
     </div>
     <div class="State">
         <h2>Succès <img src="../../assets/images/imageStates/succes.png"></img> :</h2>
-        <span><?php $statsUser->getNbSucces() ?></span>
+        <?php echo $statsUser->getNbSucces() ?>
     </div>
     <div class="State">
         <h2>Score <img src="../../assets/images/imageStates/scoremax.png"></img> :</h2>
-        <span><?php $statsUser->getScoreMaximal() ?></span>
+        <?php echo $statsUser->getScoreMaximal() ?>
     </div>
     <div class="State">
         <h2>Douzhee <img src="../../assets/images/imageStates/nbDouzhee.png"></img> :</h2>
-        <span>15</span>
+       <?php echo  $statsUser->getNbDouzhee()?>
     </div>
     <div class="State">
         <h2>Temps de jeu <img src="../../assets/images/imageStates/tempsjeu.png"></img> :</h2>
-        <span><?php $statsUser->getTempsJeu() ?></span>
+        <?php echo $statsUser->getTempsJeu() ?>
     </div>
 </div>
 </body>

@@ -199,13 +199,13 @@ function readJoueur(int $id): ?Joueur {
 
     $results = $statement->fetch(PDO::FETCH_ASSOC);
     	
-    $pseudo = $results ["Pseudonyme"];
-    $mdp = $results ["Mdp"];
-    $douzCoin = $results ["DouzCoin"];
-    $email = $results ["Email"];
-    $bio = $results ["Biographie"];
-    $dateInsc = $results ["DateInscription"];
-    $idPartie = $results ["idPartie"];
+    $pseudo = $results ["pseudonyme"];
+    $mdp = $results ["mdp"];
+    $douzCoin = $results ["douzCoin"];
+    $email = $results ["email"];
+    $bio = $results ["biographie"];
+    $dateInsc = $results ["dateInscription"];
+    $idPartie = $results ["idPartieEnCours"];
     
     return new Joueur ($pseudo, $mdp, $douzCoin, $email, $bio, $dateInsc, $idPartie);
 }

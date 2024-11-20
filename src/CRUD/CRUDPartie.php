@@ -65,6 +65,25 @@
     }
 
     /**
+     * @brief Récupère une partie en fonction de son lien
+     * @author Nathan
+     * @param string $lienPartie lien de la partie
+     * @return Partie instance de Partie contenant toutes les informations récupérées
+     */
+    function readPartieByLien(String $lienPartie): Partie{
+        $connection = ConnexionSingleton::getInstance();
+
+        $readPartie = 'SELECT * FROM partie WHERE lienPartie = :lienPartie';
+        $statement = $connection->prepare($readPartie);
+        $statement->bindParam(':lienPartie', $lienPartie, PDO::PARAM_STR);
+        $statement->execute();
+
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return new Partie($results['id'], $results['date'], $results['score'], $results['scoreTotalPartie'], $results['nbJoueurs'], $results['lienPartie']);
+    }
+
+    /**
      * @brief Récupère une partie donnée
      * @author Nathan
      * @param int $id identifiant de la partie

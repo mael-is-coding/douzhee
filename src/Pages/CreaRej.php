@@ -11,9 +11,9 @@
     if(isset($_POST['nombre_joueur'])) {
         $nombre_joueur = $_POST['nombre_joueur'];
         $idJoueur = $_SESSION['user_id'];
-        $lienParite = bin2hex(random_bytes(16));
-        $idPartie = createPartie($nombre_joueur, $lienParite);
-        createJouerPartie($idJoueur, $idPartie);
+        $lienPartie = bin2hex(random_bytes(16));
+        $idPartie = createPartie($nombre_joueur, $lienPartie);
+        echo $idPartie;
     }
 ?>
     <link rel="stylesheet" href="../../assets/CSS/CreaRej.css">   

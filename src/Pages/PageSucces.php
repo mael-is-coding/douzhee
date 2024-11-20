@@ -25,14 +25,13 @@
 </body>
 </html>
  <?php
-    for ($i= 1; $i < 16; $i++) {
+    for ($i= 1; $i < 2; $i++) {
         $allsucces = readAllUserWinTheSuccesId($i);
         if (is_array($allsucces)) {
             foreach ($allsucces as $succes) {
                 if ($_SESSION['user_id'] == $succes['idJoueur']) {  
                     ?>
                     <script>
-                       
                         document.addEventListener('DOMContentLoaded', () => {
                             const img = document.getElementById('<?php echo $i; ?>');
                             img.src = '../../assets/images/imageSucces/<?php echo $i; ?>.png';

@@ -22,12 +22,32 @@ function readJouerPartie(int $idJoueurJoue, int $idPartieJoue): ?JouerPartie {
     return new JouerPartie($idJoueurJoue, $idPartieJoue, $scoreJoueur, $positionJoueur, $dateParticipation, $estGagnant);
 }
 
+function readPositionIsUsed(int $idJJ, int $idPJ, int $position) : bool {
+    $connexion = ConnexionSingleton::getInstance();
 
+    $SelectQuery = "SELECT positionJoueur FROM JouerPartie WHERE idJoueurJouee = :idJJ AND idPartieJouee = :idPJ";
 
-function createJouerPartie(int $idJoueurJoue, int $idPartieJoue, int $scoreJoueur, int $positionJoueur, string $dateParticipation, bool $estGagnant): bool {
+    $statement = $connexion->prepare($SelectQuery);
+
+    $statement->bindParam("idJJ", $idJJ);
+    $statement->bindParam("idPJ", $idPJ);
+    
+    $Rqsuccess = $statement->execute();
+
+    $results = $statement->fetch(PDO::FETCH_ASSOC);
+    $fetchedPos = $results["positionJoueur"];
+
+    return $fetchedPos != $position && $Rqsuccess;
+}
+
+function createJouerPartie(int $idJoueurJoue, int $idPartieJoue, int $positionJoueur): bool {
     $connection = ConnexionSingleton::getInstance();
 
-    $InsertQuery = "INSERT INTO JouerPartie (idJoueurJoue, idPartieJoue, scoreJoueur, positionJoueur, dateParticipation, estGagnant) 
+    $dateParticipation = date("j:n:g:i:s");
+    $estGagnant = false;
+    $scoreJoueur = 0;
+
+    $InsertQuery = "INSERT INTO JouerPartie (idJoueurJouee, idPartieJouee, scoreJoueur, positionJoueur, dateParticipation, estGagnant) 
     VALUES (:idJoueurJoue, :idPartieJoue, :scoreJoueur, :positionJoueur, :dateParticipation, :estGagnant)";
 
     $statement = $connection->prepare($InsertQuery);

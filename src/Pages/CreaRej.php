@@ -2,8 +2,8 @@
     require_once("../Utils/headerInit.php");
     require_once("../CRUD/CRUDJoueur.php");
     require_once("../CRUD/CRUDPartie.php");
-
-    //$joueurTemp = createJoueur("test", "test", 0, "test", "test", "test");
+    require_once("../CRUD/CRUDJouerPartie.php");
+    
     $_SESSION['user_id'] = 1;
     $joueurTemp = readJoueur($_SESSION['user_id']);
     echo $joueurTemp->getPseudo();
@@ -12,7 +12,8 @@
         $nombre_joueur = $_POST['nombre_joueur'];
         $idJoueur = $_SESSION['user_id'];
         $lienParite = bin2hex(random_bytes(16));
-        echo $lienParite;
+        $idPartie = createPartie($nombre_joueur, $lienParite);
+        createJouerPartie($idJoueur, $idPartie);
     }
 ?>
     <link rel="stylesheet" href="../../assets/CSS/CreaRej.css">   

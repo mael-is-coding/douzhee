@@ -7,8 +7,8 @@ function readJouerPartie(int $idJoueurJoue, int $idPartieJoue): ?JouerPartie {
 
     $statement = $connection->prepare($SelectQuery);
 
-    $statement->bindParam(":idJoueurJoue", $idJoueurJoue);
-    $statement->bindParam(":idPartieJoue", $idPartieJoue);
+    $statement->bindParam("idJoueurJoue", $idJoueurJoue);
+    $statement->bindParam("idPartieJoue", $idPartieJoue);
 
     $statement->execute();
 
@@ -37,7 +37,7 @@ function readPositionIsUsed(int $idJJ, int $idPJ, int $position) : bool {
     $results = $statement->fetch(PDO::FETCH_ASSOC);
     $fetchedPos = $results["positionJoueur"];
 
-    return $fetchedPos != $position && $Rqsuccess;
+    return ($fetchedPos != $position) && $Rqsuccess;
 }
 
 function createJouerPartie(int $idJoueurJoue, int $idPartieJoue, int $positionJoueur): bool {
@@ -52,12 +52,12 @@ function createJouerPartie(int $idJoueurJoue, int $idPartieJoue, int $positionJo
 
     $statement = $connection->prepare($InsertQuery);
 
-    $statement->bindParam(":idJoueurJoue", $idJoueurJoue);
-    $statement->bindParam(":idPartieJoue", $idPartieJoue);
-    $statement->bindParam(":scoreJoueur", $scoreJoueur);
-    $statement->bindParam(":positionJoueur", $positionJoueur);
-    $statement->bindParam(":dateParticipation", $dateParticipation);
-    $statement->bindParam(":estGagnant", $estGagnant);
+    $statement->bindParam("idJoueurJoue", $idJoueurJoue);
+    $statement->bindParam("idPartieJoue", $idPartieJoue);
+    $statement->bindParam("scoreJoueur", $scoreJoueur);
+    $statement->bindParam("positionJoueur", $positionJoueur);
+    $statement->bindParam("dateParticipation", $dateParticipation);
+    $statement->bindParam("estGagnant", $estGagnant);
 
     return $statement->execute();
 }
@@ -88,7 +88,7 @@ function readPartieCount(int $idJJ): int {
 
     $statement = $connexion->prepare($SelectQuery);
 
-    $statement->bindParam(":idJJ", $idJJ);
+    $statement->bindParam("idJJ", $idJJ);
 
     $statement->execute();
 

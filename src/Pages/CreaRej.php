@@ -7,14 +7,17 @@
     
     $_SESSION['user_id'] = 1;
     $joueurTemp = readJoueur($_SESSION['user_id']);
-    echo $joueurTemp->getPseudo();
 
     if(isset($_POST['nombre_joueur'])) {
         $nombre_joueur = $_POST['nombre_joueur'];
         $idJoueur = $_SESSION['user_id'];
         $lienPartie = bin2hex(random_bytes(16));
-        $idPartie = createPartie($nombre_joueur, $lienPartie);
-        $idJouerPartie = createJouerPartie($idJoueur, $idPartie);
+        $idPartie = createPartie($nombre_joueur, "20d9d8dd72d31ba297889effa1aa3cd6");
+        if ($idPartie == -1){
+            echo '<script type="text/javascript"> window.onload = function () { alert("Lien déjà utilisé"); }</script>';
+        }
+        $idJouerPartie = createJouerPartie($idJoueur, $idPartie, 1);
+        var_dump(readPositionIsUsed($idJoueur, $idPartie, 1));
     }
 ?>
     <link rel="stylesheet" href="../../assets/CSS/CreaRej.css">   

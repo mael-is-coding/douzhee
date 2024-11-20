@@ -5,6 +5,8 @@
 
     //$joueurTemp = createJoueur("test", "test", 0, "test", "test", "test");
     $_SESSION['user_id'] = 1;
+    $joueurTemp = readJoueur($_SESSION['user_id']);
+    echo $joueurTemp->getPseudo();
 
     if(isset($_POST['nombre_joueur'])) {
         $nombre_joueur = $_POST['nombre_joueur'];

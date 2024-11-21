@@ -2,7 +2,6 @@
     require_once("../CRUD/CRUDJoueur.php");
     require_once("../Utils/headerInit.php");
 ?>
-    <link rel="stylesheet" href="../../assets/css/styleProfil.css">
     <link rel="stylesheet" href="../../assets/css/styleHeader.css"> 
     <link rel="stylesheet" href="../../assets/css/stylePersonnalisation.css">
 </head>
@@ -11,7 +10,7 @@
 ?>        
 <body>
     <div class="Profil">
-        <form action="Profil.php" method="POST"  enctype="multipart/form-data">
+        <form action="Personnalisation.php" method="POST"  enctype="multipart/form-data">
 
             <div class="input-input-group">
                 <div class="input-group">
@@ -60,18 +59,21 @@
         }if(!empty($_POST['bio'])){
             updateBio($_SESSION['userId'], $_POST['bio']);
 
-        }if(isset($_FILES['avatar']) && $_FILES['avatar']['error'] == 4){
+        }if(isset($_FILES['avatar']) && $_FILES['avatar']['error'] == 0){
             $file = $_FILES['avatar'];
             $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
             $uploadDir = '../../assets/images/imageavatars/';
             $filename = uniqid() . '_' . basename($file['name']);
             $uploadFile = $uploadDir . $filename;
+            $oldAvatar = readAvatarById($_SESSION['userId']);
             if (in_array($file['type'], $allowedTypes) && $file['size'] <= 2000000) { 
                 if (move_uploaded_file($file['tmp_name'], $uploadFile)) {
-                    $relativePath = '../../assets/images/imageavatars/' . $filename; 
-                  // updatePatchFile($_SESSION['user_id'], $relativePath);
-        
+                    $relativePath = $uploadDir . $filename; 
+                    updateAvatar($relativePath,$_SESSION['userId']);
                     echo "Avatar mis à jour avec succès !";
+                    if ($oldAvatar && $oldAvatar !== '../../assets/images/imageavatars/photodefault.jpg' && file_exists($oldAvatar)) {
+                        unlink($oldAvatar);
+                    }
                 } else {
                     echo "Erreur lors du téléchargement de l'image.";
                 }
@@ -95,4 +97,9 @@
     }
 
 }
+
 ?>
+  <script>
+        const img_ = document.getElementsByClassName("file-label")[0]
+        img_.style.backgroundImage = 'url("<?php echo readAvatarById($_SESSION['userId']); ?>")'
+    </script>

@@ -320,4 +320,27 @@ function updatePassword($mdp,$email){
     $stmt->bindParam(2,$id);
     $stmt->execute();
 }
+function readAvatarById(int $idUser): string{
+    
+    $connection = ConnexionSingleton::getInstance();
+    $selectedQuery = "Select avatarChemin from Joueur  WHERE id = :idUser";
+    $statement = $connection->prepare($selectedQuery);
+    $statement->bindParam("idUser", $idUser);
+    $statement->execute();
+    $result = $statement->fetch(PDO::FETCH_ASSOC);
+    return $result['avatarChemin'];
+}
+
+
+function updateAvatar(String $path, int $idUser) {
+    $connection = ConnexionSingleton::getInstance();
+    $updateQuery = "UPDATE Joueur SET avatarChemin = :chemin WHERE id = :id";
+
+    $statement = $connection->prepare($updateQuery);
+    $statement->bindParam(":chemin", $path);
+    $statement->bindParam(":id", $idUser);
+
+    return $statement->execute();
+
+}
 ?>

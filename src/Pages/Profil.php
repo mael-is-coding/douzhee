@@ -14,7 +14,7 @@
     }
 ?>
     <div class="PageProfil">
-        <img src="../../assets/images/imageavatars/photodefault.jpg" alt="Avatar" width="100" height="100" id="avatar">
+        <img src="<?php echo readAvatarById($_SESSION['userId'])?>" alt="Avatar" width="100" height="100" id="avatar">
         <h2 id="Pseudo"><?php echo $_SESSION['pseudo']; ?></h2>
         <p id="bio"><?php echo $_SESSION['bio']; ?></p>
         <div class="buttons">

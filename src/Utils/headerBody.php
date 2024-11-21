@@ -35,3 +35,8 @@ require_once("../CRUD/CRUDJoueur.php");
             </div>
         <?php endif; ?>
      </header>
+     <script>
+        const img = document.getElementById("profil")
+        img.style.backgroundImage = 'url("<?php echo readAvatarById($_SESSION['userId']); ?>")'
+        console.log("<?php echo readAvatarById($_SESSION['userId']); ?>")
+    </script>

@@ -59,11 +59,9 @@ label {
     border: 1px solid #DDD;
     border-radius: 10px;
     font-size: 14px;
-    text-align: left; 
-    position: relative;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    text-align: left;          
+    box-sizing: border-box;    
+    resize: vertical;  
     
 }
 
@@ -85,10 +83,6 @@ input[type="file"]{
 }
 
 
-textarea {
-    height: 100px;
-    resize: vertical;
-}
 
 .radio-group {
     display: flex;

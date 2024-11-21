@@ -3,7 +3,7 @@
     require_once("../Utils/headerInit.php");
 ?>
     <link rel="stylesheet" href="../../assets/css/styleProfil.css">
-    <link rel="stylesheet" href="../../assets/css/styleheader.css"> 
+    <link rel="stylesheet" href="../../assets/css/styleHeader.css"> 
 </head>
 <?php
     require_once("../Utils/headerBody.php");

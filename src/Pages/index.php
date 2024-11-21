@@ -2,8 +2,8 @@
     require_once("../Utils/headerInit.php");
     require_once("../CRUD/CRUDJoueur.php");
 ?>
-    <link rel="stylesheet" href="../../assets/css/styleindex.css">
-    <link rel="stylesheet" href="../../assets/css/styleheader.css"> 
+    <link rel="stylesheet" href="../../assets/css/styleIndex.css">
+    <link rel="stylesheet" href="../../assets/css/styleHeader.css"> 
 </head>
 <?php
     require_once("../Utils/headerBody.php");

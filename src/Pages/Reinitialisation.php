@@ -5,7 +5,7 @@
     use PHPMailer\PHPMailer\Exception;
     require_once("../Utils/headerInit.php");
 ?>
-    <link rel="stylesheet" href="../../assets/css/style_PCIR.css">
+    <link rel="stylesheet" href="../../assets/css/styleCIRV.css">
 </head>
 <body>
     <div class="PCIR">

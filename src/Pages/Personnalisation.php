@@ -3,7 +3,7 @@
     require_once("../Utils/headerInit.php");
 ?>
     <link rel="stylesheet" href="../../assets/css/styleProfil.css">
-    <link rel="stylesheet" href="../../assets/css/styleheader.css"> 
+    <link rel="stylesheet" href="../../assets/css/styleHeader.css"> 
     <link rel="stylesheet" href="../../assets/css/stylePersonnalisation.css">
 </head>
 <?php
@@ -27,7 +27,7 @@
            
             <div class="input-group">
                 <label for="Bio">Bio</label>
-                <input type="text" id="BioPers" name="bio" value="<?php echo getBioById($_SESSION['userId'])?>" maxlength="500">
+                <textarea id="BioPers" name="bio"><?php echo getBioById($_SESSION['userId'])?></textarea>
             </div>
 
             <div class="input-group">

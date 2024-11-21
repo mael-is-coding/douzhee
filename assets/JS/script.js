@@ -25,7 +25,6 @@ function changeStyleText(){
     speechText.style.textAlign = "justify";
     speechText.style.fontFamily = "Georgia, serif"; 
     speechText.style.fontSize = "18px"; 
-    speechText.style.color = "#333";
 
 }
 function showarrow(){

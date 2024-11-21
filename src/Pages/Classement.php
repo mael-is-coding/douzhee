@@ -4,7 +4,7 @@
     require_once("../CRUD/CRUDClassement.php");
     require_once("../Utils/redirection.php");
 ?>
-    <link rel="stylesheet" href="../../assets/css/styleheader.css"> 
+    <link rel="stylesheet" href="../../assets/css/styleHeader.css"> 
     <link rel="stylesheet" href="../../assets/css/styleClassement.css">
 <?php
     require_once("../Utils/headerBody.php");

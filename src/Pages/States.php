@@ -3,7 +3,7 @@
     require_once("../Utils/headerInit.php");
     require_once("../CRUD/CRUDStatistiques.php");
 ?>
-    <link rel="stylesheet" href="../../assets/css/styleheader.css"> 
+    <link rel="stylesheet" href="../../assets/css/styleHeader.css"> 
     <link rel="stylesheet" href="../../assets/css/styleStates.css">
 <?php
     require_once("../Utils/headerBody.php");

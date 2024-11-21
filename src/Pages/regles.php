@@ -2,8 +2,8 @@
     require_once("../Utils/headerInit.php");
     require_once("../Utils/redirection.php");
 ?>
-        <link rel="stylesheet" href="../../assets/css/style_regles.css">
-        <link rel="stylesheet" href="../../assets/css/styleheader.css">
+        <link rel="stylesheet" href="../../assets/css/styleRegles.css">
+        <link rel="stylesheet" href="../../assets/css/styleHeader.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     </head>
 <?php

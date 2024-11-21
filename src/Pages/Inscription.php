@@ -1,9 +1,8 @@
 <?php
     require_once("../CRUD/CRUDJoueur.php");
     require_once("../Utils/headerInit.php");
-    $stats = readStatistiquesByIdUser($_SESSION['userID']);
 ?>
-    <link rel="stylesheet" href="../../assets/css/style_PCIR.css">
+    <link rel="stylesheet" href="../../assets/css/styleCIRV.css">
 </head>
 <body>
     <div class="PCIR">
@@ -28,6 +27,7 @@
             }
             else{
                 $_SESSION['userId'] = getIdUser($_POST['E-mail']);
+                $stats = readStatistiquesByIdUser($_SESSION['userId']);
                 insertUser($_POST['E-mail'],$_POST['Password'],$_POST['Pseudo']);
                 createStatistiques($_SESSION['userId']);
                 header('Location: Index.php');

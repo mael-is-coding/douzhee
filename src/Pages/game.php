@@ -9,20 +9,22 @@
 <body>
     <?php
         // Nombre de joueurs requis pour commencer la partie
-        $requiredPlayers = 4; //readPartieById($_SESSION['idPartie'])['nbJoueurs'];
+        $requiredPlayers = readPartieById($_SESSION['idPartie'])->getNbJoueurs();
 
         // Fonction pour vérifier le nombre de joueurs connectés
-        function getConnectedPlayers() {
+        function readConnectedPlayers() {
             //doit retourner le nombre de joueurs actuellement connectés
             return 2; // Exemple
         }
 
-        $connectedPlayers = getConnectedPlayers();
+        $connectedPlayers = readConnectedPlayers();
+
+        debugSession();
     ?>
 
     <script>
-        var requiredPlayers = <?php echo $requiredPlayers; ?>;
-        var connectedPlayers = <?php echo $connectedPlayers; ?>;
+        var requiredPlayers = <?= $requiredPlayers; ?>;
+        var connectedPlayers = <?= $connectedPlayers; ?>;
 
         // Fonction pour vérifier le nombre de joueurs connectés et afficher/masquer les éléments en conséquence
         function checkPlayers() {
@@ -364,7 +366,7 @@
     <script>
         var socket = io(); // Initialiser le socket client pour se connecter au serveur socket.io sur le même domaine 
 
-        var gameid = 1; // ID de la partie
+        var gameid = <?= $_SESSION['idPartie']; ?>; // Récupérer l'ID de la partie
 
         // Rejoindre la salle de chat pour la partie spécifique
         socket.emit('join game', gameid);

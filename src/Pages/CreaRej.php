@@ -11,17 +11,35 @@
     if(isset($_POST['nombre_joueur'])) {
         $nombre_joueur = $_POST['nombre_joueur'];
         $idJoueur = $_SESSION['user_id'];
-        $lienPartie = bin2hex(random_bytes(16));
+        $lienPartie = bin2hex(random_bytes(10)); // Génère un lien de 20 caractères
         $_SESSION['lienPartie'] = $lienPartie;
-        var_dump($lienPartie);
         $idPartie = createPartie($nombre_joueur, $_SESSION['lienPartie']);
-        var_dump($idPartie);
         if ($idPartie == -1){
             echo '<script type="text/javascript"> window.onload = function () { alert("Lien déjà utilisé"); }</script>';
         }
         $_SESSION['idPartie'] = $idPartie;
         $idJouerPartie = createJouerPartie($idJoueur, $idPartie, 1);
+        $_SESSION["position"] = 1;
+        header("Location: ./game.php");
+        exit();
     }
+
+    /*
+    switch(false){
+        case readPositionIsUsed(1, 1, 2):
+            createJouerPartie($idJoueur, $idPartie, 2);
+            break;
+        case readPositionIsUsed(1, 1, 3):
+            createJouerPartie($idJoueur, $idPartie, 3);
+            break;
+        case readPositionIsUsed(1, 1, 4):
+            createJouerPartie($idJoueur, $idPartie, 3);
+            break;
+        default:
+            echo "Partie Pleine";
+            break;
+    }
+    */
 
     if(isset($_POST['lien_partie'])) {
         $lienPartie = $_POST['lien_partie'];
@@ -31,7 +49,8 @@
             echo '<script type="text/javascript"> window.onload = function () { alert("Lien invalide"); }</script>';
         }
         $idJoueur = $_SESSION['user_id'];
-        $idJouerPartie = createJouerPartie($idJoueur, $idPartie, 0);
+        $idJouerPartie = createJouerPartie($idJoueur, $idPartie, 2);
+        $_SESSION["position"] = 2;
         header("Location: ./game.php");
         exit();
     }

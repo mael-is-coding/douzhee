@@ -80,7 +80,7 @@
 
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-        return new Partie($results['id'], $results['date'], $results['score'], $results['scoreTotalPartie'], $results['nbJoueurs'], $results['lienPartie']);
+        return new Partie($results['id'], $results['datePartie'], $results['statut'], $results['scoreTotalPartie'], $results['nbJoueurs'], $results['lienPartie']);
     }
 
     /**
@@ -99,7 +99,7 @@
         $statement->execute();
 
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-        return new Partie($results['id'], $results['date'], $results['score'], $results['scoreTotalPartie'], $results['nbJoueurs'], $results['lienPartie']);
+        return new Partie($results['id'], $results['datePartie'], $results['statut'], $results['scoreTotalPartie'], $results['nbJoueurs']);
     }
 
     /**

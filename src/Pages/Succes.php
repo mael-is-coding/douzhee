@@ -29,7 +29,7 @@
         $allsucces = readAllUserWinTheSuccesId($i);
         if (is_array($allsucces)) {
             foreach ($allsucces as $succes) {
-                if ($_SESSION['user_id'] == $succes['idJoueur']) {  
+                if ($_SESSION['userId'] == $succes['idJoueur']) {  
                     ?>
                     <script>
                         document.addEventListener('DOMContentLoaded', () => {

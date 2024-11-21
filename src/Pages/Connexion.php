@@ -8,7 +8,7 @@
 <body>
     <div class="PCIR">
         <h2>Connexion</h2>
-        <form action = "Page_Connexion.php" method="POST">
+        <form action = "Connexion.php" method="POST">
             <input name="E-mail" type="email" placeholder="E-mail" required value="<?php echo $_SESSION['cacheE-mail'] ?? '';?>">
             <input name = "Password" type="password" placeholder="Password" required value="<?php echo $_SESSION['cachePassword'] ?? '';?>">
             <div class="checkbox">
@@ -17,8 +17,8 @@
             </div>
             <button type="submit">Connexion</button>
         </form>
-        <a href="Page_Réinitialisation.php">Mot de passe oublié ?</a>
-        <div class = "link">Nouveau ici ? <a href="Page_Inscription.php">Inscrivez vous</a>
+        <a href="Reinitialisation.php">Mot de passe oublié ?</a>
+        <div class = "link">Nouveau ici ? <a href="Inscription.php">Inscrivez vous</a>
         </div>
     </div>
 </body>
@@ -36,8 +36,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         }
         $trouve = verifUser($_POST['E-mail']);
         if ($trouve){
-            $_SESSION['user_id'] = getIdUser($_POST['E-mail']);
-            header('Location: index.php');
+            $_SESSION['userId'] = getIdUser($_POST['E-mail']);
+            header('Location: Index.php');
             exit;
         } else {
             echo '<script 

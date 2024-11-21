@@ -125,10 +125,10 @@ input[type="radio"]#Themes_1{
     background-image: url('../../assets/images/imagePersonnalisation/Theme_1.png');
 }
 input[type="radio"]#Themes_2{
-    background-image: url('../../assets/images/imagePersonnalisation/Theme_2.png');
+    background-image: url('../../assets/images/imagePersonnalisation/Theme_2_verrouillé.png');
 }
 input[type="radio"]#Themes_3{
-    background-image: url('../../assets/images/imagePersonnalisation/Theme_3.png');
+    background-image: url('../../assets/images/imagePersonnalisation/Theme_3_verrouillé.png');
 }
 input[type="radio"]#Des_1{
     background-image: url('../../assets/images/imagePersonnalisation/dés_2.png');

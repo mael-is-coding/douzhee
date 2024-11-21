@@ -6,7 +6,7 @@
 <body>
     <div class="PCIR">
         <h2>Saisir le code</h2>
-        <form action = "PageVerification.php" method="POST">
+        <form action = "Verification.php" method="POST">
             <input name="codeVerification" type="text" placeholder="Code de vérification" required>
             <button type="submit">Valider le code</button>
         </form>
@@ -17,7 +17,7 @@
     if (!empty($_POST['codeVerification'])){
         if ($_POST['codeVerification'] == $_SESSION['codeVerification']){
             updatePassword($_SESSION['newPassword'],$_SESSION['E-mail']);
-            header('Location: Page_Connexion.php');
+            header('Location: Connexion.php');
         }else{
             echo '<script 
             type="text/javascript"> window.onload = function () { alert("Mauvais code de verification"); }

@@ -11,12 +11,12 @@
 ?>        
 <body>
     <div class="Profil">
-        <form action="PageProfil.php" method="POST"  enctype="multipart/form-data">
+        <form action="Profil.php" method="POST"  enctype="multipart/form-data">
 
             <div class="input-input-group">
                 <div class="input-group">
                     <label for="pseudo">Pseudo</label>
-                    <input type="text" id="pseudoPers" name="pseudo" value="<?php echo getPseudoById($_SESSION['user_id']) ?>" maxlength="50">
+                    <input type="text" id="pseudoPers" name="pseudo" value="<?php echo getPseudoById($_SESSION['userId']) ?>" maxlength="50">
                 </div>
                 <div class="input-group">
                     <label for="Avatar"class="file-label">+</label>
@@ -27,14 +27,14 @@
            
             <div class="input-group">
                 <label for="Bio">Bio</label>
-                <input type="text" id="BioPers" name="bio" value="<?php echo getBioById($_SESSION['user_id'])?>" maxlength="500">
+                <input type="text" id="BioPers" name="bio" value="<?php echo getBioById($_SESSION['userId'])?>" maxlength="500">
             </div>
 
             <div class="input-group">
                 <label for="Themes">Themes</label>
                 <div class="radio-group">
                     <input type="radio" id="Themes_1" name="themes" value="theme1" checked>
-                    <input type="radio" id="Themes_2" name="themes" value="theme2">
+                    <input type="radio" id="Themes_2" name="themes" value="theme2" class="modal-bt">
                     <input type="radio" id="Themes_3" name="themes" value="theme3">
                 </div>
             </div>
@@ -55,10 +55,10 @@
 <?php
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         if (!empty($_POST['pseudo'])){
-            updatePseudoJoueur($_SESSION['user_id'], $_POST['pseudo']);
+            updatePseudoJoueur($_SESSION['userId'], $_POST['pseudo']);
 
         }if(!empty($_POST['bio'])){
-            updateBio($_SESSION['user_id'], $_POST['bio']);
+            updateBio($_SESSION['userId'], $_POST['bio']);
 
         }if(isset($_FILES['avatar']) && $_FILES['avatar']['error'] == 4){
             $file = $_FILES['avatar'];

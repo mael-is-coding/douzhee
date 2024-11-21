@@ -9,7 +9,7 @@
     require_once("../Utils/headerBody.php");
 ?>        
 <?php
-    $statsUser = readStatistiquesByIdUser($_SESSION['user_id']);
+    $statsUser = readStatistiquesByIdUser($_SESSION['userId']);
 ?>
 </head>
 <body>

@@ -2,6 +2,7 @@
     require_once("../CRUD/CRUDJoueur.php");
     require_once("../Utils/headerInit.php");
     require_once("../CRUD/CRUDClassement.php");
+    require_once("../Utils/redirection.php");
 ?>
     <link rel="stylesheet" href="../../assets/css/styleheader.css"> 
     <link rel="stylesheet" href="../../assets/css/styleClassement.css">

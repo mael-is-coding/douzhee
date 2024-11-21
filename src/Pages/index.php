@@ -10,10 +10,10 @@
 ?>
     <div id="fonctionnalites">
         <div id="sectionHaut">
-            <form action="regles.php" method="GET">
+            <form action="Regles.php" method="GET">
                 <input id="regles" type="submit" value="">
             </form>
-            <form action="classement.php" method="GET">
+            <form action="Classement.php" method="GET">
                 <input id="classement" type="submit" value="">
             </form>
         </div>

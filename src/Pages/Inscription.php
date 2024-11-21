@@ -1,13 +1,14 @@
 <?php
     require_once("../CRUD/CRUDJoueur.php");
     require_once("../Utils/headerInit.php");
+    $stats = readStatistiquesByIdUser($_SESSION['userID']);
 ?>
     <link rel="stylesheet" href="../../assets/css/style_PCIR.css">
 </head>
 <body>
     <div class="PCIR">
         <h2>Inscription</h2>
-        <form action = "Page_Inscription.php" method="POST">
+        <form action = "Inscription.php" method="POST">
             <input name="E-mail" type="email" placeholder="E-mail" required>
             <input name="Pseudo" type="text" placeholder="Username" required maxlength="30" title="Longueur maximale 30 caractère!">
             <input name = "Password" type="password" placeholder="Password" required maxlength="25" title="Longueur maximale 25 caractère!">
@@ -26,9 +27,10 @@
                 </script>';
             }
             else{
+                $_SESSION['userId'] = getIdUser($_POST['E-mail']);
                 insertUser($_POST['E-mail'],$_POST['Password'],$_POST['Pseudo']);
-                $_SESSION['user_id'] = getIdUser($_POST['E-mail']);
-                header('Location: index.php');
+                createStatistiques($_SESSION['userId']);
+                header('Location: Index.php');
              }
         }
     }

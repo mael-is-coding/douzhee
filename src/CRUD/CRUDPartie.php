@@ -1,6 +1,6 @@
 <?PHP 
-    require_once $_SERVER['DOCUMENT_ROOT'] . "/SAE/Douzhee/src/Classes/Partie.php";
-    require_once $_SERVER['DOCUMENT_ROOT'] . "/SAE/Douzhee/src/Utils/connectionSingleton.php";
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/Classes/Partie.php";
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/Utils/connectionSingleton.php";
 
     //FONCTIONS CREATE
 
@@ -78,8 +78,7 @@
         $statement->bindParam(':lienPartie', $lienPartie, PDO::PARAM_STR);
         $statement->execute();
 
-        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-
+        $results = $statement->fetch(PDO::FETCH_ASSOC);
         return new Partie($results['id'], $results['datePartie'], $results['statut'], $results['scoreTotalPartie'], $results['nbJoueurs'], $results['lienPartie']);
     }
 
@@ -98,7 +97,7 @@
         $statement->bindParam(':id', $id, PDO::PARAM_INT);
         $statement->execute();
 
-        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $results = $statement->fetch(PDO::FETCH_ASSOC);
         return new Partie($results['id'], $results['datePartie'], $results['statut'], $results['scoreTotalPartie'], $results['nbJoueurs'], $results['lienPartie']);
     }
 

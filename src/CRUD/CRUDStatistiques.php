@@ -1,8 +1,8 @@
 <?PHP 
-    require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/douzhee/src/Classes/Statistiques.php";
-    require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/douzhee/src/Utils/connectionSingleton.php";
-    require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/douzhee/src/CRUD/CRUDConsulte.php";
-    require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/douzhee/src/CRUD/CRUDClassement.php";
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/douzhee/src/Classes/Statistiques.php";
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/douzhee/src/Utils/connectionSingleton.php";
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/douzhee/src/CRUD/CRUDConsulte.php";
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/douzhee/src/CRUD/CRUDClassement.php";
 
     //FONCTIONS CREATE
 

@@ -1,6 +1,6 @@
 <?PHP 
-    require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/douzhee/src/Classes/Consulte.php";
-    require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/douzhee/src/Utils/connectionSingleton.php";
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/douzhee/src/Classes/Consulte.php";
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/douzhee/src/Utils/connectionSingleton.php";
 
     //FONCTIONS CREATE
 

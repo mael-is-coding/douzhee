@@ -199,19 +199,26 @@ function readJoueur(int $id): ?Joueur {
     $SelectQuery = "SELECT * FROM Joueur WHERE id = $id";
 
     $statement = $connection->prepare($SelectQuery);
-    $statement->execute();
 
-    $results = $statement->fetch(PDO::FETCH_ASSOC);
-    	
-    $pseudo = $results ["pseudonyme"];
-    $mdp = $results ["mdp"];
-    $douzCoin = $results ["douzCoin"];
-    $email = $results ["email"];
-    $bio = $results ["biographie"];
-    $dateInsc = $results ["dateInscription"];
-    $idPartieEnCours = $results ["idPartieEnCours"];
-    
-    return new Joueur ($pseudo, $mdp, $douzCoin, $email, $bio, $dateInsc, $idPartieEnCours);
+    if($statement->execute()) {
+        $results = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if(gettype($results) == "boolean") {
+            $pseudo = $results ["pseudonyme"];
+            $mdp = $results ["mdp"];
+            $douzCoin = $results ["douzCoin"];
+            $email = $results ["email"];
+            $bio = $results ["biographie"];
+            $dateInsc = $results ["dateInscription"];
+            $idPartieEnCours = $results ["idPartieEnCours"];
+            
+            return new Joueur ($pseudo, $mdp, $douzCoin, $email, $bio, $dateInsc, $idPartieEnCours);
+        } else {
+            return null;
+        }
+    } else {
+        return null;
+    }
 }
 
 /**
@@ -219,7 +226,7 @@ function readJoueur(int $id): ?Joueur {
  * @param int $id id du joueur dont on cherche l'id partie
  * @return int -1 si le joueur n'existe pas, l'id Partie correspondant à au param id du joueur sinon
  */
-function readIdPartieJoueur(int $id): int{
+function readIdPartieJoueur(int $id): int {
     return (readJoueur($id) != null) ? readJoueur($id)->getIdPartie() : -1;
 }
 
@@ -292,6 +299,19 @@ function readBoughtSkinsById(int $idJ) : ?array {
     } else {
         return null;
     }
+}
+
+
+/**
+ * @author Mael
+ * @brief renvoie une liste des joueurs possédent le skin idSkin
+ * @param $idSkin l'id du skin que les joueurs dans la liste retournée possèdent
+ * @return array|null une collection de joueurs si des joueurs possèdent le skin, null sinon
+ */
+function readJoueursThatHaveSkins(int $idSkin): ?array {
+    $connexion = ConnexionSingleton::getInstance();
+
+    return null;
 }
 
 /**

@@ -41,7 +41,9 @@ function readParticiperA(int $idJoueur, int $idJoueurJoue, int $idPartieJoue): ?
     $statement->bindParam("idJoueurJoue", $idJoueurJoue);
     $statement->bindParam("idPartieJoue", $idPartieJoue);
 
-    $statement->execute();
+    if (!$statement->execute()) {
+        return null;
+    }
 
     $results = $statement->fetch(PDO::FETCH_ASSOC);
 

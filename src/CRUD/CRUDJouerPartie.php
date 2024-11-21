@@ -21,7 +21,12 @@ function readJouerPartie(int $idJoueurJoue, int $idPartieJoue): ?JouerPartie {
 
     return new JouerPartie($idJoueurJoue, $idPartieJoue, $scoreJoueur, $positionJoueur, $dateParticipation, $estGagnant);
 }
-
+/**
+ * @param int $idJJ
+ * @param int $idPJ
+ * @param int $position
+ * @return bool|null
+ */
 function readPositionIsUsed(int $idJJ, int $idPJ, int $position) : bool {
     $connexion = ConnexionSingleton::getInstance();
 
@@ -77,6 +82,7 @@ function readEstGagnant(int $idJoueurJoue, int $idPartieJoue): bool {
 
 
 /**
+ * @author Mael
  * @brief Retourne le nombre de parties jouées par le joueur possédant l'id idJ
  * @param int $idJ
  * @return int le nombre de parties jouées, -1 si une erreur est survenue
@@ -94,9 +100,9 @@ function readPartieCount(int $idJJ): int {
 
     $results = $statement->fetch(PDO::FETCH_ASSOC);
     
-    if(!gettype($results) == "boolean") {
+    if(gettype($results) == "boolean") {
         return (int)$results["Count"];
-    } 
+    }
 
     return -1;
 }

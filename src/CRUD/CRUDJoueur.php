@@ -325,7 +325,7 @@ function readAvatarById(int $idUser): string{
     $connection = ConnexionSingleton::getInstance();
     $selectedQuery = "Select avatarChemin from Joueur  WHERE id = :idUser";
     $statement = $connection->prepare($selectedQuery);
-    $statement->bindParam("idUser", $idUser);
+    $statement->bindParam(":idUser", $idUser);
     $statement->execute();
     $result = $statement->fetch(PDO::FETCH_ASSOC);
     return $result['avatarChemin'];

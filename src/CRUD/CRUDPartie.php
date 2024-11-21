@@ -79,8 +79,7 @@
         $statement->bindParam(':lienPartie', $lienPartie, PDO::PARAM_STR);
         $statement->execute();
 
-        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-
+        $results = $statement->fetch(PDO::FETCH_ASSOC);
         return new Partie($results['id'], $results['datePartie'], $results['statut'], $results['scoreTotalPartie'], $results['nbJoueurs'], $results['lienPartie']);
     }
 
@@ -99,7 +98,7 @@
         $statement->bindParam(':id', $id, PDO::PARAM_INT);
         $statement->execute();
 
-        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $results = $statement->fetch(PDO::FETCH_ASSOC);
         return new Partie($results['id'], $results['datePartie'], $results['statut'], $results['scoreTotalPartie'], $results['nbJoueurs'], $results['lienPartie']);
     }
 

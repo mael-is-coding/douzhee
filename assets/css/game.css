@@ -20,6 +20,26 @@ body {
     position: relative; 
 }
 
+.waiting-room {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    height: 100%;
+    color: white;
+    text-align: center;
+}
+
+.waiting-room h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.waiting-room p {
+    font-size: 1.2em;
+}
+
 .chat-container {
     bottom: 0;
     right: 0;

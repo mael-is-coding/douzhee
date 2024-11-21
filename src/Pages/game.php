@@ -1,15 +1,61 @@
 <?php
     require_once("../Utils/headerInit.php");
+    require_once("../CRUD/CRUDJoueur.php");
+    require_once("../CRUD/CRUDPartie.php");
+    require_once("../CRUD/CRUDJouerPartie.php");
 ?>
     <link rel="stylesheet" href="../../assets/CSS/game.css">   
 </head>
 <body>
-    <!--
-    <div class="lienPartie">
-        <span class="lien">Lien:</span>
-        <button class="copyLien"></button>
+    <?php
+        // Nombre de joueurs requis pour commencer la partie
+        $requiredPlayers = 4; //readPartieById($_SESSION['idPartie'])['nbJoueurs'];
+
+        // Fonction pour vérifier le nombre de joueurs connectés
+        function getConnectedPlayers() {
+            //doit retourner le nombre de joueurs actuellement connectés
+            return 4; // Exemple
+        }
+
+        $connectedPlayers = getConnectedPlayers();
+    ?>
+
+    <script>
+        var requiredPlayers = <?php echo $requiredPlayers; ?>;
+        var connectedPlayers = <?php echo $connectedPlayers; ?>;
+
+        // Fonction pour vérifier le nombre de joueurs connectés et afficher/masquer les éléments en conséquence
+        function checkPlayers() {
+            if (connectedPlayers < requiredPlayers) {
+                document.querySelector('.waiting-room').style.display = 'flex';
+                document.querySelector('.score').style.display = 'none';
+                document.querySelector('.dé-table').style.display = 'none';
+                document.querySelector('.versus').style.display = 'none';
+                document.querySelector('.chat-container').style.display = 'none';
+                document.querySelector('.chat-toggle').style.display = 'none';
+            } else {
+                document.querySelector('.waiting-room').style.display = 'none';
+                document.querySelector('.score').style.display = 'flex';
+                document.querySelector('.dé-table').style.display = 'flex';
+                document.querySelector('.versus').style.display = 'flex';
+                document.querySelector('.chat-container').style.display = 'flex';
+                document.querySelector('.chat-toggle').style.display = 'flex';
+            }
+        }
+
+        // Appeler la fonction au chargement de la page
+        window.onload = checkPlayers;
+    </script>
+    <div class="waiting-room">
+        <h1>En attente des autres joueurs...</h1>
+        <p>Nombre de joueurs connectés: <span id="connected-players"><?php echo $connectedPlayers; ?></span> / <?php echo $requiredPlayers; ?></p>
+        <br>
+        <h3>
+            <p>Lien de la partie:</p> 
+            <?php echo $_SESSION['lienPartie']; ?>
+        </h2>
+        <p>Veuillez patienter pendant que les autres joueurs rejoignent la partie.</p>
     </div>
-    -->
     <div class="score">
         <table class="Upper">
             <thead>
@@ -318,7 +364,7 @@
     <script>
         var socket = io(); // Initialiser le socket client pour se connecter au serveur socket.io sur le même domaine 
 
-        var gameid = prompt('Entrez l\'identifiant de la partie :'); // Demander à l'utilisateur de saisir l'identifiant de la partie
+        var gameid = 1; // ID de la partie
 
         // Rejoindre la salle de chat pour la partie spécifique
         socket.emit('join game', gameid);

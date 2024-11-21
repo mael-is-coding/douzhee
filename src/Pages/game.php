@@ -14,7 +14,7 @@
         // Fonction pour vérifier le nombre de joueurs connectés
         function getConnectedPlayers() {
             //doit retourner le nombre de joueurs actuellement connectés
-            return 4; // Exemple
+            return 2; // Exemple
         }
 
         $connectedPlayers = getConnectedPlayers();

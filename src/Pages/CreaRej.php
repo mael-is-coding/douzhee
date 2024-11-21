@@ -13,24 +13,27 @@
         $idJoueur = $_SESSION['user_id'];
         $lienPartie = bin2hex(random_bytes(16));
         $_SESSION['lienPartie'] = $lienPartie;
-        $idPartie = createPartie($nombre_joueur, $lienPartie);
+        var_dump($lienPartie);
+        $idPartie = createPartie($nombre_joueur, $_SESSION['lienPartie']);
+        var_dump($idPartie);
         if ($idPartie == -1){
             echo '<script type="text/javascript"> window.onload = function () { alert("Lien déjà utilisé"); }</script>';
         }
         $_SESSION['idPartie'] = $idPartie;
         $idJouerPartie = createJouerPartie($idJoueur, $idPartie, 1);
-        header("Location: ./game.php");
     }
 
     if(isset($_POST['lien_partie'])) {
         $lienPartie = $_POST['lien_partie'];
         $idPartie = readPartieByLien($lienPartie);
+        $idPartie = $idPartie->getId();
         if ($idPartie == -1){
             echo '<script type="text/javascript"> window.onload = function () { alert("Lien invalide"); }</script>';
         }
         $idJoueur = $_SESSION['user_id'];
         $idJouerPartie = createJouerPartie($idJoueur, $idPartie, 0);
         header("Location: ./game.php");
+        exit();
     }
 
 ?>

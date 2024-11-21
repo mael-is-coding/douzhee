@@ -27,6 +27,7 @@
         $statement->execute();
 
         $idPartie = $connection->lastInsertId();
+        echo $idPartie;
         return $idPartie;
     }
 

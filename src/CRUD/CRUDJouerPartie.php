@@ -7,8 +7,8 @@ function readJouerPartie(int $idJoueurJoue, int $idPartieJoue): ?JouerPartie {
 
     $statement = $connection->prepare($SelectQuery);
 
-    $statement->bindParam(":idJoueurJoue", $idJoueurJoue);
-    $statement->bindParam(":idPartieJoue", $idPartieJoue);
+    $statement->bindParam("idJoueurJoue", $idJoueurJoue);
+    $statement->bindParam("idPartieJoue", $idPartieJoue);
 
     $statement->execute();
 
@@ -21,28 +21,59 @@ function readJouerPartie(int $idJoueurJoue, int $idPartieJoue): ?JouerPartie {
 
     return new JouerPartie($idJoueurJoue, $idPartieJoue, $scoreJoueur, $positionJoueur, $dateParticipation, $estGagnant);
 }
+
+function readConnectedPlayers() {
+    $connection = ConnexionSingleton::getInstance();
+
+    $SelectQuery = "SELECT COUNT(*) FROM JouerPartie WHERE idPartieJouee  = :idPartie";
+
+    $statement = $connection->prepare($SelectQuery);
+    $statement->execute(['idPartie' => $_SESSION['idPartie']]);
+
+    return $statement->fetchColumn();
+}
+
 /**
- * @param int $idJJ
  * @param int $idPJ
  * @param int $position
- * @return bool|null
+ * @return int
  */
-function readPositionIsUsed(int $idJJ, int $idPJ, int $position) : bool {
+function readPositionIsUsed(int $idPJ, int $position) : int {
     $connexion = ConnexionSingleton::getInstance();
 
-    $SelectQuery = "SELECT positionJoueur FROM JouerPartie WHERE idJoueurJouee = :idJJ AND idPartieJouee = :idPJ";
+    $existenceQuery = "SELECT COUNT(idPartieJouee) AS C FROM `JouerPartie` WHERE idPartieJouee = :idPJ";
+    $existStatement = $connexion->prepare($existenceQuery);
+    $existStatement->bindParam("idPJ", $idPJ);
 
-    $statement = $connexion->prepare($SelectQuery);
+    $existRqSuccess = $existStatement->execute();
+    $existResults = $existStatement->fetch(PDO::FETCH_ASSOC);
 
-    $statement->bindParam("idJJ", $idJJ);
-    $statement->bindParam("idPJ", $idPJ);
-    
-    $Rqsuccess = $statement->execute();
+    if($existResults["C"] > 0 && $existRqSuccess) {
 
-    $results = $statement->fetch(PDO::FETCH_ASSOC);
-    $fetchedPos = $results["positionJoueur"];
+        $SelectQuery = "SELECT positionJoueur FROM `JouerPartie` WHERE idPartieJouee = :idPJ";
 
-    return $fetchedPos != $position && $Rqsuccess;
+        $statement = $connexion->prepare($SelectQuery);
+
+        $statement->bindParam("idPJ", $idPJ);
+        
+        $Rqsuccess = $statement->execute();
+
+        if($Rqsuccess) {
+            $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+            
+            if(count($results) == 0) {
+                return -1;
+            }
+
+            foreach ($results as $row) {
+                if ($row["positionJoueur"] == $position) {
+                    return 1;
+                }
+            }
+            return 0;
+        }
+    }
+    return -1;
 }
 
 function createJouerPartie(int $idJoueurJoue, int $idPartieJoue, int $positionJoueur): bool {
@@ -57,12 +88,12 @@ function createJouerPartie(int $idJoueurJoue, int $idPartieJoue, int $positionJo
 
     $statement = $connection->prepare($InsertQuery);
 
-    $statement->bindParam(":idJoueurJoue", $idJoueurJoue);
-    $statement->bindParam(":idPartieJoue", $idPartieJoue);
-    $statement->bindParam(":scoreJoueur", $scoreJoueur);
-    $statement->bindParam(":positionJoueur", $positionJoueur);
-    $statement->bindParam(":dateParticipation", $dateParticipation);
-    $statement->bindParam(":estGagnant", $estGagnant);
+    $statement->bindParam("idJoueurJoue", $idJoueurJoue);
+    $statement->bindParam("idPartieJoue", $idPartieJoue);
+    $statement->bindParam("scoreJoueur", $scoreJoueur);
+    $statement->bindParam("positionJoueur", $positionJoueur);
+    $statement->bindParam("dateParticipation", $dateParticipation);
+    $statement->bindParam("estGagnant", $estGagnant);
 
     return $statement->execute();
 }
@@ -94,7 +125,7 @@ function readPartieCount(int $idJJ): int {
 
     $statement = $connexion->prepare($SelectQuery);
 
-    $statement->bindParam(":idJJ", $idJJ);
+    $statement->bindParam("idJJ", $idJJ);
 
     $statement->execute();
 

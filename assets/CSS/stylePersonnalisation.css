@@ -115,22 +115,22 @@ input[type="file"]{
 #buttonPers:hover {
     background-color: #4A2F9D;
 }
-input[type="radio"]#Themes_1{
-    background-image: url('../../assets/images/imagePersonnalisation/Theme_1.png');
+input[type="radio"]#Themes1{
+    background-image: url('../../assets/images/imagePersonnalisation/Theme1.png');
 }
-input[type="radio"]#Themes_2{
+input[type="radio"]#Themes2{
     background-image: url('../../assets/images/imagePersonnalisation/Theme_2_verrouillé.png');
 }
-input[type="radio"]#Themes_3{
+input[type="radio"]#Themes3{
     background-image: url('../../assets/images/imagePersonnalisation/Theme_3_verrouillé.png');
 }
-input[type="radio"]#Des_1{
+input[type="radio"]#Des1{
     background-image: url('../../assets/images/imagePersonnalisation/dés_2.png');
 }
-input[type="radio"]#Des_2{
+input[type="radio"]#Des2{
     background-image: url('../../assets/images/imagePersonnalisation/dés_2.png');
 }
-input[type="radio"]#Des_3{
+input[type="radio"]#Des3{
     background-image: url('../../assets/images/imagePersonnalisation/dés_2.png');
 }
 input[type="radio"]:checked {

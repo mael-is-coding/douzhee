@@ -25,7 +25,7 @@
 </body>
 </html>
  <?php
-    for ($i= 1; $i < 2; $i++) {
+    for ($i= 1; $i < 16; $i++) {
         $allsucces = readAllUserWinTheSuccesId($i);
         if (is_array($allsucces)) {
             foreach ($allsucces as $succes) {

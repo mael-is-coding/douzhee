@@ -41,4 +41,40 @@ function readSkinAchete(int $idSkin, int $idAchat): ?SkinAchete {
         return null;
     }
 
+
 }
+function readAllAchatByUser(int $userId){
+ 
+    $connection = ConnexionSingleton::getInstance();
+    $selectedQuery = "Select sa.idSkin, sa.typeSkin, sa.etatSkin
+
+                    from effectueachat eff 
+                    join skinacheter sa on sa.id = eff.idAchat
+                    join Skinachetable ska on ska.id = sa.id 
+                    where idJoueur = :idUser";
+
+    $statement = $connection->prepare($selectedQuery);
+    $statement->bindParam(":idUser", $userId);
+    $statement->execute();
+    return  $statement->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function updateEtatSkin(int $idSkin, int $etatSkin, int $idUser){
+    $connection = ConnexionSingleton::getInstance();
+    $selectedQuery = "Select idAchat from effectueachat where idJoueur = :idUser";
+    $statement = $connection->prepare($selectedQuery);
+    $statement->bindParam(":idUser", $idUser);
+    $statement->execute();
+
+    if ($statement->rowCount() > 0) {
+        $idAchat = $statement->fetchColumn();
+        $updateQuery = "UPDATE skinacheter SET etatSkin = :etat WHERE idSkin = :idSkin AND id = :idAchat";
+        $statement = $connection->prepare($updateQuery);
+        $statement->bindParam(":etat", $etatSkin);
+        $statement->bindParam(":idSkin", $idSkin);
+        $statement->bindParam(":idAchat", $idAchat);
+        $statement->execute();
+
+}
+}
+

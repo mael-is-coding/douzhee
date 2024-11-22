@@ -1,12 +1,14 @@
 <?php
     require_once("../CRUD/CRUDJoueur.php");
     require_once("../Utils/headerInit.php");
+    require_once("../CRUD/CRUDSkinAchete.php");
 ?>
     <link rel="stylesheet" href="../../assets/css/styleHeader.css"> 
     <link rel="stylesheet" href="../../assets/css/stylePersonnalisation.css">
 </head>
 <?php
     require_once("../Utils/headerBody.php");
+    $allAchats = readAllAchatByUser($_SESSION['userId']);
 ?>        
 <body>
     <div class="Profil">
@@ -32,18 +34,18 @@
             <div class="input-group">
                 <label for="Themes">Themes</label>
                 <div class="radio-group">
-                    <input type="radio" id="Themes_1" name="themes" value="theme1" checked>
-                    <input type="radio" id="Themes_2" name="themes" value="theme2" class="modal-bt">
-                    <input type="radio" id="Themes_3" name="themes" value="theme3">
+                    <input type="radio" id="Themes1" name="themes" value="theme1" checked>
+                    <input type="radio" id="Themes2" name="themes" value="theme2" disabled>
+                    <input type="radio" id="Themes3" name="themes" value="theme3" disabled>
                 </div>
             </div>
 
             <div class="input-group">
                 <label for="Dés">Dés</label>
                 <div class="radio-group">
-                    <input type="radio" id="Des_1" name="des" checked>
-                    <input type="radio" id="Des_2" name="des">
-                    <input type="radio" id="Des_3" name="des">
+                    <input type="radio" id="Des1" name="des" checked>
+                    <input type="radio" id="Des2" name="des" disabled>
+                    <input type="radio" id="Des3" name="des" disabled>
                 </div>
             </div>
             <button id="buttonPers" type="submit">Enregistrer les modifications</button>
@@ -81,21 +83,41 @@
                 echo "Le fichier doit être une image (JPEG, PNG, GIF) de moins de 2 Mo.";
             }
 
-    }if (isset($_POST['themes'])){
+    }if (!empty($_POST['themes'])){
         $selected_theme = $_POST['themes'];
         switch ($selected_theme) {
             case 'theme1':
-                
+                updateEtatSkin(1,1,$_SESSION['userId']);
+                updateEtatSkin(2,0,$_SESSION['userId']);
+                updateEtatSkin(3,0,$_SESSION['userId']);
                 break;
             case 'theme2':
-                
+                updateEtatSkin(1,0,$_SESSION['userId']);
+                updateEtatSkin(2,1,$_SESSION['userId']);
+                updateEtatSkin(3,0,$_SESSION['userId']);
                 break;
             case 'theme3':
-                
+                updateEtatSkin(1,0,$_SESSION['userId']);
+                updateEtatSkin(2,0,$_SESSION['userId']);
+                updateEtatSkin(3,1,$_SESSION['userId']);
                 break;
         }
     }
+    
 
+}if (is_array($allAchats)){
+    foreach($allAchats as $achats){
+        $themeId = $achats['idSkin'];
+        ?>
+        <script>
+                document.addEventListener('DOMContentLoaded',() =>{
+                const theme = document.getElementById("Themes<?php echo $themeId; ?>");
+                theme.style.backgroundImage = 'url("../../assets/images/imagePersonnalisation/Theme<?php echo $themeId; ?>.png")';
+                theme.disabled = false;
+            });
+        </script>
+        <?php
+    }
 }
 
 ?>

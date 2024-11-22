@@ -1,5 +1,7 @@
 <?php
 require_once("../CRUD/CRUDJoueur.php");
+require_once("../CRUD/CRUDSkinAchete.php");
+$allAchats = readAllAchatByUser($_SESSION['userId']);
 ?>
 <body>
     <header>
@@ -38,5 +40,42 @@ require_once("../CRUD/CRUDJoueur.php");
      <script>
         const img = document.getElementById("profil")
         img.style.backgroundImage = 'url("<?php echo readAvatarById($_SESSION['userId']); ?>")'
-        console.log("<?php echo readAvatarById($_SESSION['userId']); ?>")
     </script>
+    <?php
+        if (is_array($allAchats)){
+            foreach($allAchats as $achats){
+                $themeId = $achats['idSkin'];
+                $etatSkin = $achats['etatSkin'];
+                $typeSkin = $achats['typeSkin'];
+                if ($typeSkin == "Theme" && $etatSkin == 1){
+                    switch($themeId){
+                        case 1:
+                            ?>
+                            <script>
+                                document.body.style.backgroundColor = "#c2adcc";
+                                document.querySelector("header").style.backgroundColor = "#401753";
+                            </script>
+                            <?php
+                            break;
+                        case 2:
+                            ?>
+                            <script>
+                                document.body.style.backgroundColor = "#95ca97";
+                                document.querySelector("header").style.backgroundColor = "#195426";
+                            </script>
+                            <?php
+                            break;
+                        case 3:
+                            ?>
+                            <script>
+                            document.body.style.backgroundColor = "#927272";
+                            document.querySelector("header").style.backgroundColor = "#6f4b4d";
+                        </script>
+                        <?php
+                        break;
+                    }
+                }
+                
+            }
+        }
+        ?>

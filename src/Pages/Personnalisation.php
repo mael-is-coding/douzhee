@@ -12,7 +12,7 @@
 ?>        
 <body>
     <div class="Profil">
-        <form action="Personnalisation.php" method="POST"  enctype="multipart/form-data">
+        <form action="Profil.php" method="POST"  enctype="multipart/form-data">
 
             <div class="input-input-group">
                 <div class="input-group">
@@ -37,9 +37,10 @@
                     <input type="radio" id="Themes1" name="themes" value="theme1" checked>
                     <input type="radio" id="Themes2" name="themes" value="theme2" disabled>
                     <input type="radio" id="Themes3" name="themes" value="theme3" disabled>
+                    
                 </div>
             </div>
-
+            <button type="button" id="openModal">Ouvrir Modal</button>
             <div class="input-group">
                 <label for="Dés">Dés</label>
                 <div class="radio-group">
@@ -50,6 +51,15 @@
             </div>
             <button id="buttonPers" type="submit">Enregistrer les modifications</button>
         </form>
+    </div>
+    <div id ="fenModal" class="modal">
+        <div class="content">
+            <h2>Voulez-vous acheter ce skin</h2>
+            <img src="../../assets/images/imagePersonnalisation/Theme2.png">
+            <h2>Prix du skin : 250</h2>
+            <button id="refuser">Refuser</button>
+            <button id="valider">Valider</button>
+        </div>
     </div>
 </body>
 </html>
@@ -124,4 +134,42 @@
   <script>
         const img_ = document.getElementsByClassName("file-label")[0]
         img_.style.backgroundImage = 'url("<?php echo readAvatarById($_SESSION['userId']); ?>")'
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+        const modal = document.getElementById("fenModal");
+        const input = document.getElementById("Themes3");
+        const valider = document.getElementById("valider");
+        const refuser = document.getElementById("refuser");
+        const openModal = document.getElementById("openModal");
+
+        openModal.onclick = () => {
+            modal.style.display = "block";
+        };
+      
+        refuser.onclick = () =>{
+            modal.style.display = "none";
+        };
+        window.onclick = (event) =>{
+            if (event.target === modal){
+                modal.style.display = "none";
+            }
+        };
+        valider.onclick = () =>{
+            <?php
+            $money = getMoneyById($_SESSION['userId']);
+            ?>
+            if (<?php echo $money?> > 2500){
+                input.disabled = false;
+                <?php
+                $newmoney = $money - 2500;
+                 updateDouzCoin($_SESSION['userId'],$newmoney)?>
+                 modal.style.display ="none";
+            }else{
+                modal.style.display ="none";
+                alert("vous n'avez pas asser d'argent");
+            }
+        };
+    });
     </script>

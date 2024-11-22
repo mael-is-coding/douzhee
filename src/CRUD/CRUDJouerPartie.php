@@ -36,12 +36,12 @@ function readConnectedPlayers() {
 /**
  * @param int $idPJ
  * @param int $position
- * @return bool|null
+ * @return int
  */
 function readPositionIsUsed(int $idPJ, int $position) : int {
     $connexion = ConnexionSingleton::getInstance();
 
-    $existenceQuery = "SELECT COUNT(idPartie) AS C FROM table WHERE idPartie = :idPJ";
+    $existenceQuery = "SELECT COUNT(idPartieJouee) AS C FROM `JouerPartie` WHERE idPartieJouee = :idPJ";
     $existStatement = $connexion->prepare($existenceQuery);
     $existStatement->bindParam("idPJ", $idPJ);
 
@@ -50,7 +50,7 @@ function readPositionIsUsed(int $idPJ, int $position) : int {
 
     if($existResults["C"] > 0 && $existRqSuccess) {
 
-        $SelectQuery = "SELECT positionJoueur FROM JouerPartie WHERE idPartieJouee = :idPJ";
+        $SelectQuery = "SELECT positionJoueur FROM `JouerPartie` WHERE idPartieJouee = :idPJ";
 
         $statement = $connexion->prepare($SelectQuery);
 
@@ -59,27 +59,21 @@ function readPositionIsUsed(int $idPJ, int $position) : int {
         $Rqsuccess = $statement->execute();
 
         if($Rqsuccess) {
+            $results = $statement->fetchAll(PDO::FETCH_ASSOC);
             
-            $results = $statement->fetch(PDO::FETCH_ASSOC);
-            
-            if(gettype($results) == "boolean") {
+            if(count($results) == 0) {
                 return -1;
             }
 
-            $fetchedPos = $results["positionJoueur"];
-
-            if ($fetchedPos != $position) {
-                return 0;
-            } else {
-                return 1;
+            foreach ($results as $row) {
+                if ($row["positionJoueur"] == $position) {
+                    return 1;
+                }
             }
-
-        } else {
-            return -1; // on part du principe que si la requête échoue COMPLETEMENT, on agit comme dans le pire des cas : ça existe pas
+            return 0;
         }
-    } else {
-        return -1; // idPartie n'est pas dans la base de données
     }
+    return -1;
 }
 
 function createJouerPartie(int $idJoueurJoue, int $idPartieJoue, int $positionJoueur): bool {

@@ -12,9 +12,8 @@
         // Nombre de joueurs requis pour commencer la partie
         $requiredPlayers = readPartieById($_SESSION['idPartie'])->getNbJoueurs();
 
-
         $connectedPlayers = readConnectedPlayers();
-        debugSession();
+        //debugSession();
     ?>
     <div class="waiting-room">
         <h1>En attente des autres joueurs...</h1>

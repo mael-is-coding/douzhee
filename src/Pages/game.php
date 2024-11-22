@@ -3,6 +3,7 @@
     require_once("../CRUD/CRUDJoueur.php");
     require_once("../CRUD/CRUDPartie.php");
     require_once("../CRUD/CRUDJouerPartie.php");
+    require_once("../Utils/connectionSingleton.php");
 ?>
     <link rel="stylesheet" href="../../assets/CSS/game.css">   
 </head>
@@ -13,41 +14,16 @@
 
         // Fonction pour vérifier le nombre de joueurs connectés
         function readConnectedPlayers() {
-            //doit retourner le nombre de joueurs actuellement connectés
-            return 2; // Exemple
+            $pdo = ConnexionSingleton::getInstance();
+            $query = $pdo->prepare("SELECT COUNT(*) FROM JouerPartie WHERE idPartieJouee  = :idPartie");
+            $query->execute(['idPartie' => $_SESSION['idPartie']]);
+            return $query->fetchColumn();
         }
 
         $connectedPlayers = readConnectedPlayers();
 
         debugSession();
     ?>
-
-    <script>
-        var requiredPlayers = <?= $requiredPlayers; ?>;
-        var connectedPlayers = <?= $connectedPlayers; ?>;
-
-        // Fonction pour vérifier le nombre de joueurs connectés et afficher/masquer les éléments en conséquence
-        function checkPlayers() {
-            if (connectedPlayers < requiredPlayers) {
-                document.querySelector('.waiting-room').style.display = 'flex';
-                document.querySelector('.score').style.display = 'none';
-                document.querySelector('.dé-table').style.display = 'none';
-                document.querySelector('.versus').style.display = 'none';
-                document.querySelector('.chat-container').style.display = 'none';
-                document.querySelector('.chat-toggle').style.display = 'none';
-            } else {
-                document.querySelector('.waiting-room').style.display = 'none';
-                document.querySelector('.score').style.display = 'flex';
-                document.querySelector('.dé-table').style.display = 'flex';
-                document.querySelector('.versus').style.display = 'flex';
-                document.querySelector('.chat-container').style.display = 'flex';
-                document.querySelector('.chat-toggle').style.display = 'flex';
-            }
-        }
-
-        // Appeler la fonction au chargement de la page
-        window.onload = checkPlayers;
-    </script>
     <div class="waiting-room">
         <h1>En attente des autres joueurs...</h1>
         <p>Nombre de joueurs connectés: <span id="connected-players"><?php echo $connectedPlayers; ?></span> / <?php echo $requiredPlayers; ?></p>
@@ -364,12 +340,53 @@
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
 
     <script>
-        var socket = io(); // Initialiser le socket client pour se connecter au serveur socket.io sur le même domaine 
+
+        var requiredPlayers = <?= $requiredPlayers; ?>;
+        var connectedPlayers = <?= $connectedPlayers; ?>;
+
+        // Fonction pour vérifier le nombre de joueurs connectés et afficher/masquer les éléments en conséquence
+        function checkPlayers() {
+            if (connectedPlayers < requiredPlayers) {
+                document.querySelector('.waiting-room').style.display = 'flex';
+                document.querySelector('.score').style.display = 'none';
+                document.querySelector('.dé-table').style.display = 'none';
+                document.querySelector('.versus').style.display = 'none';
+                document.querySelector('.chat-container').style.display = 'none';
+                document.querySelector('.chat-toggle').style.display = 'none';
+            } else {
+                document.querySelector('.waiting-room').style.display = 'none';
+                document.querySelector('.score').style.display = 'flex';
+                document.querySelector('.dé-table').style.display = 'flex';
+                document.querySelector('.versus').style.display = 'flex';
+                document.querySelector('.chat-container').style.display = 'flex';
+                document.querySelector('.chat-toggle').style.display = 'flex';
+            }
+        }
+
+        // Appeler la fonction au chargement de la page
+        window.onload = checkPlayers;
+
+        
+        var socket = io('http://localhost:8080'); // Initialiser le socket client pour se connecter au serveur socket.io sur le même domaine 
+        // var socket = io('https://douzhee.fr'); // Sur le VPS
 
         var gameid = <?= $_SESSION['idPartie']; ?>; // Récupérer l'ID de la partie
-
         // Rejoindre la salle de chat pour la partie spécifique
-        socket.emit('join game', gameid);
+        socket.emit('player joined', gameid);
+
+        socket.on('player joined', function(connectedPlayersCount) {
+            console.log('Player joined game: ' + connectedPlayersCount);
+            document.getElementById('connected-players').innerText = connectedPlayersCount;
+            connectedPlayers = connectedPlayersCount;
+            checkPlayers();
+        });
+
+        socket.on('player disconnected', function(connectedPlayersCount) {
+            console.log('Player disconnected from game: ' + gameid);
+            document.getElementById('connected-players').innerText = connectedPlayersCount;
+            connectedPlayers = connectedPlayersCount;
+            checkPlayers();
+        });
 
         // Fonction pour envoyer un message
         function sendMessage() {

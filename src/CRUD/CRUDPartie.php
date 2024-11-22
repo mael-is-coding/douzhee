@@ -10,15 +10,7 @@
      * @param int $nbJoueurs nombre de joueurs
      * @param string $lienPartie lien d'invitation de la partie
      * @return int identifiant de la partie créée
-     * @param string $lienPartie lien d'invitation de la partie
-     * @return int identifiant de la partie créée
      */
-    function createPartie(int $nbJoueurs, String $lienPartie): int{
-        $liens = readAllLiens();
-        if(in_array($lienPartie, $liens)){
-            return -1;
-        }
-
     function createPartie(int $nbJoueurs, String $lienPartie): int{
         $liens = readAllLiens();
         if(in_array($lienPartie, $liens)){
@@ -28,17 +20,11 @@
         $connection = ConnexionSingleton::getInstance();
 
         $insertPartie = 'INSERT INTO partie VALUES (NULL, CURRENT_TIMESTAMP, "En commencement", 0, :nbJoueurs, :lienPartie)';
-        $insertPartie = 'INSERT INTO partie VALUES (NULL, CURRENT_TIMESTAMP, "En commencement", 0, :nbJoueurs, :lienPartie)';
 
         $statement = $connection->prepare($insertPartie);
         $statement->bindParam(':nbJoueurs', $nbJoueurs, PDO::PARAM_INT);
         $statement->bindParam(':lienPartie', $lienPartie, PDO::PARAM_STR);
-        $statement->bindParam(':nbJoueurs', $nbJoueurs, PDO::PARAM_INT);
-        $statement->bindParam(':lienPartie', $lienPartie, PDO::PARAM_STR);
         $statement->execute();
-
-        $idPartie = $connection->lastInsertId();
-        return $idPartie;
 
         $idPartie = $connection->lastInsertId();
         return $idPartie;
@@ -79,24 +65,6 @@
     }
 
     /**
-     * @brief Récupère une partie en fonction de son lien
-     * @author Nathan
-     * @param string $lienPartie lien de la partie
-     * @return Partie instance de Partie contenant toutes les informations récupérées
-     */
-    function readPartieByLien(String $lienPartie): Partie{
-        $connection = ConnexionSingleton::getInstance();
-
-        $readPartie = 'SELECT * FROM partie WHERE lienPartie = :lienPartie';
-        $statement = $connection->prepare($readPartie);
-        $statement->bindParam(':lienPartie', $lienPartie, PDO::PARAM_STR);
-        $statement->execute();
-
-        $results = $statement->fetch(PDO::FETCH_ASSOC);
-        return new Partie($results['id'], $results['datePartie'], $results['statut'], $results['scoreTotalPartie'], $results['nbJoueurs'], $results['lienPartie']);
-    }
-
-    /**
      * @brief Récupère une partie donnée
      * @author Nathan
      * @param int $id identifiant de la partie
@@ -106,15 +74,13 @@
         $connection = ConnexionSingleton::getInstance();
 
         $readPartie = 'SELECT * FROM partie WHERE id = :id';
-        $readPartie = 'SELECT * FROM partie WHERE id = :id';
 
         $statement = $connection->prepare($readPartie);
         $statement->bindParam(':id', $id, PDO::PARAM_INT);
-        $statement->bindParam(':id', $id, PDO::PARAM_INT);
         $statement->execute();
 
-        $results = $statement->fetch(PDO::FETCH_ASSOC);
-        return new Partie($results['id'], $results['datePartie'], $results['statut'], $results['scoreTotalPartie'], $results['nbJoueurs'], $results['lienPartie']);
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return new Partie($results['id'], $results['date'], $results['score'], $results['scoreTotalPartie'], $results['nbJoueurs'], $results['lienPartie']);
     }
 
     /**
@@ -127,10 +93,8 @@
         $connection = ConnexionSingleton::getInstance();
 
         $readParties = 'SELECT * FROM partie WHERE statut = :statut ORDER BY date DESC';
-        $readParties = 'SELECT * FROM partie WHERE statut = :statut ORDER BY date DESC';
 
         $statement = $connection->prepare($readParties);
-        $statement->bindParam(':statut', $statut, PDO::PARAM_STR);
         $statement->bindParam(':statut', $statut, PDO::PARAM_STR);
         $statement->execute();
 
@@ -151,11 +115,8 @@
         $connection = ConnexionSingleton::getInstance();
 
         $updateStatut = 'UPDATE partie SET statut = :statut WHERE id = :id';
-        $updateStatut = 'UPDATE partie SET statut = :statut WHERE id = :id';
 
         $statement = $connection->prepare($updateStatut);
-        $statement->bindParam(':statut', $statut, PDO::PARAM_STR);
-        $statement->bindParam(':id', $id, PDO::PARAM_INT);
         $statement->bindParam(':statut', $statut, PDO::PARAM_STR);
         $statement->bindParam(':id', $id, PDO::PARAM_INT);
         $statement->execute();
@@ -172,11 +133,8 @@
         $connection = ConnexionSingleton::getInstance();
 
         $updatePartie = 'UPDATE partie SET scoreTotalPartie = :scoreTotal WHERE id = :id';
-        $updatePartie = 'UPDATE partie SET scoreTotalPartie = :scoreTotal WHERE id = :id';
 
         $statement = $connection->prepare($updatePartie);
-        $statement->bindParam(':scoreTotal', $scoreTotal, PDO::PARAM_INT);
-        $statement->bindParam(':id', $id, PDO::PARAM_INT);
         $statement->bindParam(':scoreTotal', $scoreTotal, PDO::PARAM_INT);
         $statement->bindParam(':id', $id, PDO::PARAM_INT);
         $statement->execute();

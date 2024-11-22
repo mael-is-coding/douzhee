@@ -1,6 +1,8 @@
 <?php
     require_once("../CRUD/CRUDJoueur.php");
     require_once("../Utils/headerInit.php");
+    require_once("../CRUD/CRUDStatistiques.php");
+    require_once("../CRUD/CRUDClassement.php");
 ?>
     <link rel="stylesheet" href="../../assets/css/styleCIRV.css">
 </head>
@@ -26,10 +28,10 @@
                 </script>';
             }
             else{
-                $_SESSION['userId'] = getIdUser($_POST['E-mail']);
-                $stats = readStatistiquesByIdUser($_SESSION['userId']);
                 insertUser($_POST['E-mail'],$_POST['Password'],$_POST['Pseudo']);
+                $_SESSION['userId'] = getIdUser($_POST['E-mail']);
                 createStatistiques($_SESSION['userId']);
+                createClassement(getPseudoById($_SESSION['userId']),$_SESSION['userId']);
                 header('Location: Index.php');
              }
         }

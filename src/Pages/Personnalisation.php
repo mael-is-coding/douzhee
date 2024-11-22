@@ -11,9 +11,8 @@
     $allAchats = readAllAchatByUser($_SESSION['userId']);
 ?>        
 <body>
-    <div class="Profil">
-        <form action="Profil.php" method="POST"  enctype="multipart/form-data">
-
+    <div class="Personnalisation.php">
+        <form action="Personnalisation.php" method="POST"  enctype="multipart/form-data">
             <div class="input-input-group">
                 <div class="input-group">
                     <label for="pseudo">Pseudo</label>
@@ -40,7 +39,6 @@
                     
                 </div>
             </div>
-            <button type="button" id="openModal">Ouvrir Modal</button>
             <div class="input-group">
                 <label for="Dés">Dés</label>
                 <div class="radio-group">
@@ -52,22 +50,13 @@
             <button id="buttonPers" type="submit">Enregistrer les modifications</button>
         </form>
     </div>
-    <div id ="fenModal" class="modal">
-        <div class="content">
-            <h2>Voulez-vous acheter ce skin</h2>
-            <img src="../../assets/images/imagePersonnalisation/Theme2.png">
-            <h2>Prix du skin : 250</h2>
-            <button id="refuser">Refuser</button>
-            <button id="valider">Valider</button>
-        </div>
-    </div>
 </body>
 </html>
 <?php
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         if (!empty($_POST['pseudo'])){
             updatePseudoJoueur($_SESSION['userId'], $_POST['pseudo']);
-
+            header('Location: Profil.php');
         }if(!empty($_POST['bio'])){
             updateBio($_SESSION['userId'], $_POST['bio']);
 
@@ -82,7 +71,6 @@
                 if (move_uploaded_file($file['tmp_name'], $uploadFile)) {
                     $relativePath = $uploadDir . $filename; 
                     updateAvatar($relativePath,$_SESSION['userId']);
-                    echo "Avatar mis à jour avec succès !";
                     if ($oldAvatar && $oldAvatar !== '../../assets/images/imageavatars/photodefault.jpg' && file_exists($oldAvatar)) {
                         unlink($oldAvatar);
                     }
@@ -137,6 +125,7 @@
     </script>
 
     <script>
+        /* A Faire plus tard
         document.addEventListener('DOMContentLoaded', () => {
         const modal = document.getElementById("fenModal");
         const input = document.getElementById("Themes3");
@@ -145,10 +134,10 @@
         const openModal = document.getElementById("openModal");
 
         openModal.onclick = () => {
-            modal.style.display = "block";
+           modal.style.display = "block";
         };
       
-        refuser.onclick = () =>{
+       refuser.onclick = () =>{
             modal.style.display = "none";
         };
         window.onclick = (event) =>{
@@ -158,13 +147,13 @@
         };
         valider.onclick = () =>{
             <?php
-            $money = getMoneyById($_SESSION['userId']);
+         //   $money = getMoneyById($_SESSION['userId']);
             ?>
             if (<?php echo $money?> > 2500){
                 input.disabled = false;
                 <?php
-                $newmoney = $money - 2500;
-                 updateDouzCoin($_SESSION['userId'],$newmoney)?>
+             //   $newmoney = $money - 2500;
+              //   updateDouzCoin($_SESSION['userId'],$newmoney)?>
                  modal.style.display ="none";
             }else{
                 modal.style.display ="none";
@@ -172,4 +161,5 @@
             }
         };
     });
+    */
     </script>

@@ -15,7 +15,7 @@
     function createStatistiques(int $idUser): void {
         $connection = ConnexionSingleton::getInstance();
 
-        $insertStatsQuery = "INSERT INTO statistiques VALUES (NULL, 0, 0, 0, 0, 0, 0, 0)";
+        $insertStatsQuery = "INSERT INTO statistiques(nbDouzhee,nbPartiesGagnees,nbPartiesJoues,nbSucces,ratioVictoire,scoreMaximal,tempsJeu) VALUES (0, 0, 0, 0, 0, 0, 0)";
 
         $statement = $connection->prepare($insertStatsQuery);
         $statement->execute();
@@ -47,7 +47,7 @@
 
         $data = $statement->fetch(PDO::FETCH_ASSOC);
 
-        $statsUser = new Statistiques($data['id'], $data['nbPartiesGagnees'], $data['scoreMaximal'], $data['tempsJeu'], $data['ratioVictoire'], $data['nombreSucces'], $data['nbDouzhee'], $data['nbPartiesJoues']);
+        $statsUser = new Statistiques($data['id'], $data['nbPartiesGagnees'], $data['scoreMaximal'], $data['tempsJeu'], $data['ratioVictoire'], $data['nbSucces'], $data['nbDouzhee'], $data['nbPartiesJoues']);
         return $statsUser;
     }
 

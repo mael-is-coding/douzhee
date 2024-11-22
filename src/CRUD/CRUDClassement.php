@@ -1,7 +1,7 @@
 <?PHP 
     require_once $_SERVER['DOCUMENT_ROOT'] . "/douzhee/src/Classes/Classement.php";
     require_once $_SERVER['DOCUMENT_ROOT'] . "/douzhee/src/Utils/connectionSingleton.php";
-  //  require_once $_SERVER['DOCUMENT_ROOT'] . "/douzhee/src/CRUD/CRUDSeTrouve.php";
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/douzhee/src/CRUD/CRUDSeTrouve.php";
 
     //FONCTIONS CREATE
 
@@ -14,11 +14,12 @@
      */
     function createClassement(String $pseudo, int $idUser): void{
         $connection = ConnexionSingleton::getInstance();
-
-        $insertClassement = 'INSERT INTO classement VALUES (NULL, 0, 0, :pseudo)';
+        $place = $connection->lastInsertId() + 1;
+        $insertClassement = 'INSERT INTO classement VALUES (NULL, 0, :place, :pseudo)';
 
         $statement = $connection->prepare($insertClassement);
         $statement->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
+        $statement->bindParam(':place', $place);
         $statement->execute();
 
         $idClassement = $connection->lastInsertId();

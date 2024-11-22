@@ -1,5 +1,6 @@
 <?php
     require_once("../CRUD/CRUDJoueur.php");
+    require_once("../Utils/headerInit.php");
 ?>
     <link rel="stylesheet" href="../../assets/css/styleCIRV.css">
 </head>
@@ -14,9 +15,12 @@
 </body>
 </html>
 <?php
+
     if (!empty($_POST['codeVerification'])){
+        echo $_SESSION['codeVerification'];
         if ($_POST['codeVerification'] == $_SESSION['codeVerification']){
             updatePassword($_SESSION['newPassword'],$_SESSION['E-mail']);
+            unset($_SESSION['codeVerification']);
             header('Location: Connexion.php');
         }else{
             echo '<script 

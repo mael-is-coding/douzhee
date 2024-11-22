@@ -7,7 +7,7 @@
  * @brief insère un nouveau joueur dans la table Joueur selon les paramètres spécifiés. tout les paramètres sont obligatoires.
  * @return bool false si la requête a échoué true sinon
  */
-function createJoueur(string $pseudo, string $mdp, int $douzCoin = 0, string $email, string $bio = null) :bool {
+function createJoueur(string $pseudo, string $mdp, string $email, int $douzCoin = 0, string $bio = null) :bool {
     $connection = ConnexionSingleton::getInstance();
     $hashedPassword = password_hash($mdp, PASSWORD_DEFAULT);
     $InsertQuery = "INSERT INTO Joueur (pseudonyme, mdp, douzCoin, email, biographie, dateInscription) VALUES (:pseudo, :mdp, :douzCoin, :email, :bio, CURRENT_TIMESTAMP)";
@@ -16,9 +16,10 @@ function createJoueur(string $pseudo, string $mdp, int $douzCoin = 0, string $em
 
     $statement->bindParam("pseudo", $pseudo);
     $statement->bindParam("mdp", $hashedPassword);
+    $statement->bindParam("douzCoin", $douzCoin);
     $statement->bindParam("email", $email);
     $statement->bindParam("bio", $bio);
-    $statement->bindParam("douzCoin", $douzCoin);
+   
 
     return $statement->execute();
 }

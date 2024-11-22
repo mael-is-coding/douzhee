@@ -15,8 +15,8 @@
 ?>
     <div class="PageProfil">
         <img src="<?php echo readAvatarById($_SESSION['userId'])?>" alt="Avatar" width="100" height="100" id="avatar">
-        <h2 id="Pseudo"><?php echo $_SESSION['pseudo']; ?></h2>
-        <p id="bio"><?php echo $_SESSION['bio']; ?></p>
+        <h2 id="Pseudo"><?php echo getPseudoById($_SESSION['userId']); ?></h2>
+        <p id="bio"><?php echo getBioById($_SESSION['userId']); ?></p>
         <div class="buttons">
             <button onclick="location.href='States.php'">Statistiques</button>
             <button onclick="location.href='Personnalisation.php'">Personnalisation</button>

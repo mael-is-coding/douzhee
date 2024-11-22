@@ -42,7 +42,8 @@ if (!empty($_POST['E-mail']) &&  !empty($_POST['NewPassword'])){
             $mail->Subject = 'Changement de mot de passe';
             $mail->Body    = 'Voici le code de vérification : '.$code;
             if ($mail->send()) {
-                header('Location: PageVerification.php');
+                header('Location: Verification.php');
+                exit();
             } else {
                 echo 'Échec de l\'envoi: ' . $mail->ErrorInfo;
             }

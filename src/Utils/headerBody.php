@@ -1,7 +1,10 @@
 <?php
 require_once("../CRUD/CRUDJoueur.php");
 require_once("../CRUD/CRUDSkinAchete.php");
-$allAchats = readAllAchatByUser($_SESSION['userId']);
+if (isset($_SESSION['userId'])){
+    $allAchats = readAllAchatByUser($_SESSION['userId']);
+}
+
 ?>
 <body>
     <header>
@@ -19,9 +22,9 @@ $allAchats = readAllAchatByUser($_SESSION['userId']);
             }
         ?>
             <div class="selection_droite">
-            <span id="money"><?php echo $_SESSION['douzeCoin']; ?></span>
+            <span id="money"><?php echo getMoneyById($_SESSION['userId']); ?></span>
                 <img src="../../assets/Images/imgheader/coin_dollar_finance_icon_125510 1.png" alt="Money du Jeu" width="27" height="27" id="coin">
-                <span id="pseudo"><?php echo $_SESSION['pseudo']; ?></span>
+                <span id="pseudo"><?php echo getPseudoById($_SESSION['userId']); ?></span>
                 <form action="Profil.php" method="GET">
                     <input id="profil" type="submit" value="">
                 </form>

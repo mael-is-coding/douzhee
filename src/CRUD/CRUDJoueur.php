@@ -1,27 +1,24 @@
 <?php
-    require_once $_SERVER['DOCUMENT_ROOT'] . "/SAE/Douzhee/src/Classes/Joueur.php";
-    require_once $_SERVER['DOCUMENT_ROOT'] . "/SAE/Douzhee/src/Utils/connectionSingleton.php";
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/douzhee/src/Classes/Joueur.php";
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/douzhee/src/Utils/connectionSingleton.php";
 
 
 /**
  * @brief insère un nouveau joueur dans la table Joueur selon les paramètres spécifiés. tout les paramètres sont obligatoires.
  * @return bool false si la requête a échoué true sinon
  */
-function createJoueur(string $pseudo, string $mdp, int $douzCoin, string $email, string $bio = null) :bool {
+function createJoueur(string $pseudo, string $mdp, int $douzCoin = 0, string $email, string $bio = null) :bool {
     $connection = ConnexionSingleton::getInstance();
     $hashedPassword = password_hash($mdp, PASSWORD_DEFAULT);
-    $InsertQuery = "INSERT INTO Joueur (pseudonyme, mdp, douzCoin, email, biographie, dateInscription) VALUES (:pseudo, :mdp, 0, :email, :bio, :dateInsc)";
+    $InsertQuery = "INSERT INTO Joueur (pseudonyme, mdp, douzCoin, email, biographie, dateInscription) VALUES (:pseudo, :mdp, :douzCoin, :email, :bio, CURRENT_TIMESTAMP)";
 
     $statement = $connection->prepare($InsertQuery);
-
-    $dateInsc = date("j:n:g:i:s");
 
     $statement->bindParam("pseudo", $pseudo);
     $statement->bindParam("mdp", $hashedPassword);
     $statement->bindParam("email", $email);
     $statement->bindParam("bio", $bio);
     $statement->bindParam("douzCoin", $douzCoin);
-    $statement->bindParam("dateInsc", $dateInsc);
 
     return $statement->execute();
 }
@@ -46,7 +43,7 @@ function updateJoueur(int $id, string $pseudo = null, string $mdp = null, int $d
     
 
     $connection = ConnexionSingleton::getInstance();
-    $UpdateQuery = "UPDATE Joueur SET pseudonyme = :pseudo, mdp = :mdp, douzCoin = :douzCoin, email = :email, biographie = :bio, dateInscription = :dateInsc, idPartie = :idPartie WHERE id = $id";
+    $UpdateQuery = "UPDATE Joueur SET pseudonyme = :pseudo, mdp = :mdp, douzCoin = :douzCoin, email = :email, biographie = :bio, idPartie = :idPartie WHERE id = $id";
 
     $statement = $connection->prepare($UpdateQuery);
 

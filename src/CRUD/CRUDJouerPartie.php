@@ -50,7 +50,6 @@ function readPositionIsUsed(int $idPJ, int $position) : int {
     $Rqsuccess = $statement->execute();
 
     if($Rqsuccess) {
-        
         $results = $statement->fetch(PDO::FETCH_ASSOC);
         
         if(gettype($results) == "boolean") {

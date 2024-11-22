@@ -34,6 +34,13 @@ function readConnectedPlayers() {
 }
 
 function readPositionIsUsed(int $idJJ, int $idPJ, int $position) : bool {
+/**
+ * @param int $idJJ
+ * @param int $idPJ
+ * @param int $position
+ * @return bool|null
+ */
+function readPositionIsUsed(int $idJJ, int $idPJ, int $position) : int {
     $connexion = ConnexionSingleton::getInstance();
 
     $SelectQuery = "SELECT positionJoueur FROM JouerPartie WHERE idJoueurJouee = :idJJ AND idPartieJouee = :idPJ";
@@ -45,10 +52,22 @@ function readPositionIsUsed(int $idJJ, int $idPJ, int $position) : bool {
     
     $Rqsuccess = $statement->execute();
 
-    $results = $statement->fetch(PDO::FETCH_ASSOC);
-    $fetchedPos = $results["positionJoueur"];
+    if($Rqsuccess) {
+        
+        $results = $statement->fetch(PDO::FETCH_ASSOC);
+        
+        if($results->rowCount() < 0) {
+            return -1;
+        }
 
-    return ($fetchedPos != $position) && $Rqsuccess;
+        $fetchedPos = $results["positionJoueur"];
+
+        if ($fetchedPos != $position) {
+            return 0;
+        } else {
+            return 1;
+        }
+    }
 }
 
 function createJouerPartie(int $idJoueurJoue, int $idPartieJoue, int $positionJoueur): bool {

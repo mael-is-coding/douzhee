@@ -22,6 +22,17 @@ function readJouerPartie(int $idJoueurJoue, int $idPartieJoue): ?JouerPartie {
     return new JouerPartie($idJoueurJoue, $idPartieJoue, $scoreJoueur, $positionJoueur, $dateParticipation, $estGagnant);
 }
 
+function readConnectedPlayers() {
+    $connection = ConnexionSingleton::getInstance();
+
+    $SelectQuery = "SELECT COUNT(*) FROM JouerPartie WHERE idPartieJouee  = :idPartie";
+
+    $statement = $connection->prepare($SelectQuery);
+    $statement->execute(['idPartie' => $_SESSION['idPartie']]);
+
+    return $statement->fetchColumn();
+}
+
 function readPositionIsUsed(int $idJJ, int $idPJ, int $position) : bool {
     $connexion = ConnexionSingleton::getInstance();
 

@@ -12,15 +12,6 @@
         // Nombre de joueurs requis pour commencer la partie
         $requiredPlayers = readPartieById($_SESSION['idPartie'])->getNbJoueurs();
 
-        // Fonction pour vérifier le nombre de joueurs connectés
-        // A METTRE DANS LE CRUDJouerPartie.php
-        function readConnectedPlayers() {
-            $pdo = ConnexionSingleton::getInstance();
-            $query = $pdo->prepare("SELECT COUNT(*) FROM JouerPartie WHERE idPartieJouee  = :idPartie");
-            $query->execute(['idPartie' => $_SESSION['idPartie']]);
-            return $query->fetchColumn();
-        }
-
         $connectedPlayers = readConnectedPlayers();
         //debugSession();
     ?>
@@ -48,7 +39,7 @@
                 <tr>
                     <td class="col-score">
                         <div class="rect-score">
-                            <img src="./img/de1.png" alt="icon">
+                            <img src="../../assets/Images/imgGames/de1.png" alt="icon">
                             <div class="tite-score">
                                 <p class="score-dé">Un</p>
                                 <p class="info-score">Somme des 1</p>
@@ -56,13 +47,13 @@
                         </div>
                     </td>
                     <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
-                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison" onclick="console.log('cc')"></td>
                     <?PHP endforeach; ?>
                 </tr>
                 <tr>
                     <td class="col-score">
                         <div class="rect-score">
-                            <img src="./img/de2.png" alt="icon">
+                            <img src="../../assets/Images/imgGames/de2.png" alt="icon">
                             <div class="tite-score">
                                 <p class="score-dé">Deux</p>
                                 <p class="info-score">Somme des 2</p>
@@ -76,7 +67,7 @@
                 <tr>
                     <td class="col-score">
                         <div class="rect-score">
-                            <img src="./img/de3.png" alt="icon">
+                            <img src="../../assets/Images/imgGames/de3.png" alt="icon">
                             <div class="tite-score">
                                 <p class="score-dé">Trois</p>
                                 <p class="info-score">Somme des 3</p>
@@ -90,7 +81,7 @@
                 <tr>
                     <td class="col-score">
                         <div class="rect-score">
-                            <img src="./img/de4.png" alt="icon">
+                            <img src="../../assets/Images/imgGames/de4.png" alt="icon">
                             <div class="tite-score">
                                 <p class="score-dé">Quatre</p>
                                 <p class="info-score">Somme des 4</p>
@@ -104,7 +95,7 @@
                 <tr>
                     <td class="col-score">
                         <div class="rect-score">
-                            <img src="./img/de5.png" alt="icon">
+                            <img src="../../assets/Images/imgGames/de5.png" alt="icon">
                             <div class="tite-score">
                                 <p class="score-dé">Cinq</p>
                                 <p class="info-score">Somme des 5</p>
@@ -118,7 +109,7 @@
                 <tr>
                     <td class="col-score">
                         <div class="rect-score">
-                            <img src="./img/de6.png" alt="icon">
+                            <img src="../../assets/Images/imgGames/de6.png" alt="icon">
                             <div class="tite-score">
                                 <p class="score-dé">Six</p>
                                 <p class="info-score">Somme des 6</p>
@@ -165,7 +156,7 @@
                     <td class="col-score">
                         <div class="rect-score">
                             <div clas="img-dé">
-                                <img src="./img/de3X.png" alt="icon">
+                                <img src="../../assets/Images/imgGames/de3X.png" alt="icon">
                             </div>
                             <div class="tite-score">
                                 <p class="score-dé">Brelan</p>
@@ -180,7 +171,7 @@
                 <tr>
                     <td class="col-score">
                         <div class="rect-score">
-                            <img src="./img/de4X.png" alt="icon">
+                            <img src="../../assets/Images/imgGames/de4X.png" alt="icon">
                             <div class="tite-score">
                                 <p class="score-dé">Carré</p>
                                 <p class="info-score">Somme des dés</p>
@@ -194,7 +185,7 @@
                 <tr>
                     <td class="col-score">
                         <div class="rect-score">
-                            <img src="./img/deFH.png" alt="icon">
+                            <img src="../../assets/Images/imgGames/deFH.png" alt="icon">
                             <div class="tite-score">
                                 <p class="score-dé">Full</p>
                                 <p class="info-score">25 points</p>
@@ -208,7 +199,7 @@
                 <tr>
                     <td class="col-score">
                         <div class="rect-score">
-                            <img src="./img/deSM.png" alt="icon">
+                            <img src="../../assets/Images/imgGames/deSM.png" alt="icon">
                             <div class="tite-score">
                                 <p class="score-dé" id="gt1">Petite suite</p>
                                 <p class="info-score">30 points</p>
@@ -222,7 +213,7 @@
                 <tr>
                     <td class="col-score">
                         <div class="rect-score">
-                            <img src="./img/deLG.png" alt="icon">
+                            <img src="../../assets/Images/imgGames/deLG.png" alt="icon">
                             <div class="tite-score">
                                 <p class="score-dé" id="gt2">Grande suite</p>
                                 <p class="info-score">40 points</p>
@@ -236,7 +227,7 @@
                 <tr>
                     <td class="col-score">
                         <div class="rect-score">
-                            <img src="./img/de5X.png" alt="icon">
+                            <img src="../../assets/Images/imgGames/de5X.png" alt="icon">
                             <div class="tite-score">
                                 <p class="score-dé">Douzhee</p>
                                 <p class="info-score" id="gt3">50 points (25/extra)</p>
@@ -250,7 +241,7 @@
                 <tr>
                     <td class="col-score">
                         <div class="rect-score">
-                            <img src="./img/deCH.png" alt="icon">
+                            <img src="../../assets/Images/imgGames/deCH.png" alt="icon">
                             <div class="tite-score">
                                 <p class="score-dé">Chance</p>
                                 <p class="info-score">Somme des dés</p>
@@ -287,11 +278,11 @@
     <div class="versus">
         <div class="ligne1">
             <div class="joueur-avatar">
-            <div class="img-joueur"><img src="./img/pdp.png" alt="icon"></div>
+            <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
                 <p class="joueur-nom">Joueur 1</p>
             </div>
             <div class="joueur-avatar">
-            <div class="img-joueur"><img src="./img/pdp.png" alt="icon"></div>
+            <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
                 <p class="joueur-nom">Joueur 2</p>
             </div>
         </div>
@@ -300,11 +291,11 @@
 
         <div class="ligne3">
             <div class="joueur-avatar">
-                <div class="img-joueur"><img src="./img/pdp.png" alt="icon"></div>
+                <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
                 <p class="joueur-nom">Joueur 3</p>
             </div>
             <div class="joueur-avatar">
-            <div class="img-joueur"><img src="./img/pdp.png" alt="icon"></div>
+            <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
                 <p class="joueur-nom">Joueur 4</p>
             </div>
         </div>

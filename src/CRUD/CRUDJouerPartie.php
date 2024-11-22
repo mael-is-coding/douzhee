@@ -27,14 +27,13 @@ function readJouerPartie(int $idJoueurJoue, int $idPartieJoue): ?JouerPartie {
  * @param int $position
  * @return bool|null
  */
-function readPositionIsUsed(int $idJJ, int $idPJ, int $position) : int {
+function readPositionIsUsed(int $idPJ, int $position) : int {
     $connexion = ConnexionSingleton::getInstance();
 
-    $SelectQuery = "SELECT positionJoueur FROM JouerPartie WHERE idJoueurJouee = :idJJ AND idPartieJouee = :idPJ";
+    $SelectQuery = "SELECT positionJoueur FROM JouerPartie WHERE idPartieJouee = :idPJ";
 
     $statement = $connexion->prepare($SelectQuery);
 
-    $statement->bindParam("idJJ", $idJJ);
     $statement->bindParam("idPJ", $idPJ);
     
     $Rqsuccess = $statement->execute();
@@ -43,7 +42,7 @@ function readPositionIsUsed(int $idJJ, int $idPJ, int $position) : int {
         
         $results = $statement->fetch(PDO::FETCH_ASSOC);
         
-        if($results->rowCount() < 0) {
+        if(gettype($results) == "boolean") {
             return -1;
         }
 

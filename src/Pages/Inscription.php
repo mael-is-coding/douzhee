@@ -3,6 +3,7 @@
     require_once("../Utils/headerInit.php");
     require_once("../CRUD/CRUDStatistiques.php");
     require_once("../CRUD/CRUDClassement.php");
+    require_once("../CRUD/CRUDObtient.php");
 ?>
     <link rel="stylesheet" href="../../assets/css/styleCIRV.css">
 </head>
@@ -32,6 +33,7 @@
                 $_SESSION['userId'] = getIdUser($_POST['E-mail']);
                 createStatistiques($_SESSION['userId']);
                 createClassement(getPseudoById($_SESSION['userId']),$_SESSION['userId']);
+                createObtient($_SESSION['userId'],1);
                 header('Location: Index.php');
              }
         }

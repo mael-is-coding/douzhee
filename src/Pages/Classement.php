@@ -70,11 +70,12 @@ $i = 0;
                 </tr>
                 <?php
                 if (!empty($data[$i]) && is_array($data)){
-                    $row = $data[$i];
-                    $pseudo = $row['pseudonyme'];
-                    $score = $row['score'];
-                    $place = $row['placeClassement'];
+                    
                     for($i; $i < count($data) && $i < 7; $i++){
+                        $row = $data[$i];
+                     $pseudo = $row['pseudonyme']; 
+                     $score = $row['score'];
+                     $place = $row['placeClassement'];
                         echo '<tr>';
                         echo '<th scope="row">'.htmlspecialchars($place).'</th>';
                         echo '<td>'.htmlspecialchars($pseudo). '</td>';

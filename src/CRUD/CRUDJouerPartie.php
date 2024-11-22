@@ -36,7 +36,7 @@ function readConnectedPlayers() {
 /**
  * @param int $idPJ
  * @param int $position
- * @return int
+ * @return bool|null
  */
 function readPositionIsUsed(int $idPJ, int $position) : int {
     $connexion = ConnexionSingleton::getInstance();
@@ -50,21 +50,25 @@ function readPositionIsUsed(int $idPJ, int $position) : int {
     $Rqsuccess = $statement->execute();
 
     if($Rqsuccess) {
-        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
         
-        if(count($results) == 0) {
+        $results = $statement->fetch(PDO::FETCH_ASSOC);
+        
+        if(gettype($results) == "boolean") {
             return -1;
         }
 
-        foreach ($results as $row) {
-            // Si la position est déjà utilisée
-            if ($row["positionJoueur"] == $position) {
-                return 1;
-            }
+        $fetchedPos = $results["positionJoueur"];
+
+        if ($fetchedPos != $position) {
+            return 0;
+        } else {
+            return 1;
         }
-        return 0;
+
+    } else {
+        return -1; // on part du principe que si la requête échoue COMPLETEMENT, on agit comme dans le pire des cas : ça existe pas
     }
-    return -1;
+
 }
 
 function createJouerPartie(int $idJoueurJoue, int $idPartieJoue, int $positionJoueur): bool {

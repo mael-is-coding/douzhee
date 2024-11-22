@@ -14,8 +14,10 @@
      */
     function createClassement(String $pseudo, int $idUser): void{
         $connection = ConnexionSingleton::getInstance();
-        $place = $connection->lastInsertId() + 1;
-        $insertClassement = 'INSERT INTO classement VALUES (NULL, 0, :place, :pseudo)';
+        $placeQuery = 'SELECT COUNT(*) + 1 AS place FROM classement';
+        $placeStatement = $connection->query($placeQuery);
+        $place = $placeStatement->fetchColumn();
+        $insertClassement = 'INSERT INTO classement VALUES (NULL, :place, 0, :pseudo)';
 
         $statement = $connection->prepare($insertClassement);
         $statement->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);

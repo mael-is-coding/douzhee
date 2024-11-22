@@ -33,41 +33,38 @@ function readConnectedPlayers() {
     return $statement->fetchColumn();
 }
 
-function readPositionIsUsed(int $idJJ, int $idPJ, int $position) : bool {
 /**
- * @param int $idJJ
  * @param int $idPJ
  * @param int $position
- * @return bool|null
+ * @return int
  */
-function readPositionIsUsed(int $idJJ, int $idPJ, int $position) : int {
+function readPositionIsUsed(int $idPJ, int $position) : int {
     $connexion = ConnexionSingleton::getInstance();
 
-    $SelectQuery = "SELECT positionJoueur FROM JouerPartie WHERE idJoueurJouee = :idJJ AND idPartieJouee = :idPJ";
+    $SelectQuery = "SELECT positionJoueur FROM JouerPartie WHERE idPartieJouee = :idPJ";
 
     $statement = $connexion->prepare($SelectQuery);
 
-    $statement->bindParam("idJJ", $idJJ);
     $statement->bindParam("idPJ", $idPJ);
     
     $Rqsuccess = $statement->execute();
 
     if($Rqsuccess) {
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
         
-        $results = $statement->fetch(PDO::FETCH_ASSOC);
-        
-        if($results->rowCount() < 0) {
+        if(count($results) == 0) {
             return -1;
         }
 
-        $fetchedPos = $results["positionJoueur"];
-
-        if ($fetchedPos != $position) {
-            return 0;
-        } else {
-            return 1;
+        foreach ($results as $row) {
+            // Si la position est déjà utilisée
+            if ($row["positionJoueur"] == $position) {
+                return 1;
+            }
         }
+        return 0;
     }
+    return -1;
 }
 
 function createJouerPartie(int $idJoueurJoue, int $idPartieJoue, int $positionJoueur): bool {

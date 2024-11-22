@@ -8,6 +8,8 @@
     $_SESSION['user_id'] = 1;
     $joueurTemp = readJoueur($_SESSION['user_id']);
 
+    
+
     if(isset($_POST['nombre_joueur'])) {
         $nombre_joueur = $_POST['nombre_joueur'];
         $idJoueur = $_SESSION['user_id'];
@@ -24,35 +26,37 @@
         exit();
     }
 
-    /*
-    switch(false){
-        case readPositionIsUsed(1, 1, 2):
-            createJouerPartie($idJoueur, $idPartie, 2);
-            break;
-        case readPositionIsUsed(1, 1, 3):
-            createJouerPartie($idJoueur, $idPartie, 3);
-            break;
-        case readPositionIsUsed(1, 1, 4):
-            createJouerPartie($idJoueur, $idPartie, 3);
-            break;
-        default:
-            echo "Partie Pleine";
-            break;
-    }
-    */
-
     if(isset($_POST['lien_partie'])) {
         $lienPartie = $_POST['lien_partie'];
-        $idPartie = readPartieByLien($lienPartie);
-        $idPartie = $idPartie->getId();
+        $partie = readPartieByLien($lienPartie);
+        $idPartie = $partie->getId();
         if ($idPartie == -1){
             echo '<script type="text/javascript"> window.onload = function () { alert("Lien invalide"); }</script>';
         }
         $idJoueur = $_SESSION['user_id'];
-        $idJouerPartie = createJouerPartie($idJoueur, $idPartie, 2);
-        $_SESSION["position"] = 2;
-        header("Location: ./game.php");
-        exit();
+        switch(true){
+            case readConnectedPlayers($idPartie) == 0 && $partie->getNbJoueurs() >= 2:
+                $idJouerPartie = createJouerPartie($idJoueur, $idPartie, 2);
+                $_SESSION["position"] = 2;
+                header("Location: ./game.php");
+                exit();
+                break;
+            case readConnectedPlayers($idPartie) == 0 && $partie->getNbJoueurs() >= 3:
+                $idJouerPartie = createJouerPartie($idJoueur, $idPartie, 3);
+                $_SESSION["position"] = 3;
+                header("Location: ./game.php");
+                exit();
+                break;
+            case readConnectedPlayers($idPartie) == 0 && $partie->getNbJoueurs() >= 4:
+                $idJouerPartie = createJouerPartie($idJoueur, $idPartie, 4);
+                $_SESSION["position"] = 4;
+                header("Location: ./game.php");
+                exit();
+                break;
+            default:
+                echo '<script type="text/javascript"> window.onload = function () { alert("Partie pleine"); }</script>';
+                break;
+        }
     }
 
 ?>

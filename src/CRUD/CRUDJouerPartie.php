@@ -54,6 +54,9 @@ function readPositionIsUsed(int $idJJ, int $idPJ, int $position) : int {
         } else {
             return 1;
         }
+
+    } else {
+        return -1; // on part du principe que si la requête échoue COMPLETEMENT, on agit comme dans le pire des cas : ça existe pas
     }
 
 }

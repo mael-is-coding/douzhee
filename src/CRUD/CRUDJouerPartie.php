@@ -30,34 +30,45 @@ function readJouerPartie(int $idJoueurJoue, int $idPartieJoue): ?JouerPartie {
 function readPositionIsUsed(int $idPJ, int $position) : int {
     $connexion = ConnexionSingleton::getInstance();
 
-    $SelectQuery = "SELECT positionJoueur FROM JouerPartie WHERE idPartieJouee = :idPJ";
+    $existenceQuery = "SELECT COUNT(idPartie) AS C FROM table WHERE idPartie = :idPJ";
+    $existStatement = $connexion->prepare($existenceQuery);
+    $existStatement->bindParam("idPJ", $idPJ);
 
-    $statement = $connexion->prepare($SelectQuery);
+    $existRqSuccess = $existStatement->execute();
+    $existResults = $existStatement->fetch(PDO::FETCH_ASSOC);
 
-    $statement->bindParam("idPJ", $idPJ);
-    
-    $Rqsuccess = $statement->execute();
+    if($existResults["C"] > 0 && $existRqSuccess) {
 
-    if($Rqsuccess) {
+        $SelectQuery = "SELECT positionJoueur FROM JouerPartie WHERE idPartieJouee = :idPJ";
+
+        $statement = $connexion->prepare($SelectQuery);
+
+        $statement->bindParam("idPJ", $idPJ);
         
-        $results = $statement->fetch(PDO::FETCH_ASSOC);
-        
-        if(gettype($results) == "boolean") {
-            return -1;
-        }
+        $Rqsuccess = $statement->execute();
 
-        $fetchedPos = $results["positionJoueur"];
+        if($Rqsuccess) {
+            
+            $results = $statement->fetch(PDO::FETCH_ASSOC);
+            
+            if(gettype($results) == "boolean") {
+                return -1;
+            }
 
-        if ($fetchedPos != $position) {
-            return 0;
+            $fetchedPos = $results["positionJoueur"];
+
+            if ($fetchedPos != $position) {
+                return 0;
+            } else {
+                return 1;
+            }
+
         } else {
-            return 1;
+            return -1; // on part du principe que si la requête échoue COMPLETEMENT, on agit comme dans le pire des cas : ça existe pas
         }
-
     } else {
-        return -1; // on part du principe que si la requête échoue COMPLETEMENT, on agit comme dans le pire des cas : ça existe pas
+        return -1; // idPartie n'est pas dans la base de données
     }
-
 }
 
 function createJouerPartie(int $idJoueurJoue, int $idPartieJoue, int $positionJoueur): bool {

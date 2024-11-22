@@ -121,7 +121,7 @@ body {
     height: 100px;
 }
 
-.roll {
+#roll {
     background: #AB00E7;
     color: rgb(0, 0, 0);
     border: none;
@@ -177,7 +177,7 @@ tfoot{
     border: 2px solid black;
 }
 
-.case-score {
+.combinaison, .bonus {
     width: 65%;
     height: 65%;
     background: #6E6B6B;
@@ -499,7 +499,7 @@ p{
         border-radius: 50%;  
     }
 
-    .case-score{
+    .combinaison, .bonus{
         min-width: 20px;
     }
 
@@ -517,7 +517,7 @@ p{
         border: 2px solid white;
     }
 
-    .roll {
+    #roll {
         width: 75%;
         height: 10%;
         border-radius: 0%;

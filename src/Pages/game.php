@@ -13,6 +13,7 @@
         $requiredPlayers = readPartieById($_SESSION['idPartie'])->getNbJoueurs();
 
         // Fonction pour vérifier le nombre de joueurs connectés
+        // A METTRE DANS LE CRUDJouerPartie.php
         function readConnectedPlayers() {
             $pdo = ConnexionSingleton::getInstance();
             $query = $pdo->prepare("SELECT COUNT(*) FROM JouerPartie WHERE idPartieJouee  = :idPartie");
@@ -21,8 +22,7 @@
         }
 
         $connectedPlayers = readConnectedPlayers();
-
-        debugSession();
+        //debugSession();
     ?>
     <div class="waiting-room">
         <h1>En attente des autres joueurs...</h1>
@@ -39,10 +39,9 @@
             <thead>
                 <tr>
                     <th class="head-score"></th>
-                    <th class="head-joueur">J1</th>
-                    <th class="head-joueur">J2</th>
-                    <th class="head-joueur">J3</th>
-                    <th class="head-joueur">J4</th>
+                    <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
+                        <th class="head-joueur">J<?PHP echo $value ?></th>
+                    <?PHP endforeach; ?>
                 </tr>
             </thead>
             <tbody>
@@ -56,10 +55,9 @@
                             </div>
                         </div>
                     </td>
-                    <td class="col-joueur"><div class="case-score">55</div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
+                    <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
+                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                    <?PHP endforeach; ?>
                 </tr>
                 <tr>
                     <td class="col-score">
@@ -71,10 +69,9 @@
                             </div>
                         </div>
                     </td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
+                    <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
+                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                    <?PHP endforeach; ?>
                 </tr>
                 <tr>
                     <td class="col-score">
@@ -86,10 +83,9 @@
                             </div>
                         </div>
                     </td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
+                    <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
+                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                    <?PHP endforeach; ?>
                 </tr>
                 <tr>
                     <td class="col-score">
@@ -101,10 +97,9 @@
                             </div>
                         </div>
                     </td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
+                    <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
+                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                    <?PHP endforeach; ?>
                 </tr>
                 <tr>
                     <td class="col-score">
@@ -116,10 +111,9 @@
                             </div>
                         </div>
                     </td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
+                    <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
+                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                    <?PHP endforeach; ?>
                 </tr>
                 <tr>
                     <td class="col-score">
@@ -131,10 +125,9 @@
                             </div>
                         </div>
                     </td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
+                    <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
+                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                    <?PHP endforeach; ?>
                 </tr>
                 <tr>
                     <td class="col-score">
@@ -144,19 +137,17 @@
                                 <p class="info-score">supérieur à 62</p>
                         </div>
                     </td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
+                    <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
+                        <td class="col-joueur"><input type="button" placeholder="" class="bonus"></td>
+                    <?PHP endforeach; ?>
                 </tr>
             </tbody>
             <tfoot>
                 <tr>
                     <th class="foot-score"><p>UPPER</p></th>
-                    <th class="foot-joueur"></th>
-                    <th class="foot-joueur"></th>
-                    <th class="foot-joueur"></th>
-                    <th class="foot-joueur"></th>
+                    <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
+                        <th class="foot-joueur"></th>
+                    <?PHP endforeach; ?>
                 </tr>
             </tfoot>
         </table>
@@ -164,10 +155,9 @@
             <thead>
                 <tr>
                     <th class="head-score"></th>
-                    <th class="head-joueur">J1</th>
-                    <th class="head-joueur">J2</th>
-                    <th class="head-joueur">J3</th>
-                    <th class="head-joueur">J4</th>
+                    <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
+                        <th class="head-joueur">J<?PHP echo $value+1 ?></th>
+                    <?PHP endforeach; ?>
                 </tr>
             </thead>
             <tbody>
@@ -183,10 +173,9 @@
                             </div>
                         </div>
                     </td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
+                    <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
+                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                    <?PHP endforeach; ?>
                 </tr>
                 <tr>
                     <td class="col-score">
@@ -198,10 +187,9 @@
                             </div>
                         </div>
                     </td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
+                    <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
+                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                    <?PHP endforeach; ?>
                 </tr>
                 <tr>
                     <td class="col-score">
@@ -213,10 +201,9 @@
                             </div>
                         </div>
                     </td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
+                    <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
+                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                    <?PHP endforeach; ?>
                 </tr>
                 <tr>
                     <td class="col-score">
@@ -228,10 +215,9 @@
                             </div>
                         </div>
                     </td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
+                    <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
+                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                    <?PHP endforeach; ?>
                 </tr>
                 <tr>
                     <td class="col-score">
@@ -243,10 +229,9 @@
                             </div>
                         </div>
                     </td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
+                    <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
+                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                    <?PHP endforeach; ?>
                 </tr>
                 <tr>
                     <td class="col-score">
@@ -258,10 +243,9 @@
                             </div>
                         </div>
                     </td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
+                    <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
+                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                    <?PHP endforeach; ?>
                 </tr>
                 <tr>
                     <td class="col-score">
@@ -273,19 +257,17 @@
                             </div>
                         </div>
                     </td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
-                    <td class="col-joueur"><div class="case-score"></div></td>
+                    <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
+                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                    <?PHP endforeach; ?>
                 </tr>
             </tbody>
             <tfoot>
                 <tr>
                     <th class="foot-score"><p>LOWER</p></th>
-                    <th class="foot-joueur"></th>
-                    <th class="foot-joueur"></th>
-                    <th class="foot-joueur"></th>
-                    <th class="foot-joueur"></th>
+                    <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
+                        <th class="foot-joueur"></t>
+                    <?PHP endforeach; ?>
                 </tr>
             </tfoot>
         </table>
@@ -293,13 +275,13 @@
 
     <div class="dé-table">
         <div class="table">
-            <div class="dé" id="dé1"></div>
-            <div class="dé" id="dé2"></div>
-            <div class="dé" id="dé3"></div>
-            <div class="dé" id="dé4"></div>
-            <div class="dé" id="dé5"></div>
+            <div class="des libre" id="dé1"></div>
+            <div class="des libre" id="dé2"></div>
+            <div class="des libre" id="dé3"></div>
+            <div class="des libre" id="dé4"></div>
+            <div class="des libre" id="dé5"></div>
         </div>
-        <button class="roll"><p>Roll</p></button>
+        <button id="roll"><p>Roll</p></button>
     </div>
 
     <div class="versus">
@@ -366,7 +348,6 @@
         // Appeler la fonction au chargement de la page
         window.onload = checkPlayers;
 
-        
         var socket = io('http://localhost:8080'); // Initialiser le socket client pour se connecter au serveur socket.io sur le même domaine 
         // var socket = io('https://douzhee.fr'); // Sur le VPS
 

@@ -111,7 +111,8 @@ io.on('connection', (socket) => {
 
     // Gestion des messages de chat pour une partie spécifique
     socket.on('chat message game', (data) => {
-        io.to(data.gameid).emit('chat message game', data.message); // Diffuser le message à tous les clients dans la salle spécifique
+        console.log(`Message received for game ${data.gameId}: ${data.message}`);
+        io.to(data.gameId).emit('chat message game', data); // Diffuser le message à tous les clients dans la salle spécifique
     });
 });
 

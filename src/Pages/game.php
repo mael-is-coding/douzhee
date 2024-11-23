@@ -9,12 +9,11 @@
 </head>
 <body>
     <?php
-        // Nombre de joueurs requis pour commencer la partie
-        $requiredPlayers = readPartieById($_SESSION['idPartie'])->getNbJoueurs();
+        $requiredPlayers = readPartieById($_SESSION['idPartie'])->getNbJoueurs(); // nombre de joueurs requis pour commencer la partie
+        $connectedPlayers = readConnectedPlayers(); // nombre de joueurs connectés
+        $ids = 0; // id pour les inputs
 
-        $connectedPlayers = readConnectedPlayers();
-        debugSession();
-        $ids = 0;
+        //debugSession();
     ?>
     <div class="waiting-room">
         <h1>En attente des autres joueurs...</h1>
@@ -306,95 +305,28 @@
         <div class="chat-messages" id="chat-messages"></div>
         <div class="chat-input">
             <input type="text" id="chat-input" placeholder="Tapez votre message..." />
-            <button onclick="sendMessage()">Envoyer</button>
+            <button id="sendMessage">Envoyer</button>
         </div>
     </div>
-    <button class="chat-toggle" onclick="toggleChat()">💬</button>
+    <button id="chat-toggle">💬</button>
     
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     <script>
-        // Injection des variables PHP dans le code JavaScript
-        let playerId = <?= json_encode($_SESSION["userId"]); ?>;
-        let position = <?= json_encode($_SESSION["position"]); ?>;
-        let nbPlayers = <?= json_encode($requiredPlayers); ?>;
+        let playerId = <?= json_encode($_SESSION["userId"]); ?>; // Récupérer l'ID du joueur
+        let position = <?= json_encode($_SESSION["position"]); ?>; // Récupérer la position du joueur
+        let nbPlayers = <?= json_encode($requiredPlayers); ?>; // Récupérer le nombre de joueurs
 
         let socket = io('http://localhost:8080'); // Initialiser le socket client pour se connecter au serveur socket.io sur le même domaine 
         // let socket = io('https://douzhee.fr'); // Sur le VPS
 
         let gameId = <?= json_encode($_SESSION['idPartie']); ?>; // Récupérer l'ID de la partie
+        let pseudo = <?= json_encode($_SESSION['pseudo']); ?>; // Récupérer le pseudo du joueur
+
+        let requiredPlayers = <?= json_encode($requiredPlayers); ?>; // Récupérer le nombre de joueurs requis pour commencer la partie
+        let connectedPlayers = <?= json_encode($connectedPlayers); ?>; // Récupérer le nombre de joueurs connectés
     </script>
     <script src="../../assets/JS/scriptPageJeu.js" type="module"></script>
-    
-
-    <script>
-
-        var requiredPlayers = <?= $requiredPlayers; ?>;
-        var connectedPlayers = <?= $connectedPlayers; ?>;
-
-        console.log(<?php echo $_SESSION['position']; ?>);
-
-        // Fonction pour vérifier le nombre de joueurs connectés et afficher/masquer les éléments en conséquence
-        function checkPlayers() {
-            if (connectedPlayers < requiredPlayers) {
-                document.querySelector('.waiting-room').style.display = 'flex';
-                document.querySelector('.score').style.display = 'none';
-                document.querySelector('.dé-table').style.display = 'none';
-                document.querySelector('.versus').style.display = 'none';
-                document.querySelector('.chat-container').style.display = 'none';
-                document.querySelector('.chat-toggle').style.display = 'none';
-            } else {
-                document.querySelector('.waiting-room').style.display = 'none';
-                document.querySelector('.score').style.display = 'flex';
-                document.querySelector('.dé-table').style.display = 'flex';
-                document.querySelector('.versus').style.display = 'flex';
-                document.querySelector('.chat-container').style.display = 'flex';
-                document.querySelector('.chat-toggle').style.display = 'flex';
-            }
-        }
-
-        // Appeler la fonction au chargement de la page
-        window.onload = checkPlayers;
-
-        
-
-        
-        // Rejoindre la salle de chat pour la partie spécifique
-        socket.emit('player joined', gameId);
-
-        socket.on('player joined', function(connectedPlayersCount) {
-            console.log('Player joined game: ' + connectedPlayersCount);
-            document.getElementById('connected-players').innerText = connectedPlayersCount;
-            connectedPlayers = connectedPlayersCount;
-            checkPlayers();
-        });
-
-        socket.on('player disconnected', function(connectedPlayersCount) {
-            console.log('Player disconnected from game: ' + gameId);
-            document.getElementById('connected-players').innerText = connectedPlayersCount;
-            connectedPlayers = connectedPlayersCount;
-            checkPlayers();
-        });
-
-        // Fonction pour envoyer un message
-        function sendMessage() {
-            var input = document.getElementById('chat-input'); // Récupérer l'input
-            var message = input.value; // Récupérer la valeur de l'input
-            input.value = ''; // Réinitialiser l'input
-            socket.emit('chat message game', { gameId: gameId, message: message }); // Émettre le message
-        }
-
-        socket.on('chat message game', function(msg) {
-            var messages = document.getElementById('chat-messages'); // Récupérer les messages
-            var messageElement = document.createElement('p'); // Créer un élément div
-            messageElement.textContent = msg; // Ajouter le message reçu à l'élément div
-            messages.appendChild(messageElement); // Ajouter le message à la liste des messages
-            messages.scrollTop = messages.scrollHeight; // Faire défiler vers le bas pour afficher le dernier message
-        });
-
-        function toggleChat() {
-            var chatContainer = document.querySelector('.chat-container'); // Récupérer le conteneur du chat
-            chatContainer.classList.toggle('active'); // Ajouter ou supprimer la classe active pour afficher ou masquer le chat
-        }
-    </script>
+    <script src="../../assets/JS/scriptChatEnLigne.js"></script>
+    <script src="../../assets/JS/scriptPageAttente.js"></script>
 </body>
 </html>

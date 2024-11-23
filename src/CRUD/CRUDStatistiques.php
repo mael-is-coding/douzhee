@@ -125,3 +125,12 @@
         $statement->bindParam(':nbDouzhee', $nbDouzhee, PDO::PARAM_INT);
         $statement->execute();
     }
+    function updateTempsJeu(int $idUser, int $temps){
+        $connection = ConnexionSingleton::getInstance();
+        $updateQuery = 'UPDATE statistiques SET tempsJeu = tempsJeu + :tempsJeu WHERE id = (SELECT idStatistiques FROM consulte WHERE idJoueur = :idUser)';
+        $statement = $connection->prepare($updateQuery);
+        $statement->bindParam(':idUser', $idUser, PDO::PARAM_INT);
+        $statement->bindParam(':tempsJeu', $temps, PDO::PARAM_INT);
+        $statement->execute();
+
+    }

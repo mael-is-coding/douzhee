@@ -42,6 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         $trouve = verifUser($_POST['E-mail']);
         if ($trouve){
             $_SESSION['userId'] = getIdUser($_POST['E-mail']);
+            $_SESSION['timeStart'] = microtime(true); 
             header('Location: Index.php');
             exit;
         } else {

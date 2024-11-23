@@ -72,7 +72,7 @@ $i = 0;
                 <?php
                 if (!empty($data[$i]) && is_array($data)){
                     
-                    for($i; $i < count($data) && $i < 7; $i++){
+                    for($i; $i < count($data) && $i < 10; $i++){
                         $row = $data[$i];
                      $pseudo = $row['pseudonyme']; 
                      $score = $row['score'];

@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
             setcookie($cookiename,"",time() - 9600,"/");
             setcookie($cookiename2,"",time() - 9600, "/");
         }
-        $trouve = verifUser($_POST['E-mail']);
+        $trouve = verifUser($_POST['E-mail'],$_POST['Password']);
         if ($trouve){
             $_SESSION['userId'] = getIdUser($_POST['E-mail']);
             $_SESSION['timeStart'] = microtime(true); 

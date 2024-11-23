@@ -333,13 +333,14 @@ function getIdUser($email){
 /**
  * @brief vérifie si un utilisateur existe dans la base de données
  */
-function verifUser($email) {
+function verifUser($email, $mdp) {  
     $connexion = ConnexionSingleton::getInstance();
-    $sql = "SELECT email FROM joueur WHERE email = :email";
+    $sql = "SELECT email, mdp FROM joueur WHERE email = :email";
     $stmt = $connexion->prepare($sql);
-    $stmt->bindParam('email', $email);
+    $stmt->bindParam(':email', $email);
     $stmt->execute();
-    return $stmt->fetch(PDO::FETCH_ASSOC);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC); 
+    return $user && password_verify($mdp,$user['mdp']);
 }
 function getPseudoById($id){
     $connexion = ConnexionSingleton::getInstance();

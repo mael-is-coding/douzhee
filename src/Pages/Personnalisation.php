@@ -50,6 +50,17 @@
             <button id="buttonPers" type="submit">Enregistrer les modifications</button>
         </form>
     </div>
+    <!--
+    <div id="fenModal">
+        <div class="content">
+            <h2>Voulez-vous acheter ce skin?</h2>
+            <img src="../../assets/images/imagePersonnalisation/Theme2.png">
+            <h2> Cela vous coutera 350 douzcoin</h2>
+            <button id="refuser">Refuser</button>
+            <button id="valider">Valider</button>
+        </div>
+    </div>
+    -->
 </body>
 </html>
 <?php
@@ -125,17 +136,17 @@
     </script>
 
     <script>
-        /* A Faire plus tard
+        /* A retravailler plus tard
         document.addEventListener('DOMContentLoaded', () => {
         const modal = document.getElementById("fenModal");
-        const input = document.getElementById("Themes3");
+        const input = document.getElementById("Themes2");
         const valider = document.getElementById("valider");
         const refuser = document.getElementById("refuser");
         const openModal = document.getElementById("openModal");
 
-        openModal.onclick = () => {
+        input.addEventListener('mouseover',  () => {
            modal.style.display = "block";
-        };
+        });
       
        refuser.onclick = () =>{
             modal.style.display = "none";

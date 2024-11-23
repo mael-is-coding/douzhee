@@ -7,6 +7,10 @@
 </head>
 <?php
     require_once("../Utils/headerBody.php");
+    if (isset($_SESSION['messageSucces1'])){
+        echo '<script>alert("' . $_SESSION['messageSucces1'] . '");</script>';
+        unset($_SESSION['messageSucces1']);
+    }
 ?>
     <div id="fonctionnalites">
         <div id="sectionHaut">

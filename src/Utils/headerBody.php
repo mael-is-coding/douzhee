@@ -40,12 +40,14 @@ if (isset($_SESSION['userId'])){
             </div>
         <?php endif; ?>
      </header>
+     <?php if (isset($_SESSION['userId'])): ?>
      <script>
         const img = document.getElementById("profil")
         img.style.backgroundImage = 'url("<?php echo readAvatarById($_SESSION['userId']); ?>")'
     </script>
+    <?php endif; ?>
     <?php
-        if (is_array($allAchats)){
+        if (isset($allAchats) && is_array($allAchats)  ){
             foreach($allAchats as $achats){
                 $themeId = $achats['idSkin'];
                 $etatSkin = $achats['etatSkin'];

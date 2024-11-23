@@ -30,7 +30,7 @@
 </html>
 
 <?php
-    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user_id'])){
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['userId'])){
         header('Location: ../Utils/logout.php');
     }
 ?>

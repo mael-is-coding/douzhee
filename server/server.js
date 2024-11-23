@@ -58,6 +58,17 @@ io.on('connection', (socket) => {
     // Gestion de la connexion d'un client
     console.log('a user connected');
 
+    socket.on('test' , () => {
+        console.log('test');
+        io.emit('test');
+    });
+
+    socket.on('inputValue', (data) => {
+        console.log('inputValue received');
+        console.log(data);
+        io.to(data.gameId).emit('inputValue', data);
+    });
+
     // Gestion de la déconnexion d'un client
     socket.on('disconnect', () => { 
         console.log('user disconnected to the server');

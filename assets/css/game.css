@@ -183,6 +183,7 @@ tfoot{
     max-width: 50px;
     max-height: 50px;
     background: #6E6B6B;
+    color: black;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -352,7 +353,6 @@ p{
 
     .chat-container{
         min-width: 263.68px;
-        border: 2px solid green;
         margin-left: 0px;
     }
 

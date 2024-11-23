@@ -4,15 +4,13 @@
     require_once("../CRUD/CRUDPartie.php");
     require_once("../CRUD/CRUDJouerPartie.php");
     require_once("../CRUD/CRUDAppartientA.php");
-    
-    $_SESSION['user_id'] = 1;
-    $joueurTemp = readJoueur($_SESSION['user_id']);
 
-    
+
+    $joueurTemp = readJoueur($_SESSION['userId']);
 
     if(isset($_POST['nombre_joueur'])) {
         $nombre_joueur = $_POST['nombre_joueur'];
-        $idJoueur = $_SESSION['user_id'];
+        $idJoueur = $_SESSION['userId'];
         $lienPartie = bin2hex(random_bytes(10)); // Génère un lien de 20 caractères
         $_SESSION['lienPartie'] = $lienPartie;
         $idPartie = createPartie($nombre_joueur, $_SESSION['lienPartie']);
@@ -34,7 +32,9 @@
             echo '<script type="text/javascript"> window.onload = function () { alert("Lien invalide"); }</script>';
             exit();
         }
-        $idJoueur = $_SESSION['user_id'];
+        $_SESSION['idPartie'] = $idPartie;
+        $_SESSION['lienPartie'] = $lienPartie;
+        $idJoueur = $_SESSION['userId'];
         $nbJoueurs = $partie->getNbJoueurs();
 
         if (readPositionIsUsed($idPartie, 2) == 0 && $nbJoueurs >= 2) {

@@ -13,7 +13,8 @@
         $requiredPlayers = readPartieById($_SESSION['idPartie'])->getNbJoueurs();
 
         $connectedPlayers = readConnectedPlayers();
-        //debugSession();
+        debugSession();
+        $ids = 0;
     ?>
     <div class="waiting-room">
         <h1>En attente des autres joueurs...</h1>
@@ -47,7 +48,7 @@
                         </div>
                     </td>
                     <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
-                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison" onclick="console.log('cc')"></td>
+                        <td class="col-joueur"><input id="<?php echo $ids++; ?>" type="button" placeholder="" class="combinaison"></td>
                     <?PHP endforeach; ?>
                 </tr>
                 <tr>
@@ -61,7 +62,7 @@
                         </div>
                     </td>
                     <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
-                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                        <td class="col-joueur"><input id="<?php echo $ids++; ?>" type="button" placeholder="" class="combinaison"></td>
                     <?PHP endforeach; ?>
                 </tr>
                 <tr>
@@ -75,7 +76,7 @@
                         </div>
                     </td>
                     <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
-                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                        <td class="col-joueur"><input id="<?php echo $ids++; ?>" type="button" placeholder="" class="combinaison"></td>
                     <?PHP endforeach; ?>
                 </tr>
                 <tr>
@@ -89,7 +90,7 @@
                         </div>
                     </td>
                     <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
-                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                        <td class="col-joueur"><input id="<?php echo $ids++; ?>" type="button" placeholder="" class="combinaison"></td>
                     <?PHP endforeach; ?>
                 </tr>
                 <tr>
@@ -103,7 +104,7 @@
                         </div>
                     </td>
                     <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
-                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                        <td class="col-joueur"><input id="<?php echo $ids++; ?>" type="button" placeholder="" class="combinaison"></td>
                     <?PHP endforeach; ?>
                 </tr>
                 <tr>
@@ -117,7 +118,7 @@
                         </div>
                     </td>
                     <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
-                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                        <td class="col-joueur"><input id="<?php echo $ids++; ?>" type="button" placeholder="" class="combinaison"></td>
                     <?PHP endforeach; ?>
                 </tr>
                 <tr>
@@ -165,7 +166,7 @@
                         </div>
                     </td>
                     <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
-                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                        <td class="col-joueur"><input id="<?php echo $ids++; ?>" type="button" placeholder="" class="combinaison"></td>
                     <?PHP endforeach; ?>
                 </tr>
                 <tr>
@@ -179,7 +180,7 @@
                         </div>
                     </td>
                     <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
-                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                        <td class="col-joueur"><input id="<?php echo $ids++; ?>" type="button" placeholder="" class="combinaison"></td>
                     <?PHP endforeach; ?>
                 </tr>
                 <tr>
@@ -193,7 +194,7 @@
                         </div>
                     </td>
                     <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
-                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                        <td class="col-joueur"><input id="<?php echo $ids++; ?>" type="button" placeholder="" class="combinaison"></td>
                     <?PHP endforeach; ?>
                 </tr>
                 <tr>
@@ -207,7 +208,7 @@
                         </div>
                     </td>
                     <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
-                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                        <td class="col-joueur"><input id="<?php echo $ids++; ?>" type="button" placeholder="" class="combinaison"></td>
                     <?PHP endforeach; ?>
                 </tr>
                 <tr>
@@ -221,7 +222,7 @@
                         </div>
                     </td>
                     <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
-                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                        <td class="col-joueur"><input id="<?php echo $ids++; ?>" type="button" placeholder="" class="combinaison"></td>
                     <?PHP endforeach; ?>
                 </tr>
                 <tr>
@@ -235,7 +236,7 @@
                         </div>
                     </td>
                     <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
-                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                        <td class="col-joueur"><input id="<?php echo $ids++; ?>" type="button" placeholder="" class="combinaison"></td>
                     <?PHP endforeach; ?>
                 </tr>
                 <tr>
@@ -249,7 +250,7 @@
                         </div>
                     </td>
                     <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
-                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                        <td class="col-joueur"><input id="<?php echo $ids++; ?>" type="button" placeholder="" class="combinaison"></td>
                     <?PHP endforeach; ?>
                 </tr>
             </tbody>
@@ -311,11 +312,26 @@
     <button class="chat-toggle" onclick="toggleChat()">💬</button>
     
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script>
+        // Injection des variables PHP dans le code JavaScript
+        let playerId = <?= json_encode($_SESSION["userId"]); ?>;
+        let position = <?= json_encode($_SESSION["position"]); ?>;
+        let nbPlayers = <?= json_encode($requiredPlayers); ?>;
+
+        let socket = io('http://localhost:8080'); // Initialiser le socket client pour se connecter au serveur socket.io sur le même domaine 
+        // let socket = io('https://douzhee.fr'); // Sur le VPS
+
+        let gameId = <?= json_encode($_SESSION['idPartie']); ?>; // Récupérer l'ID de la partie
+    </script>
+    <script src="../../assets/JS/scriptPageJeu.js" type="module"></script>
+    
 
     <script>
 
         var requiredPlayers = <?= $requiredPlayers; ?>;
         var connectedPlayers = <?= $connectedPlayers; ?>;
+
+        console.log(<?php echo $_SESSION['position']; ?>);
 
         // Fonction pour vérifier le nombre de joueurs connectés et afficher/masquer les éléments en conséquence
         function checkPlayers() {
@@ -339,12 +355,11 @@
         // Appeler la fonction au chargement de la page
         window.onload = checkPlayers;
 
-        var socket = io('http://localhost:8080'); // Initialiser le socket client pour se connecter au serveur socket.io sur le même domaine 
-        // var socket = io('https://douzhee.fr'); // Sur le VPS
+        
 
-        var gameid = <?= $_SESSION['idPartie']; ?>; // Récupérer l'ID de la partie
+        
         // Rejoindre la salle de chat pour la partie spécifique
-        socket.emit('player joined', gameid);
+        socket.emit('player joined', gameId);
 
         socket.on('player joined', function(connectedPlayersCount) {
             console.log('Player joined game: ' + connectedPlayersCount);
@@ -354,7 +369,7 @@
         });
 
         socket.on('player disconnected', function(connectedPlayersCount) {
-            console.log('Player disconnected from game: ' + gameid);
+            console.log('Player disconnected from game: ' + gameId);
             document.getElementById('connected-players').innerText = connectedPlayersCount;
             connectedPlayers = connectedPlayersCount;
             checkPlayers();
@@ -365,7 +380,7 @@
             var input = document.getElementById('chat-input'); // Récupérer l'input
             var message = input.value; // Récupérer la valeur de l'input
             input.value = ''; // Réinitialiser l'input
-            socket.emit('chat message game', { gameid: gameid, message: message }); // Émettre le message
+            socket.emit('chat message game', { gameId: gameId, message: message }); // Émettre le message
         }
 
         socket.on('chat message game', function(msg) {

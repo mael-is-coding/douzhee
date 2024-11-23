@@ -276,29 +276,78 @@
     </div>
 
     <div class="versus">
-        <div class="ligne1">
-            <div class="joueur-avatar">
-            <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
-                <p class="joueur-nom">Joueur 1</p>
+        <!-- Affichage pour 2 joueurs -->
+        <?php if($requiredPlayers == 2){?>
+            <div class="ligne1">
+                <div class="joueur-avatar">
+                    <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
+                    <p class="joueur-nom">Joueur 1</p>
+                </div>
+                <div class="joueur-avatar">
+                </div>
             </div>
-            <div class="joueur-avatar">
-            <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
-                <p class="joueur-nom">Joueur 2</p>
-            </div>
-        </div>
 
-        <span class="ligne2">VS</span>
+            <span class="ligne2">VS</span>
 
-        <div class="ligne3">
-            <div class="joueur-avatar">
-                <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
-                <p class="joueur-nom">Joueur 3</p>
+            <div class="ligne3">
+                <div class="joueur-avatar">
+                </div>
+                <div class="joueur-avatar">
+                    <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
+                    <p class="joueur-nom">Joueur 2</p>
+                </div>
             </div>
-            <div class="joueur-avatar">
-            <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
-                <p class="joueur-nom">Joueur 4</p>
+        
+        <!-- Affichage pour 3 joueurs -->
+        <?php } elseif($requiredPlayers == 3){?>
+            <div class="ligne1">
+                <div class="joueur-avatar">
+                    <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
+                    <p class="joueur-nom">Joueur 1</p>
+                </div>
+                <div class="joueur-avatar">
+                    <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
+                    <p class="joueur-nom">Joueur 2</p>
+                </div>
             </div>
-        </div>
+
+            <span class="ligne2">VS</span>
+
+            <div class="ligne3">
+                <div class="joueur-avatar">
+                    <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
+                    <p class="joueur-nom">Joueur 3</p>
+                </div>
+                <div class="joueur-avatar">
+                </div>
+            </div>
+        
+        <!-- Affichage pour 4 joueurs -->
+        <?php } elseif($requiredPlayers == 4){?>
+            <div class="ligne1">
+                <div class="joueur-avatar">
+                    <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
+                    <p class="joueur-nom">Joueur 1</p>
+                </div>
+                <div class="joueur-avatar">
+                    <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
+                    <p class="joueur-nom">Joueur 2</p>
+                </div>
+            </div>
+
+            <span class="ligne2">VS</span>
+
+            <div class="ligne3">
+                <div class="joueur-avatar">
+                    <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
+                    <p class="joueur-nom">Joueur 3</p>
+                </div>
+                <div class="joueur-avatar">
+                    <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
+                    <p class="joueur-nom">Joueur 3</p>
+                </div>
+            </div>
+        <?php }?>
     </div>
 
     <div class="chat-container">

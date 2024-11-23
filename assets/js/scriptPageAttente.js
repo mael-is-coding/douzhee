@@ -12,8 +12,9 @@ function checkPlayers() {
         document.querySelector('.score').style.display = 'flex';
         document.querySelector('.dé-table').style.display = 'flex';
         document.querySelector('.versus').style.display = 'flex';
-        document.querySelector('.chat-container').style.display = 'flex';
-        document.querySelector('.chat-toggle').style.display = 'flex';
+        if (window.matchMedia("(min-width: 520px)").matches) {
+            document.querySelector('.chat-container').style.display = 'flex';
+        }
     }
 }
 

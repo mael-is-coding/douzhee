@@ -1,6 +1,6 @@
-buttonSendMessage = document.getElementById('sendMessage');
-buttonToggleChat = document.getElementById('chat-toggle');
-inputChat = document.getElementById('chat-input');
+let buttonSendMessage = document.getElementById('sendMessage');
+let buttonToggleChat = document.getElementById('chat-toggle');
+let inputChat = document.getElementById('chat-input');
 
 buttonSendMessage.addEventListener('click', sendMessage);
 buttonToggleChat.addEventListener('click', toggleChat);

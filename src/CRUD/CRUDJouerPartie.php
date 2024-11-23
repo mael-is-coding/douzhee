@@ -36,7 +36,7 @@ function readConnectedPlayers() {
 /**
  * @param int $idPJ
  * @param int $position
- * @return int
+ * @return bool|null
  */
 function readPositionIsUsed(int $idPJ, int $position) : int {
     $connexion = ConnexionSingleton::getInstance();
@@ -136,4 +136,44 @@ function readPartieCount(int $idJJ): int {
     }
 
     return -1;
+}
+
+/**
+ * @brief donne une liste des Joueurs classé par leurs position à partir du param idPartie
+ * @param $idP id de la Partie d'où on sélectionne les joueurs
+ * @return ?array une collection d'instances de Joueurs, 
+ */
+function readAllUsersByIdPartie (int $idP): ?array {
+    $connexion = ConnexionSingleton::getInstance();
+
+    $SelectQuery = "SELECT pseudo FROM Joueur J 
+    JOIN JouerPartie JP 
+    ON J.id = JP.idJoueurJouee WHERE P.idPartie = :idP ORDER BY JP.positionJoueur ASC";
+
+    $statement = $connexion->prepare($SelectQuery);
+
+    $statement->bindParam("idP", $idP);
+
+    $success = $statement->execute();
+
+    if($success) {
+
+        $resultsArray = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        $returnedArray = [];
+
+        if (gettype($resultsArray) == "boolean") {
+
+            foreach($resultsArray as $results) {
+                array_push($returnedArray, $results["pseudonyme"]);
+            }
+
+            return $resultsArray;
+        } else {
+            return null;
+        }
+
+    } else {
+        return null;
+    } 
 }

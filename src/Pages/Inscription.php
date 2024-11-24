@@ -35,7 +35,7 @@
                 createStatistiques($_SESSION['userId']);
                 createClassement(getPseudoById($_SESSION['userId']),$_SESSION['userId']);
                 createObtient($_SESSION['userId'],1);
-
+                $_SESSION['timeStart'] = microtime(true); 
                 createSkinAchete(1,$_SESSION['userId'],1,"Theme",date("Y/m/d"));
                 $_SESSION['messageSucces1'] = "Bravo, vous venez d'obtenir le succès suivant : Se connecter pour la première fois";
                 header('Location: Index.php');

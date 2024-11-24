@@ -50,17 +50,6 @@
             <button id="buttonPers" type="submit">Enregistrer les modifications</button>
         </form>
     </div>
-    <!--
-    <div id="fenModal">
-        <div class="content">
-            <h2>Voulez-vous acheter ce skin?</h2>
-            <img src="../../assets/images/imagePersonnalisation/Theme2.png">
-            <h2> Cela vous coutera 350 douzcoin</h2>
-            <button id="refuser">Refuser</button>
-            <button id="valider">Valider</button>
-        </div>
-    </div>
-    -->
 </body>
 </html>
 <?php
@@ -118,19 +107,27 @@
     }
     
 
-}if (is_array($allAchats)){
-    foreach($allAchats as $achats){
-        $themeId = $achats['idSkin'];
-        ?>
-        <script>
-                document.addEventListener('DOMContentLoaded',() =>{
+}if (is_array($allAchats)) {
+    ?>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            <?php
+            foreach ($allAchats as $achats) {
+                $themeId = $achats['idSkin'];
+                ?>
                 const theme = document.getElementById("Themes<?php echo $themeId; ?>");
-                theme.style.backgroundImage = 'url("../../assets/images/imagePersonnalisation/Theme<?php echo $themeId; ?>.png")';
-                theme.disabled = false;
-            });
-        </script>
-        <?php
-    }
+                
+                if (theme) {
+                    
+                    theme.style.backgroundImage = 'url("../../assets/images/imagePersonnalisation/Theme<?php echo $themeId; ?>.png")';
+                    theme.disabled = false;
+                }
+                <?php
+            }
+            ?>
+        });
+    </script>
+    <?php
 }
 
 ?>

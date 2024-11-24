@@ -58,11 +58,10 @@ function readAllAchatByUser(int $userId): array{
  
     $connection = ConnexionSingleton::getInstance();
     $selectedQuery = "Select sa.idSkin, sa.typeSkin, sa.etatSkin
-
                     from effectueachat eff 
                     join skinacheter sa on sa.id = eff.idAchat
-                    join Skinachetable ska on ska.id = sa.id 
-                    where idJoueur = :idUser";
+                    join skinachetable ska on ska.id = sa.id 
+                    where eff.idJoueur = :idUser";
 
     $statement = $connection->prepare($selectedQuery);
     $statement->bindParam(":idUser", $userId);

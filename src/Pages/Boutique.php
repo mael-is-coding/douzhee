@@ -39,7 +39,7 @@
         foreach($allAchats as $achats){
             $themeId = $achats['idSkin'];
             
-        }
+        
         if ($themeId !=null){
         ?>
         <script>
@@ -49,16 +49,18 @@
                 if (themeId === 2){
                     theme.src = "../../assets/images/imageBoutique/Theme2Acheter.png";
                     theme.style.pointerEvents = "none";
-                }else if(themeId === 3){
+                }if(themeId === 3){
                     theme.src = "../../assets/images/imageBoutique/Theme3Acheter.png";
+                    theme.style.pointerEvents = "none";
                 }
-                
+            
 
             });
         </script>
         <?php
         }
     }
+}
 ?>
 <script>
         const modal = document.getElementById("fenModal");
@@ -119,5 +121,6 @@
             alert("Vous êtes trop pauvres !");
             modal.style.display = "none";
         }
+        window.location.href="http://localhost/douzhee/src/Pages/Index.php?_ijt=v1ppdtli2cq1rp8vpr9rsjg3b7&_ij_reload=RELOAD_ON_SAVE"
        });
  </script>

@@ -8,9 +8,9 @@ if (isset($_SESSION['userId'])){
 ?>
 <body>
     <header>
-        <form method="POST" action="Index.php">
+        <a href="Index.php">
             <input id="Logo" type="submit" value=""> 
-        </form>
+        </a>
         
         <?php if (isset($_SESSION['userId'])):
             // On vérifie si les variables de session sont définies

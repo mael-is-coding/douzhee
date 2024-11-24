@@ -65,7 +65,7 @@
         $connection = ConnexionSingleton::getInstance();
         $stats = readStatistiquesByIdUser($idUser);
 
-        $updateNbParties = 'UPDATE statistiques SET nbPartiesJoues = nbPartiesJoues + 1 WHERE id = (SELECT idStatistiques FROM consulte WHERE idJoueur = :idUser)';
+        $updateNbParties = 'UPDATE statistiques SET nbPartieJoues = nbPartieJoues + 1 WHERE id = (SELECT idStatistiques FROM consulte WHERE idJoueur = :idUser)';
         $statement = $connection->prepare($updateNbParties);
         $statement->bindParam(':idUser', $idUser, PDO::PARAM_INT);
         $statement->execute();
@@ -79,7 +79,7 @@
             updateClassement($idUser, $stats->getNbPartiesGagnees() + 1);
         }
 
-        $updateRatio = 'UPDATE statistiques SET ratioVictoire = nbPartieGagnees / nbPartiesJoues WHERE id = (SELECT idStatistiques FROM consulte WHERE idJoueur = :idUser)';
+        $updateRatio = 'UPDATE statistiques SET ratioVictoire = nbPartieGagnees / nbPartieJoues WHERE id = (SELECT idStatistiques FROM consulte WHERE idJoueur = :idUser)';
         $statement = $connection->prepare($updateRatio);
         $statement->bindParam(':idUser', $idUser, PDO::PARAM_INT);
         $statement->execute();

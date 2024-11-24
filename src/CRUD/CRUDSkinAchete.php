@@ -66,9 +66,10 @@ function readAllAchatByUser(int $userId){
 
 function updateEtatSkin(int $idSkin, int $etatSkin, int $idUser){
     $connection = ConnexionSingleton::getInstance();
-    $selectedQuery = "Select idAchat from effectueachat where idJoueur = :idUser";
+    $selectedQuery = "Select eff.idAchat from effectueachat eff join skinacheter sk on sk.id = eff.idAchat  where idJoueur = :idUser and idSkin = :idSkin";
     $statement = $connection->prepare($selectedQuery);
     $statement->bindParam(":idUser", $idUser);
+    $statement->bindParam(":idSkin",$idSkin);
     $statement->execute();
 
     if ($statement->rowCount() > 0) {

@@ -56,7 +56,7 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         if (!empty($_POST['pseudo'])){
             updatePseudoJoueur($_SESSION['userId'], $_POST['pseudo']);
-            header('Location: Profil.php');
+           // header('Location: Profil.php');
         }if(!empty($_POST['bio'])){
             updateBio($_SESSION['userId'], $_POST['bio']);
 
@@ -123,5 +123,3 @@
         const img_ = document.getElementsByClassName("file-label")[0]
         img_.style.backgroundImage = 'url("<?php echo readAvatarById($_SESSION['userId']); ?>")'
     </script>
-
-    

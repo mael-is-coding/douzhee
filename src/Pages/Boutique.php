@@ -13,8 +13,8 @@
         <h2>Bienvenue sur notre boutique !</h2>
         <div class="Theme">
             <h2>Voici tous les thèmes disponibles : </h2>
-            <img src="../../assets/images/imagePersonnalisation/Theme2.png"  class="clickable" id="2">
-            <img src="../../assets/images/imagePersonnalisation/Theme3.png"  class="clickable" id="3">
+            <img src="../../assets/images/imagePersonnalisation/Theme2.png" id="2"  class="clickable" >
+            <img src="../../assets/images/imagePersonnalisation/Theme3.png" id="3"  class="clickable" >
         </div>
         <div class="Dés">
             <h2>Voici tous les skin de dés disponibles : </h2>
@@ -35,16 +35,21 @@
 </html>
 <?php
     if (is_array($allAchats)){
+        $themeId = null;
         foreach($allAchats as $achats){
             $themeId = $achats['idSkin'];
+            
         }
+        if ($themeId !=null){
         ?>
         <script>
             document.addEventListener('DOMContentLoaded', () =>{
-                const theme = document.getElementById("<?php echo $themeId; ?>");
-                if (<?php echo $themeId; ?> === 2){
+                const themeId = parseInt("<?php echo $themeId; ?>", 10);
+                const theme = document.getElementById(`${themeId}`);
+                if (themeId === 2){
                     theme.src = "../../assets/images/imageBoutique/Theme2Acheter.png";
-                }else if(<?php echo $themeId; ?> === 3){
+                    theme.style.pointerEvents = "none";
+                }else if(themeId === 3){
                     theme.src = "../../assets/images/imageBoutique/Theme3Acheter.png";
                 }
                 
@@ -52,6 +57,7 @@
             });
         </script>
         <?php
+        }
     }
 ?>
 <script>
@@ -62,8 +68,8 @@
         const modalImage = document.getElementById("modalImage");
         const price = document.getElementById("price");
 
-        let selectedSkin = null;
-        let idSkin = null;
+        var selectedSkin = null;
+        var idSkin = null;
 
            
      inputs.forEach(input => {
@@ -85,20 +91,33 @@
         };
 
        valider.addEventListener('click', () =>{
-        const userMoney = <?php echo getMoneyById($_SESSION['userId']); ?>
+        const userMoney = <?php echo json_encode(getMoneyById($_SESSION['userId'])); ?>;
         if (userMoney >= 350){
             alert("Achat réussi !");
             modal.style.display = "none";
-            <?php
-            $newmoney = $userMoney - 350;
-            updateDouzCoin($_SESSION['userId'], $newmoney);
-            createSkinAchete($idSkin,$_SESSION['userId'],0,"Theme",date("Y/m/d"));
-            ?>
+            fetch("../Utils/processusAchat.php", {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    userId: <?php echo json_encode($_SESSION['userId']); ?>, // Injecte l'ID utilisateur
+                    idSkin: idSkin, 
+                    cost: 350
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Votre achat a été enregistré !");
+                } else {
+                    alert("Erreur : " + data.error);
+                }
+            })
+            .catch(error => {
+                console.error("Erreur lors de la requête : ", error);
+            });
         }else{
             alert("Vous êtes trop pauvres !");
             modal.style.display = "none";
         }
        });
-    
-
  </script>

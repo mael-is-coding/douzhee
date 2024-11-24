@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * @brief retourne une instance de JouerPartie si une ligne dans la BD correspond aux param
+ * @param int $idJoueurJoue 
+ * @param int $idPartieJoue
+ * @return JouerPartie|null retourne null si aucune ligne ne correspond aux paramètres
+ */
 function readJouerPartie(int $idJoueurJoue, int $idPartieJoue): ?JouerPartie {
     $connection = ConnexionSingleton::getInstance();
 
@@ -10,19 +16,33 @@ function readJouerPartie(int $idJoueurJoue, int $idPartieJoue): ?JouerPartie {
     $statement->bindParam("idJoueurJoue", $idJoueurJoue);
     $statement->bindParam("idPartieJoue", $idPartieJoue);
 
-    $statement->execute();
+    $success = $statement->execute();
 
-    $results = $statement->fetch(PDO::FETCH_ASSOC);
+    if($success) {
 
-    $scoreJoueur = $results["scoreJoueur"];
-    $positionJoueur = $results["positionJoueur"];
-    $dateParticipation = $results["dateParticipation"];
-    $estGagnant = $results["estGagnant"];
+        $results = $statement->fetch(PDO::FETCH_ASSOC);
 
-    return new JouerPartie($idJoueurJoue, $idPartieJoue, $scoreJoueur, $positionJoueur, $dateParticipation, $estGagnant);
+        if(gettype($results) == "boolean") {
+
+            $scoreJoueur = $results["scoreJoueur"];
+            $positionJoueur = $results["positionJoueur"];
+            $dateParticipation = $results["dateParticipation"];
+            $estGagnant = $results["estGagnant"];
+        
+            return new JouerPartie($idJoueurJoue, $idPartieJoue, $scoreJoueur, $positionJoueur, $dateParticipation, $estGagnant);
+        }
+
+    } else {
+        return null;
+    }
 }
 
-function readConnectedPlayers() {
+/**
+ * @brief ??
+ * @author ??
+ * @return mixed
+ */
+function readConnectedPlayers(): mixed {
     $connection = ConnexionSingleton::getInstance();
 
     $SelectQuery = "SELECT COUNT(*) FROM JouerPartie WHERE idPartieJouee  = :idPartie";
@@ -34,9 +54,10 @@ function readConnectedPlayers() {
 }
 
 /**
- * @param int $idPJ
- * @param int $position
- * @return int
+ * @author Mael 
+ * @param int $idPJ id Partie Jouée
+ * @param int $position position à tester
+ * @return int retourne 0 si la position est libre et existante, 1 si la position n'est pas libre mais existante, -1 si la position n'existe pas
  */
 function readPositionIsUsed(int $idPJ, int $position) : int {
     $connexion = ConnexionSingleton::getInstance();
@@ -76,6 +97,14 @@ function readPositionIsUsed(int $idPJ, int $position) : int {
     return -1;
 }
 
+
+/**
+ * @brief Créé un eneregistrement dans la table JouerPartie
+ * @param int $idJoueurJoue
+ * @param int $idPartieJoue
+ * @param int $positionJoueur
+ * @return bool true si la requête fonctionne, false sinon
+ */
 function createJouerPartie(int $idJoueurJoue, int $idPartieJoue, int $positionJoueur): bool {
     $connection = ConnexionSingleton::getInstance();
 
@@ -98,17 +127,38 @@ function createJouerPartie(int $idJoueurJoue, int $idPartieJoue, int $positionJo
     return $statement->execute();
 }
 
-
-function readPositionJoueur(int $idJoueurJoue, int $idPartieJoue):int {
-    return (readJouerPartie($idJoueurJoue, $idPartieJoue))->getPositionJoueur();
+/**
+ * @author Mael
+ * @param int $idJoueurJoue
+ * @param int $idPartieJoue
+ * @return int|null la position en entier, null si un problème dans readJouerPartie
+ */
+function readPositionJoueur(int $idJoueurJoue, int $idPartieJoue): int|null{
+    return (readJouerPartie($idJoueurJoue, $idPartieJoue) != null) ? 
+    readJouerPartie($idJoueurJoue, $idPartieJoue)->getPositionJoueur() : null;
 }
 
+/**
+ * @author Mael
+ * @param int $idJoueurJoue
+ * @param int $idPartieJoue
+ * @return string une chaîne de caractère qui représente la date de participation
+ */
 function readDateParticipation(int $idJoueurJoue, int $idPartieJoue): string {
-    return (readJouerPartie($idJoueurJoue, $idPartieJoue))->getDateParticipation();
+    return (readJouerPartie($idJoueurJoue, $idPartieJoue) != null) ? 
+    (readJouerPartie($idJoueurJoue, $idPartieJoue))->getDateParticipation() : null;
 }
 
+/**
+ * @author Mael
+ * @brief renvoie si le joueur décrit par les paramètre est gagnant ou perdant
+ * @param int $idJoueurJoue
+ * @param int $idPartieJoue
+ * @return bool renvoie si le joueur décrit par les paramètre est gagnant (true) ou perdant (false)
+ */
 function readEstGagnant(int $idJoueurJoue, int $idPartieJoue): bool {
-    return (readJouerPartie($idJoueurJoue, $idPartieJoue))->isEstGagnant();
+    return (readJouerPartie($idJoueurJoue, $idPartieJoue) != null) ? 
+    (readJouerPartie($idJoueurJoue, $idPartieJoue))->isEstGagnant() : null;
 }
 
 

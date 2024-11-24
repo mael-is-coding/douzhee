@@ -46,9 +46,15 @@ function readSkinAchete(int $idSkin, int $idAchat): ?SkinAchete {
         return null;
     }
 
-
 }
-function readAllAchatByUser(int $userId){
+
+/**
+ * @author Milan
+ * @brief retourne une collection associative des achats de l'utilisateur userId
+ * @param int $userId
+ * @return array
+ */
+function readAllAchatByUser(int $userId): array{
  
     $connection = ConnexionSingleton::getInstance();
     $selectedQuery = "Select sa.idSkin, sa.typeSkin, sa.etatSkin
@@ -64,6 +70,13 @@ function readAllAchatByUser(int $userId){
     return  $statement->fetchAll(PDO::FETCH_ASSOC);
 }
 
+/**
+ * @author Milan
+ * @param int $idSkin
+ * @param int $etatSkin
+ * @param int $idUser
+ * @return void
+ */
 function updateEtatSkin(int $idSkin, int $etatSkin, int $idUser){
     $connection = ConnexionSingleton::getInstance();
     $selectedQuery = "Select eff.idAchat from effectueachat eff join skinacheter sk on sk.id = eff.idAchat  where idJoueur = :idUser and idSkin = :idSkin";

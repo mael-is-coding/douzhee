@@ -1,6 +1,9 @@
 <?php
     require_once("../Utils/headerInit.php");
-    require_once("../Utils/redirection.php");
+    if (!isset($_SESSION['userId'])){
+        require_once("../Utils/redirection.php");
+    }
+    
 ?>
         <link rel="stylesheet" href="../../assets/css/styleRegles.css">
         <link rel="stylesheet" href="../../assets/css/styleHeader.css">

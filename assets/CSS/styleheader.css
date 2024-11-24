@@ -58,6 +58,7 @@ button {
     border: none;
     color: white;
     cursor: pointer;
+    margin-right: 10px;
 }
 #Logo{
     background-image: url("../../assets/images/imgheader/logo.png");

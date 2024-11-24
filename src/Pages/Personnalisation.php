@@ -81,15 +81,19 @@
             if (in_array($file['type'], $allowedTypes) && $file['size'] <= 2000000) { 
                 if (move_uploaded_file($file['tmp_name'], $uploadFile)) {
                     $relativePath = $uploadDir . $filename; 
-                    updateAvatar($relativePath,$_SESSION['userId']);
+                    updateAvatar($relativePath,$_SESSION['userId']);      
                     if ($oldAvatar && $oldAvatar !== '../../assets/images/imageavatars/photodefault.jpg' && file_exists($oldAvatar)) {
                         unlink($oldAvatar);
                     }
                 } else {
-                    echo "Erreur lors du téléchargement de l'image.";
+                    echo '<script 
+                    type="text/javascript"> window.onload = function () { alert("Erreur lors du téléchargement"); }
+                    </script>';
                 }
             } else {
-                echo "Le fichier doit être une image (JPEG, PNG, GIF) de moins de 2 Mo.";
+                echo '<script 
+                type="text/javascript"> window.onload = function () { alert("Le fichier doit être une image (JPEG, PNG, GIF) de moins de 2 Mo."); }
+                </script>';
             }
 
     }if (!empty($_POST['themes'])){
@@ -133,44 +137,4 @@
   <script>
         const img_ = document.getElementsByClassName("file-label")[0]
         img_.style.backgroundImage = 'url("<?php echo readAvatarById($_SESSION['userId']); ?>")'
-    </script>
-
-    <script>
-        /* A retravailler plus tard
-        document.addEventListener('DOMContentLoaded', () => {
-        const modal = document.getElementById("fenModal");
-        const input = document.getElementById("Themes2");
-        const valider = document.getElementById("valider");
-        const refuser = document.getElementById("refuser");
-        const openModal = document.getElementById("openModal");
-
-        input.addEventListener('mouseover',  () => {
-           modal.style.display = "block";
-        });
-      
-       refuser.onclick = () =>{
-            modal.style.display = "none";
-        };
-        window.onclick = (event) =>{
-            if (event.target === modal){
-                modal.style.display = "none";
-            }
-        };
-        valider.onclick = () =>{
-            <?php
-         //   $money = getMoneyById($_SESSION['userId']);
-            ?>
-            if (<?php echo $money?> > 2500){
-                input.disabled = false;
-                <?php
-             //   $newmoney = $money - 2500;
-              //   updateDouzCoin($_SESSION['userId'],$newmoney)?>
-                 modal.style.display ="none";
-            }else{
-                modal.style.display ="none";
-                alert("vous n'avez pas asser d'argent");
-            }
-        };
-    });
-    */
     </script>

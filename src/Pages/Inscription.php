@@ -4,6 +4,7 @@
     require_once("../CRUD/CRUDStatistiques.php");
     require_once("../CRUD/CRUDClassement.php");
     require_once("../CRUD/CRUDObtient.php");
+    require_once("../CRUD/CRUDSkinAchete.php");
 ?>
     <link rel="stylesheet" href="../../assets/css/styleCIRV.css">
 </head>
@@ -34,6 +35,8 @@
                 createStatistiques($_SESSION['userId']);
                 createClassement(getPseudoById($_SESSION['userId']),$_SESSION['userId']);
                 createObtient($_SESSION['userId'],1);
+
+                createSkinAchete(1,$_SESSION['userId'],1,"Theme",date("Y/m/d"));
                 $_SESSION['messageSucces1'] = "Bravo, vous venez d'obtenir le succès suivant : Se connecter pour la première fois";
                 header('Location: Index.php');
              }

@@ -28,6 +28,9 @@ if (isset($_SESSION['userId'])){
                 <form action="Profil.php" method="GET">
                     <input id="profil" type="submit" value="">
                 </form>
+                <form action="Boutique.php" method="POST">
+                    <button type="submit">Boutique</button>
+                </form>
                 <form method="POST" action="../Utils/logout.php">
                     <button type="submit">Déconnexion</button>
                 </form>

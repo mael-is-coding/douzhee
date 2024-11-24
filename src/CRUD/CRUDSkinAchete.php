@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * @author Mael
+ * @brief créé une instance d'un skin acheté dans la BdD
+ * @param int $idSkin
+ * @param int $idAchat
+ * @param string $etatSkin
+ * @param string $typeSkin
+ * @param string $date
+ * @return bool true si la requête fonctionne, false si elle échoue
+ */
 function createSkinAchete(int $idSkin, int $idAchat, string $etatSkin, string $typeSkin, string $date): bool {
     $connection = ConnexionSingleton::getInstance();
 
@@ -16,6 +26,14 @@ function createSkinAchete(int $idSkin, int $idAchat, string $etatSkin, string $t
     return $statement->execute();
 }
 
+
+
+/**
+ * @brief retourne une instance de classe SkinAchete depuis la BdD selon les paramètres.
+ * @param int $idSkin
+ * @param int $idAchat
+ * @return SkinAchete|null une instance de SkinAchete, null si aucun enregistrement correspondant, ou échec du côté BdD
+ */
 function readSkinAchete(int $idSkin, int $idAchat): ?SkinAchete {
     $connexion = ConnexionSingleton::getInstance();
 
@@ -45,9 +63,15 @@ function readSkinAchete(int $idSkin, int $idAchat): ?SkinAchete {
         return null;
     }
 
-
 }
-function readAllAchatByUser(int $userId){
+
+/**
+ * @author Milan
+ * @brief retourne une collection associative des achats de l'utilisateur userId
+ * @param int $userId
+ * @return array
+ */
+function readAllAchatByUser(int $userId): array{
  
     $connection = ConnexionSingleton::getInstance();
     $selectedQuery = "Select sa.idSkin, sa.typeSkin, sa.etatSkin
@@ -63,6 +87,13 @@ function readAllAchatByUser(int $userId){
     return  $statement->fetchAll(PDO::FETCH_ASSOC);
 }
 
+/**
+ * @author Milan
+ * @param int $idSkin
+ * @param int $etatSkin
+ * @param int $idUser
+ * @return void
+ */
 function updateEtatSkin(int $idSkin, int $etatSkin, int $idUser){
     $connection = ConnexionSingleton::getInstance();
     $selectedQuery = "Select idAchat from effectueachat where idJoueur = :idUser";

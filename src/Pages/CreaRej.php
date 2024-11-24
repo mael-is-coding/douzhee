@@ -4,7 +4,7 @@
     require_once("../CRUD/CRUDPartie.php");
     require_once("../CRUD/CRUDJouerPartie.php");
     require_once("../CRUD/CRUDAppartientA.php");
-    
+    require_once("../Utils/redirection.php");
     $_SESSION['user_id'] = 1;
     $joueurTemp = readJoueur($_SESSION['user_id']);
 

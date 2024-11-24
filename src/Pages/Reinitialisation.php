@@ -20,7 +20,7 @@
 </html>
 <?php
 if (!empty($_POST['E-mail']) &&  !empty($_POST['NewPassword'])){
-    $trouve = verifUser($_POST['E-mail']);
+    $trouve = verifEmail($_POST['E-mail']);
     if ($trouve){
         $code = rand(0,100000);
         $_SESSION['codeVerification'] = $code;

@@ -3,7 +3,7 @@
 function createEffectueAchat(int $idJ, int $idA) : int {
     $connexion = ConnexionSingleton::getInstance();
 
-    $InsertQuery = "INSERT INTO EffectueAchat (idJoueur, idAchat) VALUES (:idJ, :idA)";
+    $InsertQuery = "INSERT INTO effectueachat (idJoueur, idAchat) VALUES (:idJ, :idA)";
 
     $statement = $connexion->prepare($InsertQuery);
     $statement->bindParam("idJ", $idJ);

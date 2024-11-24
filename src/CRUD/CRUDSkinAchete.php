@@ -1,19 +1,20 @@
 <?php
+require_once("../CRUD/CRUDEffectueAchat.php");
 
-function createSkinAchete(int $idSkin, int $idAchat, string $etatSkin, string $typeSkin, string $date): bool {
+function createSkinAchete(int $idSkin,int $idJoueur, string $etatSkin, string $typeSkin, string $date) {
     $connection = ConnexionSingleton::getInstance();
 
-    $InsertQuery = "INSERT INTO SkinAchete (idSkin, idAchat, etatSkin, typeSkin, dateAchat) VALUES (:idSkin, :idAchat, :etatSkin, :typeSkin, :bio, :dateInsc)";
+    $InsertQuery = "INSERT INTO skinacheter (idSkin, etatSkin, typeSkin, dateAchat) VALUES (:idSkin,  :etatSkin, :typeSkin, :dateInsc)";
 
     $statement = $connection->prepare($InsertQuery);
 
     $statement->bindParam(":idSkin", $idSkin);
-    $statement->bindParam(":idAchat", $idAchat);
     $statement->bindParam(":etatSkin", $etatSkin);
     $statement->bindParam(":typeSkin", $typeSkin);
-    $statement->bindParam(":date", $date);
-
-    return $statement->execute();
+    $statement->bindParam(":dateInsc", $date);
+    $statement->execute();
+    $idAchat = $connection->lastInsertId();
+    createEffectueAchat($idJoueur,$idAchat);
 }
 
 function readSkinAchete(int $idSkin, int $idAchat): ?SkinAchete {

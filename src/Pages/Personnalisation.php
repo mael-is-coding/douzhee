@@ -50,17 +50,6 @@
             <button id="buttonPers" type="submit">Enregistrer les modifications</button>
         </form>
     </div>
-    <!--
-    <div id="fenModal">
-        <div class="content">
-            <h2>Voulez-vous acheter ce skin?</h2>
-            <img src="../../assets/images/imagePersonnalisation/Theme2.png">
-            <h2> Cela vous coutera 350 douzcoin</h2>
-            <button id="refuser">Refuser</button>
-            <button id="valider">Valider</button>
-        </div>
-    </div>
-    -->
 </body>
 </html>
 <?php
@@ -135,42 +124,4 @@
         img_.style.backgroundImage = 'url("<?php echo readAvatarById($_SESSION['userId']); ?>")'
     </script>
 
-    <script>
-        /* A retravailler plus tard
-        document.addEventListener('DOMContentLoaded', () => {
-        const modal = document.getElementById("fenModal");
-        const input = document.getElementById("Themes2");
-        const valider = document.getElementById("valider");
-        const refuser = document.getElementById("refuser");
-        const openModal = document.getElementById("openModal");
-
-        input.addEventListener('mouseover',  () => {
-           modal.style.display = "block";
-        });
-      
-       refuser.onclick = () =>{
-            modal.style.display = "none";
-        };
-        window.onclick = (event) =>{
-            if (event.target === modal){
-                modal.style.display = "none";
-            }
-        };
-        valider.onclick = () =>{
-            <?php
-         //   $money = getMoneyById($_SESSION['userId']);
-            ?>
-            if (<?php echo $money?> > 2500){
-                input.disabled = false;
-                <?php
-             //   $newmoney = $money - 2500;
-              //   updateDouzCoin($_SESSION['userId'],$newmoney)?>
-                 modal.style.display ="none";
-            }else{
-                modal.style.display ="none";
-                alert("vous n'avez pas asser d'argent");
-            }
-        };
-    });
-    */
-    </script>
+    

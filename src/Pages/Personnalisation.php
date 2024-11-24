@@ -108,27 +108,21 @@
     
 
 }if (is_array($allAchats)) {
-    ?>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            <?php
-            foreach ($allAchats as $achats) {
-                $themeId = $achats['idSkin'];
-                ?>
+    foreach ($allAchats as $achats) {
+        $themeId = $achats['idSkin'];
+        ?>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
                 const theme = document.getElementById("Themes<?php echo $themeId; ?>");
-                
-                if (theme) {
-                    
-                    theme.style.backgroundImage = 'url("../../assets/images/imagePersonnalisation/Theme<?php echo $themeId; ?>.png")';
-                    theme.disabled = false;
-                }
-                <?php
-            }
-            ?>
-        });
-    </script>
-    <?php
+                theme.style.backgroundImage = 'url("../../assets/images/imagePersonnalisation/Theme<?php echo $themeId; ?>.png")';
+                theme.disabled = false; 
+            });
+        </script>
+        <?php
+    }
 }
+?>
+    <?php
 
 ?>
   <script>

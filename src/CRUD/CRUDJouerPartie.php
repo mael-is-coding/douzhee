@@ -143,12 +143,12 @@ function readPartieCount(int $idJJ): int {
  * @param $idP id de la Partie d'où on sélectionne les joueurs
  * @return ?array une collection d'instances de Joueurs, 
  */
-function readAllUsersByIdPartie (int $idP): ?array {
+function readAllUsersByIdPartie(int $idP): ?array {
     $connexion = ConnexionSingleton::getInstance();
 
-    $SelectQuery = "SELECT pseudo FROM Joueur J 
+    $SelectQuery = "SELECT pseudonyme FROM Joueur J 
     JOIN JouerPartie JP 
-    ON J.id = JP.idJoueurJouee WHERE P.idPartie = :idP ORDER BY JP.positionJoueur ASC";
+    ON J.id = JP.idJoueurJouee WHERE JP.idPartieJouee = :idP ORDER BY JP.positionJoueur ASC";
 
     $statement = $connexion->prepare($SelectQuery);
 
@@ -157,22 +157,19 @@ function readAllUsersByIdPartie (int $idP): ?array {
     $success = $statement->execute();
 
     if($success) {
-
         $resultsArray = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-        $returnedArray = [];
-
-        if (gettype($resultsArray) == "boolean") {
+        if (!empty($resultsArray)) {
+            $returnedArray = [];
 
             foreach($resultsArray as $results) {
                 array_push($returnedArray, $results["pseudonyme"]);
             }
 
-            return $resultsArray;
+            return $returnedArray;
         } else {
             return null;
         }
-
     } else {
         return null;
     } 

@@ -6,7 +6,7 @@ function checkPlayers() {
         document.querySelector('.dé-table').style.display = 'none';
         document.querySelector('.versus').style.display = 'none';
         document.querySelector('.chat-container').style.display = 'none';
-        document.querySelector('.chat-toggle').style.display = 'none';
+        document.querySelector('#chat-toggle').style.display = 'none';
     } else {
         document.querySelector('.waiting-room').style.display = 'none';
         document.querySelector('.score').style.display = 'flex';

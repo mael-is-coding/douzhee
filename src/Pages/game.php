@@ -13,6 +13,8 @@
         $connectedPlayers = readConnectedPlayers(); // nombre de joueurs connectés
         $ids = 0; // id pour les inputs
 
+        $users = readAllUsersByIdPartie($_SESSION['idPartie']); // liste des joueurs
+
         //debugSession();
     ?>
     <div class="waiting-room">
@@ -281,7 +283,7 @@
             <div class="ligne1">
                 <div class="joueur-avatar">
                     <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
-                    <p class="joueur-nom">Joueur 1</p>
+                    <p class="joueur-nom"><?= $users[0]; ?></p>
                 </div>
                 <div class="joueur-avatar">
                 </div>
@@ -294,7 +296,7 @@
                 </div>
                 <div class="joueur-avatar">
                     <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
-                    <p class="joueur-nom">Joueur 2</p>
+                    <p class="joueur-nom"><?= $users[1]; ?></p>
                 </div>
             </div>
         
@@ -303,11 +305,11 @@
             <div class="ligne1">
                 <div class="joueur-avatar">
                     <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
-                    <p class="joueur-nom">Joueur 1</p>
+                    <p class="joueur-nom"><?= $users[0]; ?></p>
                 </div>
                 <div class="joueur-avatar">
                     <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
-                    <p class="joueur-nom">Joueur 2</p>
+                    <p class="joueur-nom"><?= $users[1]; ?></p>
                 </div>
             </div>
 
@@ -316,7 +318,7 @@
             <div class="ligne3">
                 <div class="joueur-avatar">
                     <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
-                    <p class="joueur-nom">Joueur 3</p>
+                    <p class="joueur-nom"><?= $users[2]; ?></p>
                 </div>
                 <div class="joueur-avatar">
                 </div>
@@ -327,11 +329,11 @@
             <div class="ligne1">
                 <div class="joueur-avatar">
                     <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
-                    <p class="joueur-nom">Joueur 1</p>
+                    <p class="joueur-nom"><?= $users[0]; ?></p>
                 </div>
                 <div class="joueur-avatar">
                     <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
-                    <p class="joueur-nom">Joueur 2</p>
+                    <p class="joueur-nom"><?= $users[1]; ?></p>
                 </div>
             </div>
 
@@ -340,11 +342,11 @@
             <div class="ligne3">
                 <div class="joueur-avatar">
                     <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
-                    <p class="joueur-nom">Joueur 3</p>
+                    <p class="joueur-nom"><?= $users[2]; ?></p>
                 </div>
                 <div class="joueur-avatar">
                     <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
-                    <p class="joueur-nom">Joueur 3</p>
+                    <p class="joueur-nom"><?= $users[3]; ?></p>
                 </div>
             </div>
         <?php }?>
@@ -367,7 +369,6 @@
 
         let socket = io('http://localhost:8080'); // Initialiser le socket client pour se connecter au serveur socket.io sur le même domaine 
         // let socket = io('https://douzhee.fr'); // Sur le VPS
-
         let gameId = <?= json_encode($_SESSION['idPartie']); ?>; // Récupérer l'ID de la partie
         let pseudo = <?= json_encode($_SESSION['pseudo']); ?>; // Récupérer le pseudo du joueur
 

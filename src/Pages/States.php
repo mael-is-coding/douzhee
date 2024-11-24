@@ -16,7 +16,7 @@
 <div class="States">
     <div class="State">
         <h2>Parties Jouées :</h2>
-        <?php echo $statsUser->getNbPartiesJoues() ?>
+        <?php echo $statsUser->getnbPartieJoues() ?>
     </div>
     <div class="State">
         <h2>Parties Gagnées <img src="../../assets/images/imageStates/nbPartiesGagnes.png"></img> :</h2>

@@ -70,15 +70,19 @@
             if (in_array($file['type'], $allowedTypes) && $file['size'] <= 2000000) { 
                 if (move_uploaded_file($file['tmp_name'], $uploadFile)) {
                     $relativePath = $uploadDir . $filename; 
-                    updateAvatar($relativePath,$_SESSION['userId']);
+                    updateAvatar($relativePath,$_SESSION['userId']);      
                     if ($oldAvatar && $oldAvatar !== '../../assets/images/imageavatars/photodefault.jpg' && file_exists($oldAvatar)) {
                         unlink($oldAvatar);
                     }
                 } else {
-                    echo "Erreur lors du téléchargement de l'image.";
+                    echo '<script 
+                    type="text/javascript"> window.onload = function () { alert("Erreur lors du téléchargement"); }
+                    </script>';
                 }
             } else {
-                echo "Le fichier doit être une image (JPEG, PNG, GIF) de moins de 2 Mo.";
+                echo '<script 
+                type="text/javascript"> window.onload = function () { alert("Le fichier doit être une image (JPEG, PNG, GIF) de moins de 2 Mo."); }
+                </script>';
             }
 
     }if (!empty($_POST['themes'])){

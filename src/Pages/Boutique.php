@@ -101,7 +101,7 @@
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    userId: <?php echo json_encode($_SESSION['userId']); ?>, // Injecte l'ID utilisateur
+                    userId: <?php echo json_encode($_SESSION['userId']); ?>, 
                     idSkin: idSkin, 
                     cost: 350
                 })

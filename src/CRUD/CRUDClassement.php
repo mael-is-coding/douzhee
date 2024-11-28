@@ -134,3 +134,30 @@
             }
         }
     }    
+
+    function readClassemnetBynbDouzhee(){
+        $connection = ConnexionSingleton::getInstance();
+
+        $readClassement = 'SELECT j.pseudonyme , sta.nbDouzhee from joueur j 
+                           join consulte co on co.idJoueur = j.id 
+                           join statistiques sta on sta.id = co.idStatistiques 
+                           ORDER BY nbDouzhee DESC;';
+
+        $statement = $connection->prepare($readClassement);
+        $statement->execute();
+
+        return  $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+    function readClassemnetBySucces(){
+        $connection = ConnexionSingleton::getInstance();
+
+        $readClassement = 'SELECT j.pseudonyme , sta.nbSucces from joueur j 
+                            join consulte co on co.idJoueur = j.id 
+                            join statistiques sta on sta.id = co.idStatistiques 
+                            ORDER BY nbSucces DESC;';
+
+        $statement = $connection->prepare($readClassement);
+        $statement->execute();
+
+        return  $statement->fetchAll(PDO::FETCH_ASSOC);
+    }

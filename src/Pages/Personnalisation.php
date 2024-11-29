@@ -11,7 +11,7 @@
     $allAchats = readAllAchatByUser($_SESSION['userId']);
 ?>        
 <body>
-    <div class="Personnalisation.php">
+    <div class="Personnalisation">
         <form action="Personnalisation.php" method="POST"  enctype="multipart/form-data">
             <div class="input-input-group">
                 <div class="input-group">

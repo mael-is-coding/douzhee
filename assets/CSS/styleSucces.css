@@ -29,9 +29,15 @@ body {
     gap: 15px;
     text-align: center;
 }
+.clickable {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+    padding: 13px;
+}
 
-
-img {
+#modalImage {
     width: 80px;
     height: 80px;
     object-fit: cover;

@@ -333,7 +333,7 @@ function getIdUser($email){
 /**
  * @brief vérifie si un utilisateur existe dans la base de données
  */
-function verifUser($email, $mdp) {  
+function verifUser(String $email, String $mdp) {  
     $connexion = ConnexionSingleton::getInstance();
     $sql = "SELECT email, mdp FROM joueur WHERE email = :email";
     $stmt = $connexion->prepare($sql);
@@ -342,7 +342,13 @@ function verifUser($email, $mdp) {
     $user = $stmt->fetch(PDO::FETCH_ASSOC); 
     return $user && password_verify($mdp,$user['mdp']);
 }
-function getPseudoById($id){
+/**
+ * @author Mael
+ * @brief renvoie le pseudonyme en fonction de l'identifiant
+ * @param $id l'id du joueur
+ * @return array le pseudo du joueur
+ */
+function getPseudoById(int $id){
     $connexion = ConnexionSingleton::getInstance();
     $sql = "Select pseudonyme from joueur where id =?";
     $stmt = $connexion->prepare($sql);
@@ -351,7 +357,13 @@ function getPseudoById($id){
     $pseudo = $stmt->fetch(PDO::FETCH_ASSOC);
     return $pseudo['pseudonyme'];
 }
-function getMoneyById($id){
+/**
+ * @author Mael
+ * @brief renvoie le nombre de douzcoin en fonction de l'identifiant
+ * @param $id l'id du joueur
+ * @return array le nombre de douzcoin
+ */
+function getMoneyById(int $id){
     $connexion = ConnexionSingleton::getInstance();
     $sql = "Select douzCoin from joueur where id =?";
     $stmt = $connexion->prepare($sql);

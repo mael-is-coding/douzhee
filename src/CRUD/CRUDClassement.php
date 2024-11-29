@@ -134,7 +134,11 @@
             }
         }
     }    
-
+    
+    /**
+     * @brief Recupère le classement en fonction du nombre de Douzhee
+     * @return array
+     */
     function readClassemnetBynbDouzhee(){
         $connection = ConnexionSingleton::getInstance();
 
@@ -148,6 +152,10 @@
 
         return  $statement->fetchAll(PDO::FETCH_ASSOC);
     }
+     /**
+     * @brief Recupère le classement en fonction du nombre de Succes
+     * @return array
+     */
     function readClassemnetBySucces(){
         $connection = ConnexionSingleton::getInstance();
 

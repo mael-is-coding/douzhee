@@ -54,11 +54,12 @@
 }
  ?>
 <script>
+    document.addEventListener('DOMContentLoaded', () => {
      const inputs = document.querySelectorAll(".clickable");
      const modal = document.getElementById("fenModal");
      const modalImage = document.getElementById("modalImage");
      const nom = document.getElementById("nomSucces");
-     const condition = document.getElementById("condtionSucces");
+     const condition = document.getElementById("conditionSucces");
 
      var selectedSkin = null;
      var selectedId = null;
@@ -73,16 +74,18 @@
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({selectedId : selectedId})
+            body: JSON.stringify({Id : selectedId})
             })
-            .then(response => response.json())  // On attend une réponse JSON
+            .then(response => response.json())  
             .then(data => {
          
-            if (data) {
-            modalImage.src = selectedSkin;
+            if (data && data.nom && data.condition) {
             modal.style.display = "block";
-            condition.textContent = data[0].condition;
-            nom.textContent = data[0].nom;
+            console.log(data);
+            modalImage.src = selectedSkin;     
+            condition.textContent = "Condition : " + data.condition;
+            nom.textContent = "Nom : " +  data.nom;
+           
             }
         });
      });
@@ -92,4 +95,5 @@
                 modal.style.display = "none";
             }
         };
+    });
 </script>

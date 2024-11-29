@@ -10,31 +10,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $input = file_get_contents("php://input");
     $data = json_decode($input, true);  
 
-    if (isset($data['selectedId'])) {
-        $idSucces = $data['selectedId'];
+    if (isset($data['Id']) && is_numeric($data['Id'])) {
+        $idSucces = (int) $data['Id'];
 
-        
         $succes = readSuccesById($idSucces);
 
-        if ($succes && is_array($succes) && !empty($succes)) {
-          
-            $response = [];
-            foreach ($succes as $Succes) {
-             
-                if (isset($Succes['nomSucces']) && isset($Succes['Condition'])) {
-                    $response[] = [
-                        'nom' => $Succes['nomSucces'],
-                        'condition' => $Succes['Condition']
-                    ];
-                }
-            }
+        if ($succes !== null) {
+            $response = [
+                'nom' => $succes->getName(),
+                'condition' => $succes->getCondition()
+            ];
 
-       
-            if (empty($response)) {
-                echo json_encode(['error' => 'Aucun succès valide trouvé pour cet ID.']);
-            } else {
-                echo json_encode($response);
-            }
+            echo json_encode($response);
         } else {
    
             echo json_encode(['error' => 'Succès non trouvé ou données invalides.']);

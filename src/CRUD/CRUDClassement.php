@@ -169,3 +169,15 @@
 
         return  $statement->fetchAll(PDO::FETCH_ASSOC);
     }
+    function readClassementByScore(){
+        $connection = ConnexionSingleton::getInstance();
+        $readClassement = 'SELECT j.id, j.pseudonyme , cl.score from joueur j
+                           join setrouve st on st.idJoueur = j.id
+                           join classement cl on cl.id = st.idClassement
+                           order by score DESC;';
+
+        $statement = $connection->prepare($readClassement);
+        $statement->execute();
+        return  $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    }

@@ -13,7 +13,7 @@
     require_once("../Utils/headerBody.php");
 ?>        
 <?php 
-$data = readAllClassement();
+$data = readClassementByScore();
 $i = 0;
 $secondClass = readClassemnetBynbDouzhee();
 $j = 0;
@@ -40,8 +40,9 @@ $k = 0;
                         $row = $data[$i];
                         $pseudo = $row['pseudonyme'];
                         $score = $row['score'];
+                        $id = $row['id'];
 
-                        echo '<td>'.htmlspecialchars($pseudo). '</td>';
+                        echo '<td><a href="Visualisation.php?id='.urlencode($id).'">'.htmlspecialchars($pseudo). '</a></td>';
                         echo '<td>'.htmlspecialchars($score). '</td>';
                         $i++;
                     } 

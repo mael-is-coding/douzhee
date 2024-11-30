@@ -55,8 +55,9 @@ $k = 0;
                         $row = $data[$i];
                         $pseudo = $row['pseudonyme'];
                         $score = $row['score'];
+                        $id = $row['id'];
 
-                        echo '<td>'.htmlspecialchars($pseudo). '</td>';
+                        echo '<td><a href="Visualisation.php?id='.urlencode($id).'">'.htmlspecialchars($pseudo). '</a></td>';
                         echo '<td>'.htmlspecialchars($score). '</td>';
                         $i++;
                     } 
@@ -69,8 +70,9 @@ $k = 0;
                         $row = $data[$i];
                         $pseudo = $row['pseudonyme'];
                         $score = $row['score'];
+                        $id = $row['id'];
 
-                        echo '<td>'.htmlspecialchars($pseudo). '</td>';
+                        echo '<td><a href="Visualisation.php?id='.urlencode($id).'">'.htmlspecialchars($pseudo). '</a></td>';
                         echo '<td>'.htmlspecialchars($score). '</td>';
                         $i++;
                     } 
@@ -113,8 +115,9 @@ $k = 0;
                         $row = $secondClass[$j];
                         $pseudo = $row['pseudonyme'];
                         $nbDouzhee = $row['nbDouzhee'];
+                        $id = $row['id'];
 
-                        echo '<td>'.htmlspecialchars($pseudo). '</td>';
+                        echo '<td><a href="Visualisation.php?id='.urlencode($id).'">'.htmlspecialchars($pseudo). '</a></td>';
                         echo '<td>'.htmlspecialchars($nbDouzhee). '</td>';
                         $j++;
                     } 
@@ -127,8 +130,9 @@ $k = 0;
                         $row = $secondClass[$j];
                         $pseudo = $row['pseudonyme'];
                         $nbDouzhee = $row['nbDouzhee'];
+                        $id = $row['id'];
 
-                        echo '<td>'.htmlspecialchars($pseudo). '</td>';
+                        echo '<td><a href="Visualisation.php?id='.urlencode($id).'">'.htmlspecialchars($pseudo). '</a></td>';
                         echo '<td>'.htmlspecialchars($nbDouzhee). '</td>';
                         $j++;
                     } 
@@ -141,8 +145,9 @@ $k = 0;
                         $row = $secondClass[$j];
                         $pseudo = $row['pseudonyme'];
                         $nbDouzhee = $row['nbDouzhee'];
+                        $id = $row['id'];
 
-                        echo '<td>'.htmlspecialchars($pseudo). '</td>';
+                        echo '<td><a href="Visualisation.php?id='.urlencode($id).'">'.htmlspecialchars($pseudo). '</a></td>';
                         echo '<td>'.htmlspecialchars($nbDouzhee). '</td>';
                         $j++;
                     } 
@@ -185,8 +190,9 @@ $k = 0;
                         $row = $thirdClass[$k];
                         $pseudo = $row['pseudonyme'];
                         $nbSucces = $row['nbSucces'];
+                        $id = $row['id'];
 
-                        echo '<td>'.htmlspecialchars($pseudo). '</td>';
+                        echo '<td><a href="Visualisation.php?id='.urlencode($id).'">'.htmlspecialchars($pseudo). '</a></td>';
                         echo '<td>'.htmlspecialchars($nbSucces). '</td>';
                         $k++;
                     } 
@@ -199,8 +205,9 @@ $k = 0;
                         $row = $thirdClass[$k];
                         $pseudo = $row['pseudonyme'];
                         $nbSucces = $row['nbSucces'];
+                        $id = $row['id'];
 
-                        echo '<td>'.htmlspecialchars($pseudo). '</td>';
+                        echo '<td><a href="Visualisation.php?id='.urlencode($id).'">'.htmlspecialchars($pseudo). '</a></td>';
                         echo '<td>'.htmlspecialchars($nbSucces). '</td>';
                         $k++;
                     } 
@@ -213,8 +220,9 @@ $k = 0;
                         $row = $thirdClass[$k];
                         $pseudo = $row['pseudonyme'];
                         $nbSucces = $row['nbSucces'];
+                        $id = $row['id'];
 
-                        echo '<td>'.htmlspecialchars($pseudo). '</td>';
+                        echo '<td><a href="Visualisation.php?id='.urlencode($id).'">'.htmlspecialchars($pseudo). '</a></td>';
                         echo '<td>'.htmlspecialchars($nbSucces). '</td>';
                         $k++;
                     } 

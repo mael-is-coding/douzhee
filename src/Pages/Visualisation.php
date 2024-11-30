@@ -11,6 +11,7 @@ if (isset($_GET['id'])) {
     $biographie = getBioById($id);
     $path = readAvatarById($id);
     $achat = readEffecuteAchatById($id);
+    $statsUser = readStatistiquesByIdUser($id);
 } else {
 }
    
@@ -35,7 +36,7 @@ if (isset($_GET['id'])) {
             <input type="text" id="Biog" value="<?php echo $biographie?>" disabled></input>
         </div>
         <div class="Input-Group">
-            <label>Themes</label>
+            <label for="Themes">Themes</label>
             <div class="Radio-Group">
                 <?php
                 foreach($achat as $achats){
@@ -51,6 +52,37 @@ if (isset($_GET['id'])) {
                      <input type="radio" id="Themes2" name="themes" value="theme2" <?php echo ($etatSkinChecked == 1 && $idSkin == 2) ? 'checked' : ''; ?> disabled>
                      <input type="radio" id="Themes3" name="themes" value="theme3" <?php echo ($etatSkinChecked == 1 && $idSkin == 3) ? 'checked' : ''; ?> disabled>
             </div>
+        </div>
+        <div class="Input-Group">
+            <label>Statistiques de <?php echo $pseudonyme?> : </label>
+        <div class="State">
+        <h2>Parties Jouées :</h2>
+        <?php echo $statsUser->getnbPartieJoues() ?>
+    </div>
+    <div class="State">
+        <h2>Parties Gagnées <img src="../../assets/images/imageStates/nbPartiesGagnes.png"></img> :</h2>
+        <?php echo $statsUser->getNbPartiesGagnees()?>
+    </div>
+    <div class="State">
+        <h2>Ratio Victoire :</h2>
+        <?php echo $statsUser->getRatioVictoire() ?>
+    </div>
+    <div class="State">
+        <h2>Succès <img src="../../assets/images/imageStates/succes.png"></img> :</h2>
+        <?php echo $statsUser->getNbSucces() ?>
+    </div>
+    <div class="State">
+        <h2>Score <img src="../../assets/images/imageStates/scoremax.png"></img> :</h2>
+        <?php echo $statsUser->getScoreMaximal() ?>
+    </div>
+    <div class="State">
+        <h2>Douzhee <img src="../../assets/images/imageStates/nbDouzhee.png"></img> :</h2>
+       <?php echo  $statsUser->getNbDouzhee()?>
+    </div>
+    <div class="State">
+        <h2>Temps de jeu <img src="../../assets/images/imageStates/tempsjeu.png"></img> :</h2>
+        <?php echo $statsUser->getTempsJeu() ?>
+    </div>
         </div>
     </div>
 </body>

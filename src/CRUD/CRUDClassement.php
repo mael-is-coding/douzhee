@@ -142,7 +142,7 @@
     function readClassemnetBynbDouzhee(){
         $connection = ConnexionSingleton::getInstance();
 
-        $readClassement = 'SELECT j.pseudonyme , sta.nbDouzhee from joueur j 
+        $readClassement = 'SELECT j.pseudonyme , sta.nbDouzhee , j.id from joueur j 
                            join consulte co on co.idJoueur = j.id 
                            join statistiques sta on sta.id = co.idStatistiques 
                            ORDER BY nbDouzhee DESC;';
@@ -159,7 +159,7 @@
     function readClassemnetBySucces(){
         $connection = ConnexionSingleton::getInstance();
 
-        $readClassement = 'SELECT j.pseudonyme , sta.nbSucces from joueur j 
+        $readClassement = 'SELECT j.pseudonyme , sta.nbSucces, j.id from joueur j 
                             join consulte co on co.idJoueur = j.id 
                             join statistiques sta on sta.id = co.idStatistiques 
                             ORDER BY nbSucces DESC;';

@@ -1,24 +1,20 @@
 <?php
     require_once("../Utils/headerInit.php");
+    require_once("../Utils/headerBody.php");
     if (!isset($_SESSION['userId'])){
         require_once("../Utils/redirection.php");
     }
-    
 ?>
         <link rel="stylesheet" href="../../assets/css/styleRegles.css">
         <link rel="stylesheet" href="../../assets/css/styleHeader.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     </head>
-<?php
-    require_once("../Utils/headerBody.php");
-?>  
          <div class="container">
             <div class="bulle" id="bulle">
                 <p id="Texte">Première fois ici? Voulez-vous que je vous explique les règles?</p>
                 <div class="Bouton">
                     <button type="button" id="Valider">Oui</button>
                     <button type="button" id="Refuser">Non</button>
-                    <audio id="audio" src="audio/musique.mp3"></audio>
                     <img src="../../assets/images/imageAnimation/fleche.png" alt="fleche" id="flèche" width="60" height="30 ">
                 </div>
             </div>

@@ -2,27 +2,21 @@
     require_once("../CRUD/CRUDJoueur.php");
     require_once("../Utils/headerInit.php");
     require_once("../CRUD/CRUDClassement.php");
+    require_once("../Utils/headerBody.php");
     if (!isset($_SESSION['userId'])){
         require_once("../Utils/redirection.php");
     }
+    $data = readClassementByScore();
+    $i = 1;
+    $secondClass = readClassemnetBynbDouzhee();
+    $j = 1;
+    $thirdClass = readClassemnetBySucces();
+    $k = 1;
     
 ?>
     <link rel="stylesheet" href="../../assets/css/styleHeader.css"> 
-    <link rel="stylesheet" href="../../assets/css/styleClassement.css">
-<?php
-    require_once("../Utils/headerBody.php");
-?>        
-<?php 
-$data = readClassementByScore();
-$i = 1;
-$secondClass = readClassemnetBynbDouzhee();
-$j = 1;
-$thirdClass = readClassemnetBySucces();
-$k = 1;
-?>
-
+    <link rel="stylesheet" href="../../assets/css/styleClassement.css">     
 </head>
-<body>
     <div class="Classement">
         <table>
             <thead>

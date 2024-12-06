@@ -8,7 +8,6 @@
 ?>
     <link rel="stylesheet" href="../../assets/css/styleCIRV.css">
 </head>
-<body>
     <div class="PCIR">
         <h2>Inscription</h2>
         <form action = "Inscription.php" method="POST">

@@ -12,18 +12,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (isset($data['Id']) && is_numeric($data['Id'])) {
         $idSucces = (int) $data['Id'];
-
         $succes = readSuccesById($idSucces);
-
         if ($succes !== null) {
             $response = [
                 'nom' => $succes->getName(),
                 'condition' => $succes->getCondition()
             ];
-
             echo json_encode($response);
-        } else {
-   
+        } else { 
             echo json_encode(['error' => 'Succès non trouvé ou données invalides.']);
         }
     } else {

@@ -19,7 +19,7 @@ if (isset($_GET['id'])) {
  <link rel="stylesheet" href="../../assets/css/styleHeader.css"> 
  <link rel="stylesheet" href="../../assets/CSS/styleVisualisation.css">
 </head>
-<body>
+
     <div class="Visualisation">
         <div class="Group">
                <div class="Input-Group">

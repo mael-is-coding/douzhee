@@ -3,7 +3,6 @@ const speechText = document.getElementById('Texte');
 const flèche = document.getElementById('flèche');
 const Valider = document.getElementById('Valider');
 const Refuser = document.getElementById('Refuser');
-const audio = document.getElementById('audio');
 const messages = [ 
     'But du jeu : Obtenir le maximum de points en réalisant des combinaisons spécifiques avec 5 dés.',
     'Nombre de joueurs : Le jeu peut être joué seul ou avec vos amis.',

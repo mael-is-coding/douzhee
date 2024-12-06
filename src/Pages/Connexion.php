@@ -31,8 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         $email = $_POST['E-mail'];
         $mdp = $_POST['Password'];
         if (!empty($_POST['checkbox'])){
-            $cookievalue = $email;
-            $cookievalue2 = $mdp;
+            $cookievalue = password_hash($email, PASSWORD_DEFAULT);
+            $cookievalue2 = password_hash($mdp, PASSWORD_DEFAULT);
             setcookie($cookiename,$cookievalue,time() + (60*60*2),"/");
             setcookie($cookiename2,$cookievalue2,time() + (60*60*2),"/");
         }

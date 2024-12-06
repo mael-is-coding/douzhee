@@ -2,15 +2,14 @@
     require_once("../CRUD/CRUDJoueur.php");
     require_once("../Utils/headerInit.php");
     require_once("../CRUD/CRUDSkinAchete.php");
+    require_once("../Utils/headerBody.php");
+    $allAchats = readAllAchatByUser($_SESSION['userId']);
+
 ?>
     <link rel="stylesheet" href="../../assets/css/styleHeader.css"> 
     <link rel="stylesheet" href="../../assets/css/stylePersonnalisation.css">
 </head>
-<?php
-    require_once("../Utils/headerBody.php");
-    $allAchats = readAllAchatByUser($_SESSION['userId']);
-?>        
-<body>
+       
     <div class="Personnalisation">
         <form action="Personnalisation.php" method="POST"  enctype="multipart/form-data">
             <div class="input-input-group">

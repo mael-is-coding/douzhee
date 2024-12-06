@@ -46,8 +46,6 @@
                     </script>
                     <?php
                     break;  
-
-
     }
 }
     }
@@ -60,16 +58,14 @@
      const modalImage = document.getElementById("modalImage");
      const nom = document.getElementById("nomSucces");
      const condition = document.getElementById("conditionSucces");
-
      var selectedSkin = null;
      var selectedId = null;
-           
      inputs.forEach(input => {
         input.addEventListener('click', () =>{
             console.log("Skin cliqué");
             selectedSkin = input.src;
             selectedId = input.id;
-            fetch("../Utils/proccessuCheckSKin.php", {
+            fetch("../Utils/processusCheckSkin.php", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -80,7 +76,6 @@
             .then(data => {
             console.log("Données reçues:", data)
             if (data && data.nom && data.condition) {
-            
             console.log(data);
             modalImage.src = selectedSkin;     
             condition.textContent = "Condition : " + data.condition;

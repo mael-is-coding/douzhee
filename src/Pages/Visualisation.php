@@ -36,7 +36,7 @@ if (isset($_GET['id'])) {
             <input type="text" id="Biog" value="<?php echo $biographie?>" disabled></input>
         </div>
         <div class="Input-Group">
-            <label for="Themes">Themes</label>
+            <label for="Themes">Themes : </label>
             <div class="Radio-Group">
                 <?php
                 foreach($achat as $achats){

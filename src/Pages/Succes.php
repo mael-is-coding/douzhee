@@ -66,7 +66,7 @@
            
      inputs.forEach(input => {
         input.addEventListener('click', () =>{
-            console.log("SKin cliqué");
+            console.log("Skin cliqué");
             selectedSkin = input.src;
             selectedId = input.id;
             fetch("../Utils/proccessuCheckSKin.php", {
@@ -78,13 +78,15 @@
             })
             .then(response => response.json())  
             .then(data => {
-         
+            console.log("Données reçues:", data)
             if (data && data.nom && data.condition) {
-            modal.style.display = "block";
+            
             console.log(data);
             modalImage.src = selectedSkin;     
             condition.textContent = "Condition : " + data.condition;
             nom.textContent = "Nom : " +  data.nom;
+            modal.style.display = "block";
+            modal.classList.add('active');
            
             }
         });

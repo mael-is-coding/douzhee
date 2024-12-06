@@ -14,11 +14,11 @@
 ?>        
 <?php 
 $data = readClassementByScore();
-$i = 0;
+$i = 1;
 $secondClass = readClassemnetBynbDouzhee();
-$j = 0;
+$j = 1;
 $thirdClass = readClassemnetBySucces();
-$k = 0;
+$k = 1;
 ?>
 
 </head>
@@ -85,7 +85,7 @@ $k = 0;
                         $row = $data[$i];
                         $pseudo = $row['pseudonyme']; 
                         $score = $row['score'];
-                        $place = $row['placeClassement'];
+                        $place = $i;
                         echo '<tr>';
                         echo '<th scope="row">'.htmlspecialchars($place).'</th>';
                         echo '<td>'.htmlspecialchars($pseudo). '</td>';
@@ -160,7 +160,7 @@ $k = 0;
                         $row = $secondClass[$j];
                          $pseudo = $row['pseudonyme']; 
                          $nbDouzhee = $row['nbDouzhee'];
-                         $place = $j + 1 ;
+                         $place = $j;
                         echo '<tr>';
                         echo '<th scope="row">'.htmlspecialchars($place).'</th>';
                         echo '<td>'.htmlspecialchars($pseudo). '</td>';
@@ -232,10 +232,11 @@ $k = 0;
                     if (!empty($thirdClass[$k]) && is_array($thirdClass)){
                         for($k; $k < count($thirdClass) && $k < 10; $k++){
                         $row = $thirdClass[$k];
-                        $place = $k + 1;
+                        $place = $k;
                         $pseudo = $row['pseudonyme'];
                         $nbSucces = $row['nbSucces'];
-                        echo '<td>'.htmlspecialchars($place). '</td>';
+                        echo '<tr>';
+                        echo '<th scope="row">'.htmlspecialchars($place). '</td>';
                         echo '<td>'.htmlspecialchars($pseudo). '</td>';
                         echo '<td>'.htmlspecialchars($nbSucces). '</td>';
                     } 

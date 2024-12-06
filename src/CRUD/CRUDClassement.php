@@ -17,11 +17,12 @@
         $placeQuery = 'SELECT COUNT(*) + 1 AS place FROM classement';
         $placeStatement = $connection->query($placeQuery);
         $place = $placeStatement->fetchColumn();
-        $insertClassement = 'INSERT INTO classement VALUES (NULL, :place, 0, :pseudo)';
+        $insertClassement = 'INSERT INTO classement(placeClassement,pseudonyme,score) VALUES (:place, :pseudo, 0)';
 
         $statement = $connection->prepare($insertClassement);
-        $statement->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
         $statement->bindParam(':place', $place);
+        $statement->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
+       
         $statement->execute();
 
         $idClassement = $connection->lastInsertId();

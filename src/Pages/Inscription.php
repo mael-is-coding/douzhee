@@ -33,7 +33,8 @@
                 insertUser($_POST['E-mail'],$_POST['Password'],$_POST['Pseudo']);
                 $_SESSION['userId'] = getIdUser($_POST['E-mail']);
                 createStatistiques($_SESSION['userId']);
-                createClassement(getPseudoById($_SESSION['userId']),$_SESSION['userId']);
+                $pseudo = getPseudoById($_SESSION['userId']);
+                createClassement($pseudo['pseudonyme'],$_SESSION['userId']);
                 createObtient($_SESSION['userId'],1);
                 $_SESSION['timeStart'] = microtime(true); 
                 createSkinAchete(1,$_SESSION['userId'],1,"Theme",date("Y/m/d"));

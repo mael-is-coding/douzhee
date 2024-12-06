@@ -16,7 +16,7 @@
             <div class="input-input-group">
                 <div class="input-group">
                     <label for="pseudo">Pseudo</label>
-                    <input type="text" id="pseudoPers" name="pseudo" value="<?php echo getPseudoById($_SESSION['userId']) ?>" maxlength="50">
+                    <input type="text" id="pseudoPers" name="pseudo" value="<?php echo getPseudoById($_SESSION['userId'])['pseudonyme'] ?>" maxlength="50">
                 </div>
                 <div class="input-group">
                     <label for="Avatar"class="file-label">+</label>
@@ -27,7 +27,7 @@
            
             <div class="input-group">
                 <label for="Bio">Bio</label>
-                <textarea id="BioPers" name="bio"><?php echo getBioById($_SESSION['userId'])?></textarea>
+                <textarea id="BioPers" name="bio"><?php echo getBioById($_SESSION['userId'])['biographie']?></textarea>
             </div>
 
             <div class="input-group">

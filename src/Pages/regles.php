@@ -23,8 +23,9 @@
                 </div>
             </div>
             <img src="../../assets/images/imageAnimation/mascotte1.png" alt="Personnage" id="FirstMascotte" width="200" height="300">
-            <img src="../../assets/images/imageAnimation/mascotte2.png" alt="Personnage" id="SecondMascotte" width="200" height="300">  
+            <img src="../../assets/images/imageAnimation/mascotte2.png" alt="Personnage" id="SecondMascotte" width="200" height="300"> 
+            <img src="../../assets/images/imageAnimation/mascotte3.png" alt="Personnage" id="ThirdMascotte" width="200" height="300"> 
         </div>
-        <script src="../../assets/JS/script.js"></script>
+        <script src="../../assets/JS/scriptAnimation.js"></script>
     </body>
 </html>

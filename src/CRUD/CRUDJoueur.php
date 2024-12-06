@@ -355,7 +355,7 @@ function getPseudoById(int $id){
     $stmt->bindParam(1,$id);
     $stmt->execute();
     $pseudo = $stmt->fetch(PDO::FETCH_ASSOC);
-    return $pseudo['pseudonyme'];
+    return $pseudo;
 }
 /**
  * @author Mael
@@ -370,7 +370,7 @@ function getMoneyById(int $id){
     $stmt->bindParam(1,$id);
     $stmt->execute();
     $money = $stmt->fetch(PDO::FETCH_ASSOC);
-    return $money['douzCoin'];
+    return $money;
 }
 function verifEmail($email){
     $connexion = ConnexionSingleton::getInstance();
@@ -388,7 +388,7 @@ function getBioById($id){
     $stmt->bindParam(1,$id);
     $stmt->execute();
     $bio = $stmt->fetch(PDO::FETCH_ASSOC);
-    return $bio['biographie'];
+    return $bio;
 }
 function insertUser($email,$mdp,$pseudonyme){
     $connexion = ConnexionSingleton::getInstance();

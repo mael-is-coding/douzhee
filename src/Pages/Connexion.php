@@ -33,11 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         if (!empty($_POST['checkbox'])){
             $cookievalue = $email;
             $cookievalue2 = $mdp;
-            setcookie($cookiename,$cookievalue,time() + (60*60*3),"/");
+            setcookie($cookiename,$cookievalue,time() + (60*60*2),"/");
             setcookie($cookiename2,$cookievalue2,time() + (60*60*2),"/");
-        }else{
-            setcookie($cookiename,"",time() - 9600,"/");
-            setcookie($cookiename2,"",time() - 9600, "/");
         }
         $trouve = verifUser($_POST['E-mail'],$_POST['Password']);
         if ($trouve){

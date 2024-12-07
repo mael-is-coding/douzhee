@@ -11,7 +11,7 @@
     <div class="PCIR">
         <h2>Connexion</h2>
         <form action = "Connexion.php" method="POST">
-            <input name="E-mail" type="email" placeholder="E-mail" required value="<?php echo $_COOKIE[$cookiename] ?? '';?>">
+            <input name="E-mail" type="text" placeholder="E-mail" required value="<?php echo $_COOKIE[$cookiename] ?? '';?>">
             <input name = "Password" type="password" placeholder="Password" required value="<?php echo $_COOKIE[$cookiename2] ?? '';?>">
             <div class="checkbox">
             <input type ="checkbox" id="check" name="checkbox">
@@ -48,5 +48,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
                         </script>';
         }
     }
-}
+    if (!empty($_POST['cookiename']) && $_POST['cookiename2']){
+        if (password_verify($email, $emailCookie)) {
+            if (password_verify($mdp, $mdpCookie)) {
+                    $_SESSION['userId'] = getIdUser($email);
+                    $_SESSION['timeStart'] = microtime(true);
+                    header('Location: Index.php');
+                    exit;
+                }
+            }
+        }
+    }
 ?>

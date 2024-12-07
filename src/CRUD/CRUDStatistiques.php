@@ -146,20 +146,3 @@
         $statement->bindParam(':nbDouzhee', $nbDouzhee, PDO::PARAM_INT);
         $statement->execute();
     }
-
-    /**
-     * @brief Met à jour le nombre de Douzhee d'un joueur
-     * @author Nathan
-     * @param int $idUser identifiant du joueur
-     * @param int $nbDouzhee nombre de Douzhee a ajouter
-     * @return void
-     */
-    function updateNbDouzhee(int $idUser, int $nbDouzhee): void{
-        $connection = ConnexionSingleton::getInstance();
-
-        $updateNbDouzhee = 'UPDATE statistiques SET nbDouzhee = nbDouzhee + :nbDouzhee WHERE id = (SELECT idStatistiques FROM consulte WHERE idJoueur = idUser)';
-        $statement = $connection->prepare($updateNbDouzhee);
-        $statement->bindParam('idUser', $idUser, PDO::PARAM_INT);
-        $statement->bindParam(':nbDouzhee', $nbDouzhee, PDO::PARAM_INT);
-        $statement->execute();
-    }

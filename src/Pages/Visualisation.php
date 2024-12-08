@@ -7,8 +7,8 @@
 
 if (isset($_GET['id'])) {
     $id = intval($_GET['id']);
-    $pseudonyme = getPseudoById($id);
-    $biographie = getBioById($id);
+    $pseudonyme = getPseudoById($id)['pseudonyme'];
+    $biographie = getBioById($id)['biographie'];
     $path = readAvatarById($id);
     $achat = readEffecuteAchatById($id);
     $statsUser = readStatistiquesByIdUser($id);

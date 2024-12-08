@@ -436,12 +436,16 @@ function updateAvatar(String $path, int $idUser) {
 }
 function cryptage($data,$key){
     $iv = random_bytes(16); //Génération d'une valeur aléatoire de 16 octets
-    $chiffrement = openssl_encrypt($data,'aes-256-cbc',$key,0,$iv); //chiffrement de la donnée en utilisant la clé et la valeur aléatoire
+    $chiffrement = openssl_encrypt($data,'aes-256-cbc',$key,0,$iv); //chiffrement de la donnée en utilisant l'algo de chiffrage AES la clé et la valeur aléatoire 
     return base64_encode($iv.$chiffrement); //concaténation de la valeur aléatoire au chiffrement
 }
 function decryptage($data,$key){
-    $data = base64_decode($data); //décryptage des données pour séparer la valeur random et le texte chiffré
-    $iv = substr($data,0,16); //Récupère la valeur aléatoire ( 16 premiers octets)
-    $chiffre = substr($data,16); // Extraction du texte chiffré (le reste après la valeur aléatoire)
-    return openssl_decrypt($chiffre,'aes-256-cbc',$key,0,$iv); //Déchiffrement des données en utilisant la clé et la valeur aléatoire
+    if ($data != null){
+        $data = base64_decode($data); //décryptage des données pour séparer la valeur random et le texte chiffré
+        $iv = substr($data,0,16); //Récupère la valeur aléatoire ( 16 premiers octets)
+        $chiffre = substr($data,16); // Extraction du texte chiffré (le reste après la valeur aléatoire)
+        return openssl_decrypt($chiffre,'aes-256-cbc',$key,0,$iv); //Déchiffrement des données en utilisant la clé et la valeur aléatoire
+    }else{
+        return null;
+    }
 }

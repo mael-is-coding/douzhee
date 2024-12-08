@@ -15,7 +15,7 @@
             <div class="input-input-group">
                 <div class="input-group">
                     <label for="pseudo">Pseudo</label>
-                    <input type="text" id="pseudoPers" name="pseudo" value="<?php echo getPseudoById($_SESSION['userId'])['pseudonyme'] ?>" maxlength="50">
+                    <input type="text" id="pseudoPers" name="pseudo" value="<?php echo getPseudoById($_SESSION['userId'])['pseudonyme'] ?>" maxlength="25">
                 </div>
                 <div class="input-group">
                     <label for="Avatar"class="file-label">+</label>
@@ -26,7 +26,7 @@
            
             <div class="input-group">
                 <label for="Bio">Bio</label>
-                <textarea id="BioPers" name="bio"><?php echo getBioById($_SESSION['userId'])['biographie']?></textarea>
+                <textarea id="BioPers" name="bio" maxlength="500"><?php echo getBioById($_SESSION['userId'])['biographie']?></textarea>
             </div>
 
             <div class="input-group">
@@ -61,7 +61,7 @@
 
         }if(isset($_FILES['avatar']) && $_FILES['avatar']['error'] == 0){
             $file = $_FILES['avatar'];
-            $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+            $allowedTypes = ['image/jpeg', 'image/png', 'image/gif' , 'image/jpg'];
             $uploadDir = '../../assets/images/imageavatars/';
             $filename = uniqid() . '_' . basename($file['name']);
             $uploadFile = $uploadDir . $filename;

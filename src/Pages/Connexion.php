@@ -28,13 +28,27 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     if (!empty($_POST['E-mail']) && !empty($_POST['Password'])){
+        $_SESSION['key'] = "this-is-a-32-byte-secret-key";
         $email = $_POST['E-mail'];
         $mdp = $_POST['Password'];
+        
         if (!empty($_POST['checkbox'])){
-            $cookievalue = password_hash($email, PASSWORD_DEFAULT);
-            $cookievalue2 = password_hash($mdp, PASSWORD_DEFAULT);
-            setcookie($cookiename,$cookievalue,time() + (60*60*2),"/");
-            setcookie($cookiename2,$cookievalue2,time() + (60*60*2),"/");
+            $cryptedEmail = cryptage($email,$_SESSION['key']);
+            $cryptedPassword = cryptage($mdp,$_SESSION['key']);
+            setcookie($cookiename, $cryptedEmail, [
+                'expires' => time() + (60 * 60 * 2),
+                'path' => '/',
+                'secure' => true,     
+                'httponly' => true,   
+                'samesite' => 'Strict' 
+            ]);
+            setcookie($cookiename2, $cryptedPassword, [
+                'expires' => time() + (60 * 60 * 2),
+                'path' => '/',
+                'secure' => true,     
+                'httponly' => true,   
+                'samesite' => 'Strict' 
+            ]);
         }
         $trouve = verifUser($_POST['E-mail'],$_POST['Password']);
         if ($trouve){
@@ -48,15 +62,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
                         </script>';
         }
     }
-    if (!empty($_POST['cookiename']) && $_POST['cookiename2']){
-        if (password_verify($email, $emailCookie)) {
-            if (password_verify($mdp, $mdpCookie)) {
-                    $_SESSION['userId'] = getIdUser($email);
-                    $_SESSION['timeStart'] = microtime(true);
-                    header('Location: Index.php');
-                    exit;
-                }
-            }
-        }
+    if (!empty($_COOKIE[$cookiename] ) && !empty($_COOKIE[$cookiename2])){
+        $email = decryptage($_COOKIE[$cookiename], $_SESSION['key']);
+        $mdp = decryptage($_COOKIE[$cookiename2], $_SESSION['key']);
+        $trouve = verifUser($email,$mdp);
+        if ($trouve){
+            $_SESSION['userId'] = getIdUser($email);
+            $_SESSION['timeStart'] = microtime(true); 
+            header('Location: Index.php');
+            exit;
+        } 
+    }
     }
 ?>

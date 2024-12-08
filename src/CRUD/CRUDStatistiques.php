@@ -62,7 +62,7 @@
 
         $data = $statement->fetch(PDO::FETCH_ASSOC);
 
-        $statsUser = new Statistiques($data['id'], $data['nbPartiesGagnees'], $data['scoreMaximal'], $data['tempsJeu'], $data['ratioVictoire'], $data['nbSucces'], $data['nbDouzhee'], $data['nbPartiesJoues']);
+        $statsUser = new Statistiques($data['id'], $data['nbPartiesGagnees'], $data['scoreMaximal'], $data['tempsJeu'], $data['ratioVictoire'], $data['nbSucces'], $data['nbDouzhee'], $data['nbPartieJoues']);
         return $statsUser;
     }
 
@@ -144,5 +144,14 @@
         $statement = $connection->prepare($updateNbDouzhee);
         $statement->bindParam(':idUser', $idUser, PDO::PARAM_INT);
         $statement->bindParam(':nbDouzhee', $nbDouzhee, PDO::PARAM_INT);
+        $statement->execute();
+    }
+    function updateTempsJeu(int $idJ, int $delai){
+        $connection = ConnexionSingleton::getInstance();
+
+        $updateNbDouzhee = 'UPDATE statistiques SET tempsJeu = tempsJeu + :temps WHERE id = (SELECT idStatistiques FROM consulte WHERE idJoueur = :idUser)';
+        $statement = $connection->prepare($updateNbDouzhee);
+        $statement->bindParam(':idUser', $idJ, PDO::PARAM_INT);
+        $statement->bindParam(':temps', $delai, PDO::PARAM_INT);
         $statement->execute();
     }

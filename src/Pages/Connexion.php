@@ -3,7 +3,7 @@
     require_once("../Utils/headerInit.php");
     $cookiename = "Email";
     $cookiename2 = "Password";
-    $key = "this-is-a-32-byte-secret-key";
+    $key = "this-is-a-zikette-key-for-a-pass";
     $newemail = isset($_COOKIE[$cookiename]) ? decryptage($_COOKIE[$cookiename], $key) : '';
     $newmdp = isset($_COOKIE[$cookiename2]) ? decryptage($_COOKIE[$cookiename2], $key) : '';
 ?>

@@ -6,7 +6,7 @@
     $statsUser = readStatistiquesByIdUser($_SESSION['userId']);
 ?>
     <link rel="stylesheet" href="../../assets/css/styleHeader.css"> 
-    <link rel="stylesheet" href="../../assets/css/styleStates.css">
+    <link rel="stylesheet" href="../../assets/css/styleGlobal.css">
 </head>
 <body>
     <div class="States">

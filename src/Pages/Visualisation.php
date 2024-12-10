@@ -17,7 +17,7 @@ if (isset($_GET['id'])) {
    
 ?>
  <link rel="stylesheet" href="../../assets/css/styleHeader.css"> 
- <link rel="stylesheet" href="../../assets/CSS/styleVisualisation.css">
+ <link rel="stylesheet" href="../../assets/CSS/styleGlobal.css">
 </head>
 
     <div class="Visualisation">

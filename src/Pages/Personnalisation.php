@@ -4,10 +4,11 @@
     require_once("../CRUD/CRUDSkinAchete.php");
     require_once("../Utils/headerBody.php");
     $allAchats = readAllAchatByUser($_SESSION['userId']);
+    $achat = readEffecuteAchatById($_SESSION['userId']);
 
 ?>
     <link rel="stylesheet" href="../../assets/css/styleHeader.css"> 
-    <link rel="stylesheet" href="../../assets/css/stylePersonnalisation.css">
+    <link rel="stylesheet" href="../../assets/css/styleGlobal.css">
 </head>
        
     <div class="Personnalisation">
@@ -32,9 +33,19 @@
             <div class="input-group">
                 <label for="Themes">Themes</label>
                 <div class="radio-group">
-                    <input type="radio" id="Themes1" name="themes" value="theme1" checked>
-                    <input type="radio" id="Themes2" name="themes" value="theme2" disabled>
-                    <input type="radio" id="Themes3" name="themes" value="theme3" disabled>
+                    <?php
+                    foreach($achat as $achats){
+                        $etatSkin = $achats['etatSkin'];
+                        $idSkin = $achats['idSkin'];
+                        if ($achats['etatSkin'] == 1) {
+                            $etatSkinChecked = 1; 
+                            break; 
+                        }
+                    }
+                    ?>
+                    <input type="radio" id="Themes1" name="themes" value="theme1" <?php echo ($etatSkinChecked == 1 && $idSkin == 1) ? 'checked' : ''; ?> disabled>
+                    <input type="radio" id="Themes2" name="themes" value="theme2" <?php echo ($etatSkinChecked == 1 && $idSkin == 2) ? 'checked' : ''; ?> disabled>
+                    <input type="radio" id="Themes3" name="themes" value="theme3" <?php echo ($etatSkinChecked == 1 && $idSkin == 3) ? 'checked' : ''; ?> disabled>
                     
                 </div>
             </div>

@@ -7,7 +7,7 @@
         $_SESSION['bio'] = getBioById($_SESSION['userId'])['biographie']; 
     }
 ?>
-    <link rel="stylesheet" href="../../assets/css/styleProfil.css">
+    <link rel="stylesheet" href="../../assets/css/styleGlobal.css">
     <link rel="stylesheet" href="../../assets/css/styleHeader.css"> 
 </head>
     <div class="PageProfil">

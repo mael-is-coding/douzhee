@@ -5,7 +5,7 @@
     require_once("../CRUD/CRUDSkinAchete.php");
     $allAchats = readAllAchatByUser($_SESSION['userId']);
 ?>
-    <link rel="stylesheet" href="../../assets/CSS/styleBoutique.css">
+    <link rel="stylesheet" href="../../assets/CSS/styleGlobal.css">
     <link rel="stylesheet" href="../../assets/CSS/styleHeader.css">
 </head>
     <div class="Boutique">

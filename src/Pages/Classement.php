@@ -15,7 +15,7 @@
     
 ?>
     <link rel="stylesheet" href="../../assets/css/styleHeader.css"> 
-    <link rel="stylesheet" href="../../assets/css/styleClassement.css">     
+    <link rel="stylesheet" href="../../assets/css/styleGlobal.css">     
 </head>
     <div class="Classement">
         <table>
@@ -90,7 +90,8 @@
                 
             </tbody>
         </table>
-        <button id="FirstButton">Passer au classement en fonction du nombre de Douzhee</button>
+        <button id="SecondClassButton">Passer au classement en fonction du nombre de Douzhee</button>
+        <button id="ThirdClassButton">Passer au classement en fonction du nombre de succès</button>
     </div>
     <div class="SecondClassement">
     <table>
@@ -165,7 +166,8 @@
                 
             </tbody>
         </table>
-        <button id="SecondButton">Passer au classement en fonction du nombre de succès</button>
+        <button id="ThirdClassButton">Passer au classement en fonction du nombre de succès</button>
+        <button id="FirstClassButton">Passer au classement en fonction du score</button>
     </div>
     <div class="ThirdClassement">
     <table>
@@ -239,30 +241,34 @@
                 
             </tbody>
         </table>
-        <button id="ThirdButton">Passer au classement en fonction du score</button>
+        <button id="FirstClassButton">Passer au classement en fonction du score</button>
+        <button id="SecondClassButton">Passer au classement en fonction du nombre de Douzhee</button>
     </div>
 </body>
 </html>
 <script>
-    const FirstButton = document.getElementById("FirstButton");
-    const SecondButton =document.getElementById("SecondButton");
-    const ThirdButton =document.getElementById("ThirdButton");
+    const FirstClassButton = document.getElementById("FirstClassButton");
+    const SecondClassButton =document.getElementById("SecondClassButton");
+    const ThirdClassButton =document.getElementById("ThirdClassButton");
     const FirstDiv = document.querySelector(".Classement");
     const SecondDiv =document.querySelector(".SecondClassement");
     const ThirdDiv =document.querySelector(".ThirdClassement");
 
-    FirstButton.addEventListener('click',() =>{
+    FirstClassButton.addEventListener('click',() =>{
         FirstDiv.style.display = "none";
         SecondDiv.style.display = "block";
+        ThirdDiv.style.display = "none";
 
 
     });
-    SecondButton.addEventListener('click',() =>{
+    SecondClassButton.addEventListener('click',() =>{
         SecondDiv.style.display = "none";
         ThirdDiv.style.display ="block";
+        FirstDiv.style.display = "none";
     });
-    ThirdButton.addEventListener('click', () =>{
+    ThirdClassButton.addEventListener('click', () =>{
         ThirdDiv.style.display = "none";
-        FirstDiv.style.display = "block"
+        FirstDiv.style.display = "block";
+        SecondDiv.style.display = "none";
     });
 </script>

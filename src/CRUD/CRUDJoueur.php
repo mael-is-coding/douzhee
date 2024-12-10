@@ -436,7 +436,7 @@ function updateAvatar(String $path, int $idUser) {
 }
 function cryptage($data,$key){
     $iv = random_bytes(16); //Génération d'une valeur aléatoire de 16 octets
-    $chiffrement = openssl_encrypt($data,'aes-256-cbc',$key,0,$iv); //chiffrement de la donnée en utilisant l'algo de chiffrage AES la clé et la valeur aléatoire 
+    $chiffrement = openssl_encrypt($data,'aes-256-cbc',$key,0,$iv); //chiffrement de la donnée en utilisant l'algo de chiffrage AES, la clé et la valeur aléatoire 
     return base64_encode($iv.$chiffrement); //concaténation de la valeur aléatoire au chiffrement
 }
 function decryptage($data,$key){

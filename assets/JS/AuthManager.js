@@ -25,7 +25,7 @@ class AuthManager {
             body : JSON.stringify ({
                 "from" : this.name,
                 "action" : "READ",
-                "object" : "JOUEUR",
+                "object" : "Joueur",
                 "params" : {id}
             })
         })

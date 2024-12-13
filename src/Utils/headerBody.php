@@ -8,7 +8,7 @@ if (isset($_SESSION['userId'])){
 ?>
 <body>
     <header>
-        <a href="Index.php">
+        <a href="index.php">
             <input id="Logo" type="submit" value=""> 
         </a>
         

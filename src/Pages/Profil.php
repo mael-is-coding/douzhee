@@ -18,6 +18,7 @@
             <button onclick="location.href='States.php'">Statistiques</button>
             <button onclick="location.href='Personnalisation.php'">Personnalisation</button>
             <button onclick="location.href='Succes.php'">Succès</button>
+            <button onclick="location.href='Defis.php'">Defis</button>
         </div>
     </div>
 </body>

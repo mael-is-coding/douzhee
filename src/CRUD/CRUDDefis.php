@@ -16,9 +16,9 @@
 
     return $statement->execute();
     }
-    function readAllDefis(){
+    function readThreeDefis(){
         $connection = ConnexionSingleton::getInstance();
-        $SelectQuery = "SELECT id, nom,Description,gain FROM defis";
+        $SelectQuery = "SELECT * FROM defis ORDER BY rand() limit 3 ";
         $statement = $connection->prepare($SelectQuery);
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);

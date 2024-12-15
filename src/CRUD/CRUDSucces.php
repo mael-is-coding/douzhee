@@ -1,6 +1,6 @@
 <?PHP 
-    require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/Classes/Succes.php";
-    require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/Utils/connectionSingleton.php";
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/douzhee/src/Classes/Succes.php";
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/douzhee/src/Utils/connectionSingleton.php";
 
     //FONCTIONS READ
 
@@ -33,6 +33,6 @@
         $statement->bindParam(':id', $id, PDO::PARAM_INT);
         $statement->execute();
 
-        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-        return new Succes($results['id'], $results['name'], $results['condition'], $results['type']);
+        $results = $statement->fetch(PDO::FETCH_ASSOC);
+        return new Succes($results['id'], $results['nomSucces'], $results['Condition'], $results['typeSucces']);
     }

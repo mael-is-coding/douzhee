@@ -12,11 +12,11 @@
     }
     function readCreatorbyArticle($idArticle){
         $connection = ConnexionSingleton::getInstance();
-        $readQuery = "SELECT * FROM creer WHERE idArticle = :idArticle";
+        $readQuery = "SELECT j.pseudonyme FROM creer c join joueur j on j.id = c.idJoueur WHERE idArticle = :idArticle";
         $statement = $connection->prepare($readQuery);
         $statement->bindParam(":idArticle", $idArticle);
         $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $statement->fetch(PDO::FETCH_ASSOC)['pseudonyme'];
     }
 
 ?>

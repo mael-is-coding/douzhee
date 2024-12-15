@@ -31,6 +31,9 @@ if (isset($_SESSION['userId'])){
                 <form action="Boutique.php" method="POST">
                     <button type="submit">Boutique</button>
                 </form>
+                <form action="Forum.php" method="POST">
+                    <button type="submit">Forum</button>
+                </form>
                 <form method="POST" action="../Utils/logout.php">
                     <button type="submit">Déconnexion</button>
                 </form>

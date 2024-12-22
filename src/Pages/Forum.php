@@ -10,8 +10,8 @@
 </head>
 <body>
     <div class="Forum">
-        <h2>Bienvenue sur le forum</h2>
-        <h2>Liste des Articles</h2>
+        <h1>Bienvenue sur le forum</h1>
+        <h2>Liste des Articles : </h2>
         <?php
             foreach ($allArticles as $article){
                 $idArticle = $article['id'];
@@ -20,7 +20,7 @@
                 echo "<div class='Article'>
                 <h3><a href='VisualisationArticle.php?id=" . urlencode($idArticle) . "'>" . $titreArticle . "</a></h3>
                 <p>Publié par " . readCreatorbyArticle($idArticle) . "</p>
-            </div>";
+                </div>";
             }
         ?>
         <h2>Formulaire pour ajouter un article:</h2>

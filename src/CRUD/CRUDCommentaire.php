@@ -13,7 +13,7 @@
             $idCommentaire = $connection->lastInsertId();
             createCommente($idJoueur,$idCommentaire);
         }
-        function readAllComment($idArticle){
+        function readAllCommentsById($idArticle){
             $connection = ConnexionSingleton::getInstance();
             $readQuery = "SELECT * FROM commentaire WHERE idArticle = :idArticle";
             $statement = $connection->prepare($readQuery);

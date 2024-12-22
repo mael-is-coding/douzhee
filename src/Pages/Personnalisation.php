@@ -9,6 +9,7 @@
 ?>
     <link rel="stylesheet" href="../../assets/css/styleHeader.css"> 
     <link rel="stylesheet" href="../../assets/css/styleGlobal.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 </head>
        
     <div class="Personnalisation">
@@ -132,10 +133,8 @@
     }
 }
 ?>
-    <?php
-
-?>
   <script>
         const img_ = document.getElementsByClassName("file-label")[0]
         img_.style.backgroundImage = 'url("<?php echo readAvatarById($_SESSION['userId']); ?>")'
     </script>
+    

@@ -28,7 +28,7 @@ function readSkinAchete(int $idSkin, int $idAchat): ?SkinAchete {
 
     $success = $statement->execute();
 
-    if (gettype($success) == "boolean") {
+    if (gettype($success) != "boolean") {
 
             $results = $statement->fetch(PDO::FETCH_ASSOC);
         if(gettype($results) == "boolean") {

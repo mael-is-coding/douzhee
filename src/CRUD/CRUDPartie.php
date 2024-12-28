@@ -101,6 +101,7 @@
         return new Partie($results['id'], $results['datePartie'], $results['statut'], $results['scoreTotalPartie'], $results['nbJoueurs'], $results['lienPartie']);
     }
 
+
     /**
      * @brief Récupère toutes les parties avec le statut donné
      * @author Nathan
@@ -146,8 +147,8 @@
      * @param int $scoreTotal score total de la partie
      * @param int $id identifiant de la partie
      * @return void
-     */
-    function updateEndOfGame(int $scoreTotal, int $id): void{
+     */ /* REDÉCLARATION : DEJA UNE DECLARATION DANS CRUD STATISTIQUES
+     function updateEndOfGame(int $scoreTotal, int $id): void{
         $connection = ConnexionSingleton::getInstance();
 
         $updatePartie = 'UPDATE partie SET scoreTotalPartie = :scoreTotal WHERE id = :id';
@@ -157,3 +158,4 @@
         $statement->bindParam(':id', $id, PDO::PARAM_INT);
         $statement->execute();
     }
+    */

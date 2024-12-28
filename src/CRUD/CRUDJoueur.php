@@ -201,7 +201,7 @@ function readJoueur(int $id): ?Joueur {
     if($statement->execute()) {
         $results = $statement->fetch(PDO::FETCH_ASSOC);
 
-        if(gettype($results) == "boolean") {
+        if(gettype($results) != "boolean") {
             $pseudo = $results ["pseudonyme"];
             $mdp = $results ["mdp"];
             $douzCoin = $results ["douzCoin"];
@@ -218,6 +218,35 @@ function readJoueur(int $id): ?Joueur {
         return null;
     }
 }
+
+function readJoueurByEmail(string $email) {
+    $connection = ConnexionSingleton::getInstance();
+
+    $request = "SELECT * FROM Joueur WHERE email = :email";
+
+    $statement = $connection->prepare($request);
+
+    $statement->bindParam("email", $email);
+
+    $statement->execute();
+
+    $results = $statement->fetch(PDO::FETCH_ASSOC);
+
+    if(gettype($results) != "boolean") {
+        $pseudo = $results ["pseudonyme"];
+        $mdp = $results ["mdp"];
+        $douzCoin = $results ["douzCoin"];
+        $email = $results ["email"];
+        $bio = $results ["biographie"];
+        $dateInsc = $results ["dateInscription"];
+        $idPartieEnCours = $results ["idPartieEnCours"];
+        
+        return new Joueur ($pseudo, $mdp, $douzCoin, $email, $bio, $dateInsc, $idPartieEnCours);
+    } else {
+        return null;
+    }
+}
+
 
 /**
  * @brief retourne l'id de partie du joueur à l'id $id

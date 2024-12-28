@@ -1,30 +1,27 @@
 <?php
 
-
 header("Access-Control-Allow-Origin: http://localhost");
 header("Access-Control-Allow-Headers: application/json");
 
-require_once $_SERVER ["DOCUMENT_ROOT"] . "douzhee/src/CRUD/CRUDAppartientA.php";
-require_once $_SERVER ["DOCUMENT_ROOT"] . "douzhee/src/CRUD/CRUDClassement.php";
-require_once $_SERVER ["DOCUMENT_ROOT"] . "douzhee/src/CRUD/CRUDConsulte.php";
-require_once $_SERVER ["DOCUMENT_ROOT"] . "douzhee/src/CRUD/CRUDEffectueAchat.php";
-require_once $_SERVER ["DOCUMENT_ROOT"] . "douzhee/src/CRUD/CRUDJouerPartie.php";
-require_once $_SERVER ["DOCUMENT_ROOT"] . "douzhee/src/CRUD/CRUDJoueur.php";
-require_once $_SERVER ["DOCUMENT_ROOT"] . "douzhee/src/CRUD/CRUDObtient.php";
-require_once $_SERVER ["DOCUMENT_ROOT"] . "douzhee/src/CRUD/CRUDPartie.php";
-require_once $_SERVER ["DOCUMENT_ROOT"] . "douzhee/src/CRUD/CRUDSkinAchete.php";
-require_once $_SERVER ["DOCUMENT_ROOT"] . "douzhee/src/CRUD/CRUDSkinAchetable.php";
-require_once $_SERVER ["DOCUMENT_ROOT"] . "douzhee/src/CRUD/CRUDStatistique.php";
-require_once $_SERVER ["DOCUMENT_ROOT"] . "douzhee/src/CRUD/CRUDSucces.php";
+require_once $_SERVER ["DOCUMENT_ROOT"] . "/douzhee/src/CRUD/CRUDAppartientA.php";
+require_once $_SERVER ["DOCUMENT_ROOT"] . "/douzhee/src/CRUD/CRUDClassement.php";
+require_once $_SERVER ["DOCUMENT_ROOT"] . "/douzhee/src/CRUD/CRUDConsulte.php";
+require_once $_SERVER ["DOCUMENT_ROOT"] . "/douzhee/src/CRUD/CRUDEffectueAchat.php";
+require_once $_SERVER ["DOCUMENT_ROOT"] . "/douzhee/src/CRUD/CRUDJouerPartie.php";
+require_once $_SERVER ["DOCUMENT_ROOT"] . "/douzhee/src/CRUD/CRUDJoueur.php";
+require_once $_SERVER ["DOCUMENT_ROOT"] . "/douzhee/src/CRUD/CRUDObtient.php";
+require_once $_SERVER ["DOCUMENT_ROOT"] . "/douzhee/src/CRUD/CRUDPartie.php";
+require_once $_SERVER ["DOCUMENT_ROOT"] . "/douzhee/src/CRUD/CRUDSkinAchete.php";
+require_once $_SERVER ["DOCUMENT_ROOT"] . "/douzhee/src/CRUD/CRUDSkinAchetable.php";
+require_once $_SERVER ["DOCUMENT_ROOT"] . "/douzhee/src/CRUD/CRUDStatistiques.php";
+require_once $_SERVER ["DOCUMENT_ROOT"] . "/douzhee/src/CRUD/CRUDSucces.php";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // echo json_encode(file_get_contents("php://input"));
 
     $request = json_decode(file_get_contents("php://input"), true);
 
-
-
-    exit();
+    findObjectThenExec($request);
 }   
 
 
@@ -34,41 +31,53 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
  */
 function findObjectThenExec(mixed $request): void {
     if ($request["object"] === "Joueur")  {
-       if (getAction($request) === "CREATE") {
-    
-       } else if (getAction($request) === "UPDATE") {
+       if (isUser($request) == 0 && getAction($request) === "READ") {
+        echo json_encode(["SUCCESS" => "IS A USER AND FOR CONNECTION"]);
+        $email = $request["params"]["email"];
+        $pwd = $request["params"]["pwdHash"];
 
-       } else if (getAction($request) === "READ") {
+        $returnedJoueur = readJoueurByEmail($email);
 
-       } else if (getAction($request) === "DELETE") {
+        if($returnedJoueur != null) {
+            echo json_encode(["returnedJoueur" => "is not null"]);
+            if ($returnedJoueur->getMdp() == $pwd) {
+                echo json_encode(["SUCCESS" => "Un utilisateur a ete trouve, le mot de passe est juste"]);
+                exit();
+            } else {
+                echo json_encode(["PWD ERROR" => "Un utilisateur a ete trouve, mais le mdp est errone    "]);
+                echo json_encode(["BD PWD" => $returnedJoueur->getMDP() . "      "]);
+                echo json_encode(["GIVEN PWD" => $request["params"]["pwdHash"]]);
+                exit();
+            }
+        } else {
+            echo json_encode(["EMAIL ERROR" => "EMAIL SEEMS TO BE INVALID OR NOT REGISTERED"]);
+            exit();
+        }
 
-       }
-         else {
-        echo json_encode(["ERROR" => "INVALID REQUEST -> NEITHER C, R, U or D"]);
+       } else {
+        echo json_encode(["ERROR" => "NOT A USER AND | OR NOT FOR READING"]);
         exit();
-    }
-
+       }
+    }  else {
+        echo json_encode(["ERROR" => "INVALID REQUEST"]);
+        exit();
     }
 }
 
 function getAction(mixed $request): string {
     if ($request["action"] === "CREATE") {
         return "CREATE";
-    } else if ($request["action"] === "READ") {
+    } else if ($request["action"] == "READ") {
         return "READ";
-    } else if ($request["action"] === "UPDATE") {
+    } else if ($request["action"] == "UPDATE") {
         return "UPDATE";
-    } else if ($request["action"] === "DELETE") {
+    } else if ($request["action"] == "DELETE") {
         return "DELETE";
     } else {
         return "ERROR";
     }
 }
 
-function getObject(mixed $request): string {
-    if ($request["object"] === "Joueur") {
-        return "Joueur";
-    } else if ($request["object"] === "") {
-        
-    }
+function isUser(mixed $request): int {
+    return strcasecmp($request["for"], "connection");
 }

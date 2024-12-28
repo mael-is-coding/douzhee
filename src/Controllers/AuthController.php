@@ -31,7 +31,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
  */
 function findObjectThenExec(mixed $request): void {
     if ($request["object"] === "Joueur")  {
-       if (isUser($request) == 0 && getAction($request) === "READ") {
+    // POUR LA CONNECTION 
+       if (getAction($request) === "READ") {
         echo json_encode(["SUCCESS" => "IS A USER AND FOR CONNECTION"]);
         $email = $request["params"]["email"];
         $pwd = $request["params"]["pwdHash"];
@@ -53,10 +54,31 @@ function findObjectThenExec(mixed $request): void {
             echo json_encode(["EMAIL ERROR" => "EMAIL SEEMS TO BE INVALID OR NOT REGISTERED"]);
             exit();
         }
+    // POUR LA CREATION D'UTILISATEUR PUIS CONNECTION
+       } else if (getAction($request) == "CREATE") {
+        $email = $request["params"]["email"];
+        $pwd = $request["params"]["pwd"];
+        $username = $request["params"]["username"];
 
+        $shouldBeNull = readJoueurByEmail($email);
+
+        if ($shouldBeNull != null) {
+            echo json_encode(["ERROR" => "L'email est deja dans la base de donnees, l'utilisateur existe deja"]);
+            exit();
+        } else {
+            $creationSuccess = createJoueur($username, $pwd, $email);
+            if ($creationSuccess) {
+                $newUser = readJoueurByEmail($email);
+                echo json_encode(["newUser" => $newUser->getEmail()]);
+                exit();
+            } else {
+                echo json_encode(["DATABASE ERROR" => "La BD s'est chiée dessus"]);
+                exit();
+            }
+        }
        } else {
-        echo json_encode(["ERROR" => "NOT A USER AND | OR NOT FOR READING"]);
-        exit();
+            echo json_encode(["ERROR" => "NOT A USER AND | OR NOT FOR READING"]);
+            exit();
        }
     }  else {
         echo json_encode(["ERROR" => "INVALID REQUEST"]);

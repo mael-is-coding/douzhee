@@ -9,22 +9,14 @@
 </head>
 <body>
     <?php
-        // Nombre de joueurs requis pour commencer la partie
-        $requiredPlayers = readPartieById($_SESSION['idPartie'])->getNbJoueurs();
+        $requiredPlayers = readPartieById($_SESSION['idPartie'])->getNbJoueurs(); // nombre de joueurs requis pour commencer la partie
+        $connectedPlayers = readConnectedPlayers(); // nombre de joueurs connectés
+        $ids = 0; // id pour les inputs
 
-        $connectedPlayers = readConnectedPlayers();
+        $users = readAllUsersByIdPartie($_SESSION['idPartie']); // liste des joueurs
+
         //debugSession();
     ?>
-    <div class="waiting-room">
-        <h1>En attente des autres joueurs...</h1>
-        <p>Nombre de joueurs connectés: <span id="connected-players"><?php echo $connectedPlayers; ?></span> / <?php echo $requiredPlayers; ?></p>
-        <br>
-        <h3>
-            <p>Lien de la partie:</p> 
-            <?php echo $_SESSION['lienPartie']; ?>
-        </h2>
-        <p>Veuillez patienter pendant que les autres joueurs rejoignent la partie.</p>
-    </div>
     <div class="score">
         <table class="Upper">
             <thead>
@@ -47,7 +39,7 @@
                         </div>
                     </td>
                     <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
-                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison" onclick="console.log('cc')"></td>
+                        <td class="col-joueur"><input id="<?php echo $ids++; ?>" type="button" placeholder="" class="combinaison"></td>
                     <?PHP endforeach; ?>
                 </tr>
                 <tr>
@@ -61,7 +53,7 @@
                         </div>
                     </td>
                     <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
-                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                        <td class="col-joueur"><input id="<?php echo $ids++; ?>" type="button" placeholder="" class="combinaison"></td>
                     <?PHP endforeach; ?>
                 </tr>
                 <tr>
@@ -75,7 +67,7 @@
                         </div>
                     </td>
                     <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
-                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                        <td class="col-joueur"><input id="<?php echo $ids++; ?>" type="button" placeholder="" class="combinaison"></td>
                     <?PHP endforeach; ?>
                 </tr>
                 <tr>
@@ -89,7 +81,7 @@
                         </div>
                     </td>
                     <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
-                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                        <td class="col-joueur"><input id="<?php echo $ids++; ?>" type="button" placeholder="" class="combinaison"></td>
                     <?PHP endforeach; ?>
                 </tr>
                 <tr>
@@ -103,7 +95,7 @@
                         </div>
                     </td>
                     <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
-                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                        <td class="col-joueur"><input id="<?php echo $ids++; ?>" type="button" placeholder="" class="combinaison"></td>
                     <?PHP endforeach; ?>
                 </tr>
                 <tr>
@@ -117,7 +109,7 @@
                         </div>
                     </td>
                     <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
-                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                        <td class="col-joueur"><input id="<?php echo $ids++; ?>" type="button" placeholder="" class="combinaison"></td>
                     <?PHP endforeach; ?>
                 </tr>
                 <tr>
@@ -165,7 +157,7 @@
                         </div>
                     </td>
                     <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
-                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                        <td class="col-joueur"><input id="<?php echo $ids++; ?>" type="button" placeholder="" class="combinaison"></td>
                     <?PHP endforeach; ?>
                 </tr>
                 <tr>
@@ -179,7 +171,7 @@
                         </div>
                     </td>
                     <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
-                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                        <td class="col-joueur"><input id="<?php echo $ids++; ?>" type="button" placeholder="" class="combinaison"></td>
                     <?PHP endforeach; ?>
                 </tr>
                 <tr>
@@ -193,7 +185,7 @@
                         </div>
                     </td>
                     <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
-                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                        <td class="col-joueur"><input id="<?php echo $ids++; ?>" type="button" placeholder="" class="combinaison"></td>
                     <?PHP endforeach; ?>
                 </tr>
                 <tr>
@@ -207,7 +199,7 @@
                         </div>
                     </td>
                     <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
-                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                        <td class="col-joueur"><input id="<?php echo $ids++; ?>" type="button" placeholder="" class="combinaison"></td>
                     <?PHP endforeach; ?>
                 </tr>
                 <tr>
@@ -221,7 +213,7 @@
                         </div>
                     </td>
                     <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
-                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                        <td class="col-joueur"><input id="<?php echo $ids++; ?>" type="button" placeholder="" class="combinaison"></td>
                     <?PHP endforeach; ?>
                 </tr>
                 <tr>
@@ -235,7 +227,7 @@
                         </div>
                     </td>
                     <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
-                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                        <td class="col-joueur"><input id="<?php echo $ids++; ?>" type="button" placeholder="" class="combinaison"></td>
                     <?PHP endforeach; ?>
                 </tr>
                 <tr>
@@ -249,7 +241,7 @@
                         </div>
                     </td>
                     <?PHP foreach (range(1, $requiredPlayers) as $value): ?>
-                        <td class="col-joueur"><input type="button" placeholder="" class="combinaison"></td>
+                        <td class="col-joueur"><input id="<?php echo $ids++; ?>" type="button" placeholder="" class="combinaison"></td>
                     <?PHP endforeach; ?>
                 </tr>
             </tbody>
@@ -276,110 +268,106 @@
     </div>
 
     <div class="versus">
-        <div class="ligne1">
-            <div class="joueur-avatar">
-            <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
-                <p class="joueur-nom">Joueur 1</p>
+        <!-- Affichage pour 2 joueurs -->
+        <?php if($requiredPlayers == 2){?>
+            <div class="ligne1">
+                <div class="joueur-avatar">
+                    <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
+                    <p class="joueur-nom"><?= $users[0]; ?></p>
+                </div>
+                <div class="joueur-avatar">
+                </div>
             </div>
-            <div class="joueur-avatar">
-            <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
-                <p class="joueur-nom">Joueur 2</p>
-            </div>
-        </div>
 
-        <span class="ligne2">VS</span>
+            <span class="ligne2">VS</span>
 
-        <div class="ligne3">
-            <div class="joueur-avatar">
-                <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
-                <p class="joueur-nom">Joueur 3</p>
+            <div class="ligne3">
+                <div class="joueur-avatar">
+                </div>
+                <div class="joueur-avatar">
+                    <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
+                    <p class="joueur-nom"><?= $users[1]; ?></p>
+                </div>
             </div>
-            <div class="joueur-avatar">
-            <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
-                <p class="joueur-nom">Joueur 4</p>
+        
+        <!-- Affichage pour 3 joueurs -->
+        <?php } elseif($requiredPlayers == 3){?>
+            <div class="ligne1">
+                <div class="joueur-avatar">
+                    <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
+                    <p class="joueur-nom"><?= $users[0]; ?></p>
+                </div>
+                <div class="joueur-avatar">
+                    <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
+                    <p class="joueur-nom"><?= $users[1]; ?></p>
+                </div>
             </div>
-        </div>
+
+            <span class="ligne2">VS</span>
+
+            <div class="ligne3">
+                <div class="joueur-avatar">
+                    <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
+                    <p class="joueur-nom"><?= $users[2]; ?></p>
+                </div>
+                <div class="joueur-avatar">
+                </div>
+            </div>
+        
+        <!-- Affichage pour 4 joueurs -->
+        <?php } elseif($requiredPlayers == 4){?>
+            <div class="ligne1">
+                <div class="joueur-avatar">
+                    <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
+                    <p class="joueur-nom"><?= $users[0]; ?></p>
+                </div>
+                <div class="joueur-avatar">
+                    <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
+                    <p class="joueur-nom"><?= $users[1]; ?></p>
+                </div>
+            </div>
+
+            <span class="ligne2">VS</span>
+
+            <div class="ligne3">
+                <div class="joueur-avatar">
+                    <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
+                    <p class="joueur-nom"><?= $users[2]; ?></p>
+                </div>
+                <div class="joueur-avatar">
+                    <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
+                    <p class="joueur-nom"><?= $users[3]; ?></p>
+                </div>
+            </div>
+        <?php }?>
     </div>
 
     <div class="chat-container">
         <div class="chat-messages" id="chat-messages"></div>
         <div class="chat-input">
             <input type="text" id="chat-input" placeholder="Tapez votre message..." />
-            <button onclick="sendMessage()">Envoyer</button>
+            <button id="sendMessage">Envoyer</button>
         </div>
     </div>
-    <button class="chat-toggle" onclick="toggleChat()">💬</button>
+    <button id="chat-toggle">💬</button>
     
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
-
+    <script src="../../assets/JS/connectionWebSocket.js"></script>
     <script>
+        let playerId = <?= json_encode($_SESSION["userId"]); ?>; // Récupérer l'ID du joueur
+        let position = <?= json_encode($_SESSION["position"]); ?>; // Récupérer la position du joueur
+        let nbPlayers = <?= json_encode($requiredPlayers); ?>; // Récupérer le nombre de joueurs
 
-        var requiredPlayers = <?= $requiredPlayers; ?>;
-        var connectedPlayers = <?= $connectedPlayers; ?>;
+        let gameId = <?= json_encode($_SESSION['idPartie']); ?>; // Récupérer l'ID de la partie
+        let pseudoid = <?= json_encode($_SESSION['pseudo']); ?>; // Récupérer le pseudo du joueur
 
-        // Fonction pour vérifier le nombre de joueurs connectés et afficher/masquer les éléments en conséquence
-        function checkPlayers() {
-            if (connectedPlayers < requiredPlayers) {
-                document.querySelector('.waiting-room').style.display = 'flex';
-                document.querySelector('.score').style.display = 'none';
-                document.querySelector('.dé-table').style.display = 'none';
-                document.querySelector('.versus').style.display = 'none';
-                document.querySelector('.chat-container').style.display = 'none';
-                document.querySelector('.chat-toggle').style.display = 'none';
-            } else {
-                document.querySelector('.waiting-room').style.display = 'none';
-                document.querySelector('.score').style.display = 'flex';
-                document.querySelector('.dé-table').style.display = 'flex';
-                document.querySelector('.versus').style.display = 'flex';
-                document.querySelector('.chat-container').style.display = 'flex';
-                document.querySelector('.chat-toggle').style.display = 'flex';
-            }
-        }
+        let requiredPlayers = <?= json_encode($requiredPlayers); ?>; // Récupérer le nombre de joueurs requis pour commencer la partie
+        let connectedPlayers = <?= json_encode($connectedPlayers); ?>; // Récupérer le nombre de joueurs connectés
 
-        // Appeler la fonction au chargement de la page
-        window.onload = checkPlayers;
-
-        var socket = io('http://localhost:8080'); // Initialiser le socket client pour se connecter au serveur socket.io sur le même domaine 
-        // var socket = io('https://douzhee.fr'); // Sur le VPS
-
-        var gameid = <?= $_SESSION['idPartie']; ?>; // Récupérer l'ID de la partie
         // Rejoindre la salle de chat pour la partie spécifique
-        socket.emit('player joined', gameid);
-
-        socket.on('player joined', function(connectedPlayersCount) {
-            console.log('Player joined game: ' + connectedPlayersCount);
-            document.getElementById('connected-players').innerText = connectedPlayersCount;
-            connectedPlayers = connectedPlayersCount;
-            checkPlayers();
-        });
-
-        socket.on('player disconnected', function(connectedPlayersCount) {
-            console.log('Player disconnected from game: ' + gameid);
-            document.getElementById('connected-players').innerText = connectedPlayersCount;
-            connectedPlayers = connectedPlayersCount;
-            checkPlayers();
-        });
-
-        // Fonction pour envoyer un message
-        function sendMessage() {
-            var input = document.getElementById('chat-input'); // Récupérer l'input
-            var message = input.value; // Récupérer la valeur de l'input
-            input.value = ''; // Réinitialiser l'input
-            socket.emit('chat message game', { gameid: gameid, message: message }); // Émettre le message
-        }
-
-        socket.on('chat message game', function(msg) {
-            var messages = document.getElementById('chat-messages'); // Récupérer les messages
-            var messageElement = document.createElement('p'); // Créer un élément div
-            messageElement.textContent = msg; // Ajouter le message reçu à l'élément div
-            messages.appendChild(messageElement); // Ajouter le message à la liste des messages
-            messages.scrollTop = messages.scrollHeight; // Faire défiler vers le bas pour afficher le dernier message
-        });
-
-        function toggleChat() {
-            var chatContainer = document.querySelector('.chat-container'); // Récupérer le conteneur du chat
-            chatContainer.classList.toggle('active'); // Ajouter ou supprimer la classe active pour afficher ou masquer le chat
-        }
+        socket.emit('player joined', gameId);
     </script>
+    <script src="../../assets/JS/scriptPageJeu.js" type="module"></script>
+    <script src="../../assets/JS/scriptChatEnLigne.js"></script>
 </body>
 </html>

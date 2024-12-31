@@ -58,6 +58,16 @@ io.on('connection', (socket) => {
     // Gestion de la connexion d'un client
     console.log('a user connected');
 
+    socket.on('test', () => {
+        console.log('test event received');
+    });
+
+    socket.on('inputValue', (data) => {
+        console.log('inputValue received');
+        console.log(data);
+        io.to(data.gameId).emit('inputValue', data);
+    });
+
     // Gestion de la déconnexion d'un client
     socket.on('disconnect', () => { 
         console.log('user disconnected to the server');
@@ -100,7 +110,8 @@ io.on('connection', (socket) => {
 
     // Gestion des messages de chat pour une partie spécifique
     socket.on('chat message game', (data) => {
-        io.to(data.gameid).emit('chat message game', data.message); // Diffuser le message à tous les clients dans la salle spécifique
+        console.log(`Message received for game ${data.gameId} de ${data.userName}: ${data.message}`);
+        io.to(data.gameId).emit('chat message game', data); // Diffuser le message à tous les clients dans la salle spécifique
     });
 });
 

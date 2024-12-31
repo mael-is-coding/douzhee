@@ -1,27 +1,25 @@
 <?php
-    require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/Classes/Joueur.php";
-    require_once $_SERVER['DOCUMENT_ROOT'] . "/Douzhee/src/Utils/connectionSingleton.php";
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/douzhee/src/Classes/Joueur.php";
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/douzhee/src/Utils/connectionSingleton.php";
 
 
 /**
  * @brief insère un nouveau joueur dans la table Joueur selon les paramètres spécifiés. tout les paramètres sont obligatoires.
  * @return bool false si la requête a échoué true sinon
  */
-function createJoueur(string $pseudo, string $mdp, int $douzCoin, string $email, string $bio = null) :bool {
+function createJoueur(string $pseudo, string $mdp, string $email, int $douzCoin = 0, string $bio = null) :bool {
     $connection = ConnexionSingleton::getInstance();
     $hashedPassword = password_hash($mdp, PASSWORD_DEFAULT);
-    $InsertQuery = "INSERT INTO Joueur (pseudonyme, mdp, douzCoin, email, biographie, dateInscription) VALUES (:pseudo, :mdp, 0, :email, :bio, :dateInsc)";
+    $InsertQuery = "INSERT INTO Joueur (pseudonyme, mdp, douzCoin, email, biographie, dateInscription) VALUES (:pseudo, :mdp, :douzCoin, :email, :bio, CURRENT_TIMESTAMP)";
 
     $statement = $connection->prepare($InsertQuery);
 
-    $dateInsc = date("j:n:g:i:s");
-
     $statement->bindParam("pseudo", $pseudo);
     $statement->bindParam("mdp", $hashedPassword);
+    $statement->bindParam("douzCoin", $douzCoin);
     $statement->bindParam("email", $email);
     $statement->bindParam("bio", $bio);
-    $statement->bindParam("douzCoin", $douzCoin);
-    $statement->bindParam("dateInsc", $dateInsc);
+   
 
     return $statement->execute();
 }
@@ -46,7 +44,7 @@ function updateJoueur(int $id, string $pseudo = null, string $mdp = null, int $d
     
 
     $connection = ConnexionSingleton::getInstance();
-    $UpdateQuery = "UPDATE Joueur SET pseudonyme = :pseudo, mdp = :mdp, douzCoin = :douzCoin, email = :email, biographie = :bio, dateInscription = :dateInsc, idPartie = :idPartie WHERE id = $id";
+    $UpdateQuery = "UPDATE Joueur SET pseudonyme = :pseudo, mdp = :mdp, douzCoin = :douzCoin, email = :email, biographie = :bio, idPartie = :idPartie WHERE id = $id";
 
     $statement = $connection->prepare($UpdateQuery);
 
@@ -199,19 +197,26 @@ function readJoueur(int $id): ?Joueur {
     $SelectQuery = "SELECT * FROM Joueur WHERE id = $id";
 
     $statement = $connection->prepare($SelectQuery);
-    $statement->execute();
 
-    $results = $statement->fetch(PDO::FETCH_ASSOC);
-    	
-    $pseudo = $results ["pseudonyme"];
-    $mdp = $results ["mdp"];
-    $douzCoin = $results ["douzCoin"];
-    $email = $results ["email"];
-    $bio = $results ["biographie"];
-    $dateInsc = $results ["dateInscription"];
-    $idPartieEnCours = $results ["idPartieEnCours"];
-    
-    return new Joueur ($pseudo, $mdp, $douzCoin, $email, $bio, $dateInsc, $idPartieEnCours);
+    if($statement->execute()) {
+        $results = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if(gettype($results) == "boolean") {
+            $pseudo = $results ["pseudonyme"];
+            $mdp = $results ["mdp"];
+            $douzCoin = $results ["douzCoin"];
+            $email = $results ["email"];
+            $bio = $results ["biographie"];
+            $dateInsc = $results ["dateInscription"];
+            $idPartieEnCours = $results ["idPartieEnCours"];
+            
+            return new Joueur ($pseudo, $mdp, $douzCoin, $email, $bio, $dateInsc, $idPartieEnCours);
+        } else {
+            return null;
+        }
+    } else {
+        return null;
+    }
 }
 
 /**
@@ -219,7 +224,7 @@ function readJoueur(int $id): ?Joueur {
  * @param int $id id du joueur dont on cherche l'id partie
  * @return int -1 si le joueur n'existe pas, l'id Partie correspondant à au param id du joueur sinon
  */
-function readIdPartieJoueur(int $id): int{
+function readIdPartieJoueur(int $id): int {
     return (readJoueur($id) != null) ? readJoueur($id)->getIdPartie() : -1;
 }
 
@@ -294,6 +299,19 @@ function readBoughtSkinsById(int $idJ) : ?array {
     }
 }
 
+
+/**
+ * @author Mael
+ * @brief renvoie une liste des joueurs possédent le skin idSkin
+ * @param $idSkin l'id du skin que les joueurs dans la liste retournée possèdent
+ * @return array|null une collection de joueurs si des joueurs possèdent le skin, null sinon
+ */
+function readJoueursThatHaveSkins(int $idSkin): ?array {
+    $connexion = ConnexionSingleton::getInstance();
+
+    return null;
+}
+
 /**
  * @param mixed $argument la chose sur laquelle on veut tester la nullité
  * @return bool true si c'est null, false sinon
@@ -315,31 +333,44 @@ function getIdUser($email){
 /**
  * @brief vérifie si un utilisateur existe dans la base de données
  */
-function verifUser($email) {
+function verifUser(String $email, String $mdp) {  
     $connexion = ConnexionSingleton::getInstance();
-    $sql = "SELECT email FROM joueur WHERE email = :email";
+    $sql = "SELECT email, mdp FROM joueur WHERE email = :email";
     $stmt = $connexion->prepare($sql);
     $stmt->bindParam('email', $email);
     $stmt->execute();
-    return $stmt->fetch(PDO::FETCH_ASSOC);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC); 
+    return $user && password_verify($mdp,$user['mdp']);
 }
-function getPseudoById($id){
+/**
+ * @author Mael
+ * @brief renvoie le pseudonyme en fonction de l'identifiant
+ * @param $id l'id du joueur
+ * @return array le pseudo du joueur
+ */
+function getPseudoById(int $id){
     $connexion = ConnexionSingleton::getInstance();
     $sql = "Select pseudonyme from joueur where id =?";
     $stmt = $connexion->prepare($sql);
     $stmt->bindParam(1,$id);
     $stmt->execute();
     $pseudo = $stmt->fetch(PDO::FETCH_ASSOC);
-    return $pseudo['pseudonyme'];
+    return $pseudo;
 }
-function getMoneyById($id){
+/**
+ * @author Mael
+ * @brief renvoie le nombre de douzcoin en fonction de l'identifiant
+ * @param $id l'id du joueur
+ * @return array le nombre de douzcoin
+ */
+function getMoneyById(int $id){
     $connexion = ConnexionSingleton::getInstance();
     $sql = "Select douzCoin from joueur where id =?";
     $stmt = $connexion->prepare($sql);
     $stmt->bindParam(1,$id);
     $stmt->execute();
     $money = $stmt->fetch(PDO::FETCH_ASSOC);
-    return $money['douzCoin'];
+    return $money;
 }
 function verifEmail($email){
     $connexion = ConnexionSingleton::getInstance();
@@ -357,7 +388,7 @@ function getBioById($id){
     $stmt->bindParam(1,$id);
     $stmt->execute();
     $bio = $stmt->fetch(PDO::FETCH_ASSOC);
-    return $bio['biographie'];
+    return $bio;
 }
 function insertUser($email,$mdp,$pseudonyme){
     $connexion = ConnexionSingleton::getInstance();
@@ -380,4 +411,41 @@ function updatePassword($mdp,$email){
     $stmt->bindParam(2,$id);
     $stmt->execute();
 }
-?>
+function readAvatarById(int $idUser): string{
+    
+    $connection = ConnexionSingleton::getInstance();
+    $selectedQuery = "Select avatarChemin from Joueur  WHERE id = :idUser";
+    $statement = $connection->prepare($selectedQuery);
+    $statement->bindParam(":idUser", $idUser);
+    $statement->execute();
+    $result = $statement->fetch(PDO::FETCH_ASSOC);
+    return $result['avatarChemin'];
+}
+
+
+function updateAvatar(String $path, int $idUser) {
+    $connection = ConnexionSingleton::getInstance();
+    $updateQuery = "UPDATE Joueur SET avatarChemin = :chemin WHERE id = :id";
+
+    $statement = $connection->prepare($updateQuery);
+    $statement->bindParam(":chemin", $path);
+    $statement->bindParam(":id", $idUser);
+
+    return $statement->execute();
+
+}
+function cryptage($data,$key){
+    $iv = random_bytes(16); //Génération d'une valeur aléatoire de 16 octets
+    $chiffrement = openssl_encrypt($data,'aes-256-cbc',$key,0,$iv); //chiffrement de la donnée en utilisant l'algo de chiffrage AES la clé et la valeur aléatoire 
+    return base64_encode($iv.$chiffrement); //concaténation de la valeur aléatoire au chiffrement
+}
+function decryptage($data,$key){
+    if ($data != null){
+        $data = base64_decode($data); //décryptage des données pour séparer la valeur random et le texte chiffré
+        $iv = substr($data,0,16); //Récupère la valeur aléatoire ( 16 premiers octets)
+        $chiffre = substr($data,16); // Extraction du texte chiffré (le reste après la valeur aléatoire)
+        return openssl_decrypt($chiffre,'aes-256-cbc',$key,0,$iv); //Déchiffrement des données en utilisant la clé et la valeur aléatoire
+    }else{
+        return null;
+    }
+}

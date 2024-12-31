@@ -4,15 +4,19 @@
     require_once("../CRUD/CRUDPartie.php");
     require_once("../CRUD/CRUDJouerPartie.php");
     require_once("../CRUD/CRUDAppartientA.php");
+    if (!isset($_SESSION['userId'])){
+        require_once("../Utils/redirection.php");
+    }
     
     $_SESSION['user_id'] = 1;
     $joueurTemp = readJoueur($_SESSION['user_id']);
 
-    
+
+    $joueurTemp = readJoueur($_SESSION['userId']);
 
     if(isset($_POST['nombre_joueur'])) {
         $nombre_joueur = $_POST['nombre_joueur'];
-        $idJoueur = $_SESSION['user_id'];
+        $idJoueur = $_SESSION['userId'];
         $lienPartie = bin2hex(random_bytes(10)); // Génère un lien de 20 caractères
         $_SESSION['lienPartie'] = $lienPartie;
         $idPartie = createPartie($nombre_joueur, $_SESSION['lienPartie']);
@@ -22,7 +26,7 @@
         $_SESSION['idPartie'] = $idPartie;
         $idJouerPartie = createJouerPartie($idJoueur, $idPartie, 1);
         $_SESSION["position"] = 1;
-        header("Location: ./game.php");
+        header("Location: ./loading.php");
         exit();
     }
 
@@ -34,23 +38,25 @@
             echo '<script type="text/javascript"> window.onload = function () { alert("Lien invalide"); }</script>';
             exit();
         }
-        $idJoueur = $_SESSION['user_id'];
+        $_SESSION['idPartie'] = $idPartie;
+        $_SESSION['lienPartie'] = $lienPartie;
+        $idJoueur = $_SESSION['userId'];
         $nbJoueurs = $partie->getNbJoueurs();
 
         if (readPositionIsUsed($idPartie, 2) == 0 && $nbJoueurs >= 2) {
             $idJouerPartie = createJouerPartie($idJoueur, $idPartie, 2);
             $_SESSION["position"] = 2;
-            header("Location: ./game.php");
+            header("Location: ./loading.php");
             exit();
         } elseif (readPositionIsUsed($idPartie, 3) == 0 && $nbJoueurs >= 3) {
             $idJouerPartie = createJouerPartie($idJoueur, $idPartie, 3);
             $_SESSION["position"] = 3;
-            header("Location: ./game.php");
+            header("Location: ./loading.php");
             exit();
         } elseif (readPositionIsUsed($idPartie, 4) == 0 && $nbJoueurs >= 4) {
             $idJouerPartie = createJouerPartie($idJoueur, $idPartie, 4);
             $_SESSION["position"] = 4;
-            header("Location: ./game.php");
+            header("Location: ./loading.php");
             exit();
         } else {
             echo '<script type="text/javascript"> window.onload = function () { alert("Partie pleine"); }</script>';

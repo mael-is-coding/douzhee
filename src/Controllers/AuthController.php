@@ -21,17 +21,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $request = json_decode(file_get_contents("php://input"), true);
 
-    findObjectThenExec($request);
+    routing($request);
 }   
 
 
 /**
- * une fonction qui 
+ * 
  * @return void
  */
-function findObjectThenExec(mixed $request): void {
+function routing(mixed $request): void {
     if ($request["object"] === "Joueur")  {
-    // POUR LA CONNECTION 
+    // POUR LA CONNECTION D'UN UTILISATEUR EXISTANT
        if (getAction($request) === "READ") {
         echo json_encode(["SUCCESS" => "IS A USER AND FOR CONNECTION"]);
         $email = $request["params"]["email"];
@@ -54,7 +54,7 @@ function findObjectThenExec(mixed $request): void {
             echo json_encode(["EMAIL ERROR" => "EMAIL SEEMS TO BE INVALID OR NOT REGISTERED"]);
             exit();
         }
-    // POUR LA CREATION D'UTILISATEUR PUIS CONNECTION
+    // POUR LA CREATION D'UTILISATEUR NON-EXISTANT PUIS CONNEXION
        } else if (getAction($request) == "CREATE") {
         $email = $request["params"]["email"];
         $pwd = $request["params"]["pwd"];
@@ -84,6 +84,8 @@ function findObjectThenExec(mixed $request): void {
         echo json_encode(["ERROR" => "INVALID REQUEST"]);
         exit();
     }
+
+    // POUR LA MISE A JOUR DES DONNÉES D'UN UTILISATEUR EXISTANT
 }
 
 function getAction(mixed $request): string {

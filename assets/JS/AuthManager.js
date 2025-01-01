@@ -68,7 +68,7 @@ class AuthManager {
 
         .then (data => console.log(data))
 
-        .catch(error => console.log(error))
+        .catch(error => console.error(error))
     }
 }
 

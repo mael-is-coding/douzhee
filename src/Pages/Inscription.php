@@ -42,10 +42,11 @@
                     createSkinAchete(1,$_SESSION['userId'],1,"Theme",date("Y/m/d"));
                     $_SESSION['messageSucces1'] = "Bravo, vous venez d'obtenir le succès suivant : Se connecter pour la première fois";
                     header('Location: Index.php');
-             }else{
-                echo '<script  type="text/javascript"> window.onload = function () { alert("Votre email est syntaxiquement incorrect voici un exemple de mail attendu : zikette@gmail.com"); }
-                </script>';
-             }
+                }
+                else{
+                    echo '<script  type="text/javascript"> window.onload = function () { alert("Votre email est syntaxiquement incorrect voici un exemple de mail attendu : zikette@gmail.com"); }
+                    </script>';
+                }
         }
     }
 }

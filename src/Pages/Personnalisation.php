@@ -47,6 +47,7 @@
                     <input type="radio" id="Themes1" name="themes" value="theme1" <?php echo ($etatSkinChecked == 1 && $idSkin == 1) ? 'checked' : ''; ?> disabled>
                     <input type="radio" id="Themes2" name="themes" value="theme2" <?php echo ($etatSkinChecked == 1 && $idSkin == 2) ? 'checked' : ''; ?> disabled>
                     <input type="radio" id="Themes3" name="themes" value="theme3" <?php echo ($etatSkinChecked == 1 && $idSkin == 3) ? 'checked' : ''; ?> disabled>
+                    <input type="radio" id="Themes4" name="themes" value="theme4" <?php echo ($etatSkinChecked == 1 && $idSkin == 4) ? 'checked' : ''; ?> disabled>
                     
                 </div>
             </div>
@@ -103,17 +104,27 @@
                 updateEtatSkin(1,1,$_SESSION['userId']);
                 updateEtatSkin(2,0,$_SESSION['userId']);
                 updateEtatSkin(3,0,$_SESSION['userId']);
+                updateEtatSkin(4,0,$_SESSION['userId']);
                 break;
             case 'theme2':
                 updateEtatSkin(1,0,$_SESSION['userId']);
                 updateEtatSkin(2,1,$_SESSION['userId']);
                 updateEtatSkin(3,0,$_SESSION['userId']);
+                updateEtatSkin(4,0,$_SESSION['userId']);
                 break;
             case 'theme3':
                 updateEtatSkin(1,0,$_SESSION['userId']);
                 updateEtatSkin(2,0,$_SESSION['userId']);
                 updateEtatSkin(3,1,$_SESSION['userId']);
+                updateEtatSkin(4,0,$_SESSION['userId']);
                 break;
+            case 'theme4':
+                updateEtatSkin(1,0,$_SESSION['userId']);
+                updateEtatSkin(2,0,$_SESSION['userId']);
+                updateEtatSkin(3,0,$_SESSION['userId']);
+                updateEtatSkin(4,1,$_SESSION['userId']);
+                break;
+
         }
     }
     

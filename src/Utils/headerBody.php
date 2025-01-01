@@ -22,7 +22,7 @@ if (isset($_SESSION['userId'])){
             }
         ?>
             <div class="selection_droite">
-            <span id="money"><?php echo getMoneyById($_SESSION['userId'])['douzCoin']; ?></span>
+            <span id="money"><?php echo getMoneyById($_SESSION['userId']); ?></span>
                 <img src="../../assets/images/imgheader/coin_dollar_finance_icon_125510 1.png" alt="Money du Jeu" width="27" height="27" id="coin">
                 <span id="pseudo"><?php echo getPseudoById($_SESSION['userId'])['pseudonyme']; ?></span>
                 <form action="Profil.php" method="GET">
@@ -30,9 +30,6 @@ if (isset($_SESSION['userId'])){
                 </form>
                 <form action="Boutique.php" method="POST">
                     <button type="submit">Boutique</button>
-                </form>
-                <form action="Forum.php" method="POST">
-                    <button type="submit">Forum</button>
                 </form>
                 <form method="POST" action="../Utils/logout.php">
                     <button type="submit">Déconnexion</button>
@@ -81,9 +78,17 @@ if (isset($_SESSION['userId'])){
                             <script>
                             document.body.style.background = "linear-gradient(to bottom, #A52A2A 0%, #6F4F4F 100%)";
                             document.querySelector("header").style.backgroundColor = "#6f4b4d";
-                        </script>
-                        <?php
-                        break;
+                            </script>
+                            <?php
+                            break;
+                        case 4:
+                            ?>
+                            <script>
+                                document.body.style.background = "background: linear-gradient(to bottom,  rgba(70, 112, 173, 0.51) 0%, rgba(70, 113, 170, 0.78) 11%,  rgba(70, 114, 171, 0.91) 22%,  rgba(70, 113, 171, 0.97) 33%,  rgba(71, 115, 170, 1) 44%,  rgba(77, 131, 166, 1) 55%,  rgba(78, 133, 166, 0.97) 66%,  rgba(78, 133, 165, 0.91) 77%,  rgba(78, 132, 166, 0.78) 88%,  rgba(77, 133, 165, 0.5) 100%)";
+                                document.querySelector("header").style.backgroundColor = "#4670AD83";
+                            </script>
+                            <?php
+                            break;
                     }
                 }
                 

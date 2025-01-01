@@ -619,6 +619,9 @@ input[type="radio"]#Themes2{
 input[type="radio"]#Themes3{
     background-image: url('../../assets/images/imagePersonnalisation/Theme_3_verrouillé.png');
 }
+input[type="radio"]#Themes4{
+    background-image: url('../../assets/images/imagePersonnalisation/Theme_4_verrouilé.png');
+}
 input[type="radio"]#Des1{
     background-image: url('../../assets/images/imagePersonnalisation/dés_2.png');
 }
@@ -665,8 +668,8 @@ input[type="radio"]:checked:after{
 }
 
 #modalImage {
-    width: 200px;
-    height: 200px;
+    width: 120px;
+    height: 120px;
     object-fit: cover;
     border-radius: 50px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
@@ -747,32 +750,8 @@ input[type="radio"]:checked:after{
     color: #555;
 }
 
-input[type="text"], input[type="number"], textarea{
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 25px;
-    border: none;
-    color: black;
-    font-size: 16px;
-    margin-left: 50%;
-    transform: translateX(-50%);
-    font-style: italic;
-    border-radius: 10px;
-}
-
-.Forum{
-    display: flex;
-    flex-direction: column;
-    background-color: #d4d0d6;
-    border-radius: 20px;
-    padding: 40px;
-    width: 90%;
-    max-width: 600px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    gap: 15px; 
-}
 .modal {
-    display: none;  /* Cacher la modale par défaut */
+    display: none;  
     position: fixed;
     top: 0;
     left: 0;
@@ -791,3 +770,16 @@ input[type="text"], input[type="number"], textarea{
     overflow: auto;
     border-radius: 10px;
 }
+#nomDefis, #descriptionDefis, #gainDefis{
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 25px;
+    border: none;
+    color: black;
+    font-size: 16px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    font-style: italic;
+    border-radius: 10px;
+}
+

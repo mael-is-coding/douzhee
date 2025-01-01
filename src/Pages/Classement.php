@@ -247,28 +247,36 @@
 </body>
 </html>
 <script>
-    const FirstClassButton = document.getElementById("FirstClassButton");
-    const SecondClassButton =document.getElementById("SecondClassButton");
-    const ThirdClassButton =document.getElementById("ThirdClassButton");
+    const FirstClassButton = document.querySelectorAll("#FirstClassButton");
+    const SecondClassButton =document.querySelectorAll("#SecondClassButton");
+    const ThirdClassButton =document.querySelectorAll("#ThirdClassButton");
     const FirstDiv = document.querySelector(".Classement");
     const SecondDiv =document.querySelector(".SecondClassement");
     const ThirdDiv =document.querySelector(".ThirdClassement");
 
-    FirstClassButton.addEventListener('click',() =>{
-        FirstDiv.style.display = "none";
-        SecondDiv.style.display = "block";
-        ThirdDiv.style.display = "none";
+    FirstClassButton.forEach((button) =>{
+        button.addEventListener('click',() =>{
+            FirstDiv.style.display = "block";
+            SecondDiv.style.display = "none";
+            ThirdDiv.style.display = "none";
+        });
+    })
+    SecondClassButton.forEach((button) =>{
+        button.addEventListener('click',() =>{
+            FirstDiv.style.display = "none";
+            SecondDiv.style.display = "block";
+            ThirdDiv.style.display = "none";
+        });
+    })
 
-
-    });
-    SecondClassButton.addEventListener('click',() =>{
-        SecondDiv.style.display = "none";
-        ThirdDiv.style.display ="block";
-        FirstDiv.style.display = "none";
-    });
-    ThirdClassButton.addEventListener('click', () =>{
-        ThirdDiv.style.display = "none";
-        FirstDiv.style.display = "block";
-        SecondDiv.style.display = "none";
-    });
+    ThirdClassButton.forEach((button) =>{
+        button.addEventListener('click',() =>{
+            FirstDiv.style.display = "none";
+            SecondDiv.style.display = "none";
+            ThirdDiv.style.display = "block";
+        });
+    })
+ 
+  
+   
 </script>

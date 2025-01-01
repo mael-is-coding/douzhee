@@ -9,7 +9,7 @@ $defiexists = readAllDefisSelected();
 $idDefis = 0;
 $idDefisMaitrise = 0;
 $now = time();
-$nextmonday = strtotime('next Monday', $now);
+$nextmonday = strtotime('next Sunday', $now);
 $tempsrestant = $nextmonday - $now;
 if ($tempsrestant <= 0){
     deleteAllDefisSelected();
@@ -63,9 +63,9 @@ $regexGain = '/^(1[0-9]{2}|2[0-4][0-9]|250)$/';
         ?>
         <form action="Defis.php" method="POST">
             <h2>Formulaire de création de Défis : </h2>
-            <input type="text" name="nomDefis" placeholder="Insérer le nom du Défis" maxlength="50">
-            <input type="text" name="descriptionDefis" placeholder="Insérer une description du Défis" maxlength="150">
-            <input type="number" name="gainDefis" placeholder="Insérer le gain du Défis" maxlength="3">
+            <input type="text" name="nomDefis" id="nomDefis" placeholder="Insérer le nom du Défis" maxlength="50">
+            <input type="text" name="descriptionDefis" id="descriptionDefis" placeholder="Insérer une description du Défis" maxlength="150">
+            <input type="number" name="gainDefis" id="gainDefis" placeholder="Insérer le gain du Défis" maxlength="3">
             <button type="submit">Créer le défi</button>
         </form>
     </div>

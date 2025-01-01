@@ -363,14 +363,14 @@ function getPseudoById(int $id){
  * @param $id l'id du joueur
  * @return array le nombre de douzcoin
  */
-function getMoneyById(int $id){
+function getMoneyById(int $id): int{
     $connexion = ConnexionSingleton::getInstance();
-    $sql = "Select douzCoin from joueur where id =?";
+    $sql = "Select douzCoin from joueur where id = :id";
     $stmt = $connexion->prepare($sql);
-    $stmt->bindParam(1,$id);
+    $stmt->bindParam(":id",$id);
     $stmt->execute();
     $money = $stmt->fetch(PDO::FETCH_ASSOC);
-    return $money;
+    return (int)$money['douzCoin'];
 }
 function verifEmail($email){
     $connexion = ConnexionSingleton::getInstance();

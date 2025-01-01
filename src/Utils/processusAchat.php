@@ -14,7 +14,7 @@
         $cost = $input['cost'] ?? 0;
     
         if ($userId && $idSkin && $cost > 0) {
-            $userMoney = getMoneyById($userId)['douzCoin'];
+            $userMoney = getMoneyById($_SESSION['userId']);
             if ($userMoney >= $cost) {
                 $newMoney = $userMoney - $cost;
                 updateDouzCoin($userId, $newMoney);

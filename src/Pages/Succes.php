@@ -14,7 +14,7 @@
 </head>
 <body>
     <div class="Succes">
-        <h2>Succès :</h2>
+        <h2>Liste des Succès  :</h2>
         <?php
             for ($i = 1; $i < 34; $i++) {
                 echo '<img src="../../assets/images/imageSucces/Succes_verrouille.png" alt="Image du succès" id="'. $i .'" class="clickable">';

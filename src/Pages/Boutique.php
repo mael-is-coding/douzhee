@@ -14,6 +14,11 @@
             <h2>Voici tous les thèmes disponibles : </h2>
             <img src="../../assets/images/imagePersonnalisation/Theme2.png" id="2"  class="clickable" >
             <img src="../../assets/images/imagePersonnalisation/Theme3.png" id="3"  class="clickable" >
+            <img src="../../assets/images/imagePersonnalisation/Theme4.png" id="4"  class="clickable">
+        </div>
+        <div class="Musique">
+            <h2>Voici tous les musiques disponibles : </h2>
+            
         </div>
         <div class="Dés">
             <h2>Voici tous les skin de dés disponibles : </h2>
@@ -48,6 +53,9 @@
                             theme.style.pointerEvents = "none";
                         }if(themeId === 3){
                             theme.src = "../../assets/images/imageBoutique/Theme3Acheter.png";
+                            theme.style.pointerEvents = "none";
+                        }if(themeId === 4){
+                            theme.src = "../../assets/images/imageBoutique/Theme4Acheter.png";
                             theme.style.pointerEvents = "none";
                         }
                     
@@ -118,6 +126,6 @@
             alert("Vous êtes trop pauvres !");
             modal.style.display = "none";
         }
-        window.location.href="http://localhost/douzhee/src/Pages/Index.php?_ijt=v1ppdtli2cq1rp8vpr9rsjg3b7&_ij_reload=RELOAD_ON_SAVE"
+        window.location.href="http://localhost/douzhee/src/Pages/index.php?_ijt=v1ppdtli2cq1rp8vpr9rsjg3b7&_ij_reload=RELOAD_ON_SAVE"
        });
  </script>

@@ -81,13 +81,13 @@ function updateJoueur(int $id, string $pseudo = null, string $mdp = null, int $d
  * @param string $pseudo
  * @return bool true si la requête marche, false sinon
  */
-function updatePseudoJoueur(int $id, string $pseudo): bool {
+function updatePseudoJoueur(int $id, string $pseudonyme ): bool {
     $connection = ConnexionSingleton::getInstance();
-    $updateQuery = "UPDATE Joueur SET pseudo = :pseudo WHERE id = :id";
+    $updateQuery = "UPDATE Joueur SET pseudonyme  = :pseudonyme  WHERE id = :id";
 
     $statement = $connection->prepare($updateQuery);
 
-    $statement->bindParam("pseudo", $pseudo);
+    $statement->bindParam("pseudonyme", $pseudonyme );
     $statement->bindParam("id", $id);
 
     return $statement->execute();

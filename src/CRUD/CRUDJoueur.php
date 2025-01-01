@@ -83,7 +83,7 @@ function updateJoueur(int $id, string $pseudo = null, string $mdp = null, int $d
  */
 function updatePseudoJoueur(int $id, string $pseudo): bool {
     $connection = ConnexionSingleton::getInstance();
-    $updateQuery = "UPDATE Joueur SET pseudonyme = :pseudo WHERE id = :id";
+    $updateQuery = "UPDATE Joueur SET pseudo = :pseudo WHERE id = :id";
 
     $statement = $connection->prepare($updateQuery);
 
@@ -366,7 +366,7 @@ function verifUser(String $email, String $mdp) {
     $connexion = ConnexionSingleton::getInstance();
     $sql = "SELECT email, mdp FROM joueur WHERE email = :email";
     $stmt = $connexion->prepare($sql);
-    $stmt->bindParam(':email', $email);
+    $stmt->bindParam('email', $email);
     $stmt->execute();
     $user = $stmt->fetch(PDO::FETCH_ASSOC); 
     return $user && password_verify($mdp,$user['mdp']);

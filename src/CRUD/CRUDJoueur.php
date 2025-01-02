@@ -478,3 +478,13 @@ function decryptage($data,$key){
         return null;
     }
 }
+
+function readMusicPath($idJ){
+    $connection = ConnexionSingleton::getInstance();
+    $selectedQuery = "SELECT musiqueChemin FROM Joueur  WHERE id = :idJ";
+    $statement = $connection->prepare($selectedQuery);
+    $statement->bindParam(":idJ", $idJ);
+    $statement->execute();
+    $result = $statement->fetch(PDO::FETCH_ASSOC);
+    return $result['musiqueChemin'];
+}

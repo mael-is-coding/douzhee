@@ -23,3 +23,8 @@
     </div>
 </body>
 </html>
+<script>
+    const header =document.querySelector('header');
+    const div =document.querySelector('.PageProfil');
+    div.style.backgroundColor = header.style.backgroundColor;
+</script>

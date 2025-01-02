@@ -3,11 +3,46 @@ require_once("../CRUD/CRUDJoueur.php");
 require_once("../CRUD/CRUDSkinAchete.php");
 if (isset($_SESSION['userId'])){
     $allAchats = readAllAchatByUser($_SESSION['userId']);
+    $musicPath = readMusicPath($_SESSION['userId']);
 }
 
 ?>
 <body>
     <header>
+        <audio id="audioPlayer" controls loop>
+            <source src="<?php echo $musicPath?>" type="audio/mpeg">
+        </audio>
+        <script>
+          var audio = document.getElementById('audioPlayer');
+       
+          if (localStorage.getItem('isMusicPlaying') === 'true') {
+                audio.play();
+            } else {
+                audio.pause();
+            }
+            var currentTime = localStorage.getItem('audioCurrentTime');
+            if (currentTime) {
+                audio.currentTime = currentTime;  
+            }
+        audio.style.display = 'none';
+        window.addEventListener('beforeunload', function() {
+            if (!audio.paused) {
+                localStorage.setItem('isMusicPlaying', 'true'); 
+            } else {
+                localStorage.setItem('isMusicPlaying', 'false'); 
+            }
+            localStorage.setItem('audioCurrentTime', audio.currentTime);
+        });
+        <?php
+          if (isset($_SESSION['isconnected'])){
+            echo 'localStorage.setItem("isMusicPlaying", "true");';
+            echo 'audio.play();';
+            unset($_SESSION['isconnected']);
+        }else{
+            echo 'localStorage.setItem("isMusicPlaying", "false");';
+        }
+          ?>
+        </script>
         <a href="index.php">
             <input id="Logo" type="submit" value=""> 
         </a>

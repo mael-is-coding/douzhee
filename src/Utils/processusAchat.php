@@ -15,8 +15,9 @@
     
         if ($userId && $idSkin && $cost > 0) {
             $userMoney = getMoneyById($_SESSION['userId']);
+            $_SESSION['userMoney'] = $userMoney ?? 1;
             if ($userMoney >= $cost) {
-                $newMoney = $userMoney - $cost;
+                $newMoney = $_SESSION['userMoney'] - $cost;
                 updateDouzCoin($userId, $newMoney);
                 createSkinAchete($idSkin, $userId, 0, "Theme", date("Y-m-d"));
                 echo json_encode(['success' => true]);

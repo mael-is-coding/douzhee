@@ -126,6 +126,6 @@
             alert("Vous êtes trop pauvres !");
             modal.style.display = "none";
         }
-        window.location.href="http://localhost/douzhee/src/Pages/index.php?_ijt=v1ppdtli2cq1rp8vpr9rsjg3b7&_ij_reload=RELOAD_ON_SAVE"
+        window.location.href="http://localhost/douzhee/src/Pages/Index.php?_ijt=v1ppdtli2cq1rp8vpr9rsjg3b7&_ij_reload=RELOAD_ON_SAVE"
        });
  </script>

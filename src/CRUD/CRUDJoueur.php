@@ -370,7 +370,7 @@ function getMoneyById(int $id): int{
     $stmt->bindParam(":id",$id);
     $stmt->execute();
     $money = $stmt->fetch(PDO::FETCH_ASSOC);
-    return (int)$money['douzCoin'];
+    return $money['douzCoin'];
 }
 function verifEmail($email){
     $connexion = ConnexionSingleton::getInstance();

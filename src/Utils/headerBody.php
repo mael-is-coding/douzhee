@@ -84,8 +84,8 @@ if (isset($_SESSION['userId'])){
                         case 4:
                             ?>
                             <script>
-                                document.body.style.background = "background: linear-gradient(to bottom,  rgba(70, 112, 173, 0.51) 0%, rgba(70, 113, 170, 0.78) 11%,  rgba(70, 114, 171, 0.91) 22%,  rgba(70, 113, 171, 0.97) 33%,  rgba(71, 115, 170, 1) 44%,  rgba(77, 131, 166, 1) 55%,  rgba(78, 133, 166, 0.97) 66%,  rgba(78, 133, 165, 0.91) 77%,  rgba(78, 132, 166, 0.78) 88%,  rgba(77, 133, 165, 0.5) 100%)";
-                                document.querySelector("header").style.backgroundColor = "#4670AD83";
+                               document.body.style.background = "linear-gradient(to bottom, #4a90e2 0%, #4285f4 25%, #3a78db 50%, #3367d6 75%, #2a56c6 100%)";
+                               document.querySelector("header").style.backgroundColor = "#2c5aa0";
                             </script>
                             <?php
                             break;

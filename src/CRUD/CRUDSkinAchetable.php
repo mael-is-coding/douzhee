@@ -23,7 +23,7 @@
 
       $results = $statement->fetch(PDO::FETCH_ASSOC);
 
-      if(gettype($results) == "boolean") {
+      if(gettype($results) != "boolean") {
          $idSkin = $results["idSkin"];
          $nomSkin = $results["nomSkin"];
          $prixSkin = $results["prixSkin"];

@@ -16,9 +16,9 @@
         <form action = "Connexion.php" method="POST">
             <input name="E-mail" type="email" placeholder="E-mail" required value="<?php echo htmlspecialchars($newemail);?>">
             <input name = "Password" type="password" placeholder="Password" required value="<?php echo htmlspecialchars($newmdp);?>">
-            <div class="checkbox">
-            <input type ="checkbox" id="check" name="checkbox">
-            <label for="check">Se souvenir de moi</label>
+                <div class="checkbox">
+                <input type ="checkbox" id="check" name="checkbox">
+                <label for="check">Se souvenir de moi</label>
             </div>
             <button type="submit">Connexion</button>
         </form>

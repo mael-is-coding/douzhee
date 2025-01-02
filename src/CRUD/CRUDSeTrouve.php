@@ -39,7 +39,7 @@ function readSeTrouve(int $idJ, int $idC): ?SeTrouve {
         
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-        if (gettype($results) == "boolean") {
+        if (gettype($results) != "boolean") {
             $idJ_ = $results ["idJoueur"];
             $idC_ = $results ["idClassement"];
         

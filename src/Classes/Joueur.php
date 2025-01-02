@@ -12,11 +12,11 @@ class Joueur {
     private string $mdp;
     private int $douzCoin;
     private string $email;
-    private string $bio;
+    private string|null $bio;
     private string $dateInsc;
     private int $idPartieEnCours;
 
-    function __construct(string $pseudo, string $mdp, int $douzCoin, string $email, string $bio, string $dateInsc, int $idPartie) {
+    function __construct(string $pseudo, string $mdp, int $douzCoin, string $email, string|null $bio, string $dateInsc, int $idPartie) {
         $this->pseudo = $pseudo;
         $this->mdp = $mdp;
         $this->douzCoin = $douzCoin;

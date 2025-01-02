@@ -7,7 +7,7 @@
  * @brief insère un nouveau joueur dans la table Joueur selon les paramètres spécifiés. tout les paramètres sont obligatoires.
  * @return bool false si la requête a échoué true sinon
  */
-function createJoueur(string $pseudo, string $mdp, string $email, int $douzCoin = 0, string $bio = null) :bool {
+function createJoueur(string $pseudo, string $mdp, string $email, int $douzCoin = 0, string $bio = "") :bool {
     $connection = ConnexionSingleton::getInstance();
     $hashedPassword = password_hash($mdp, PASSWORD_DEFAULT);
     $InsertQuery = "INSERT INTO Joueur (pseudonyme, mdp, douzCoin, email, biographie, dateInscription) VALUES (:pseudo, :mdp, :douzCoin, :email, :bio, CURRENT_TIMESTAMP)";
@@ -81,13 +81,13 @@ function updateJoueur(int $id, string $pseudo = null, string $mdp = null, int $d
  * @param string $pseudo
  * @return bool true si la requête marche, false sinon
  */
-function updatePseudoJoueur(int $id, string $pseudo): bool {
+function updatePseudoJoueur(int $id, string $pseudonyme ): bool {
     $connection = ConnexionSingleton::getInstance();
-    $updateQuery = "UPDATE Joueur SET pseudonyme = :pseudo WHERE id = :id";
+    $updateQuery = "UPDATE Joueur SET pseudonyme  = :pseudonyme  WHERE id = :id";
 
     $statement = $connection->prepare($updateQuery);
 
-    $statement->bindParam("pseudo", $pseudo);
+    $statement->bindParam("pseudonyme", $pseudonyme );
     $statement->bindParam("id", $id);
 
     return $statement->execute();
@@ -201,7 +201,7 @@ function readJoueur(int $id): ?Joueur {
     if($statement->execute()) {
         $results = $statement->fetch(PDO::FETCH_ASSOC);
 
-        if(gettype($results) == "boolean") {
+        if(gettype($results) != "boolean") {
             $pseudo = $results ["pseudonyme"];
             $mdp = $results ["mdp"];
             $douzCoin = $results ["douzCoin"];
@@ -218,6 +218,35 @@ function readJoueur(int $id): ?Joueur {
         return null;
     }
 }
+
+function readJoueurByEmail(string $email): ?Joueur {
+    $connection = ConnexionSingleton::getInstance();
+
+    $request = "SELECT * FROM Joueur WHERE email = :email";
+
+    $statement = $connection->prepare($request);
+
+    $statement->bindParam("email", $email);
+
+    $statement->execute();
+
+    $results = $statement->fetch(PDO::FETCH_ASSOC);
+
+    if(gettype($results) != "boolean") {
+        $pseudo = $results ["pseudonyme"];
+        $mdp = $results ["mdp"];
+        $douzCoin = $results ["douzCoin"];
+        $email = $results ["email"];
+        $bio = $results ["biographie"];
+        $dateInsc = $results ["dateInscription"];
+        $idPartieEnCours = $results ["idPartieEnCours"];
+        
+        return new Joueur ($pseudo, $mdp, $douzCoin, $email, $bio, $dateInsc, $idPartieEnCours);
+    } else {
+        return null;
+    }
+}
+
 
 /**
  * @brief retourne l'id de partie du joueur à l'id $id
@@ -337,7 +366,7 @@ function verifUser(String $email, String $mdp) {
     $connexion = ConnexionSingleton::getInstance();
     $sql = "SELECT email, mdp FROM joueur WHERE email = :email";
     $stmt = $connexion->prepare($sql);
-    $stmt->bindParam(':email', $email);
+    $stmt->bindParam('email', $email);
     $stmt->execute();
     $user = $stmt->fetch(PDO::FETCH_ASSOC); 
     return $user && password_verify($mdp,$user['mdp']);

@@ -10,11 +10,11 @@ if (isset($_SESSION['userId'])){
 <body>
     <header>
         <audio id="audioPlayer" controls loop>
-            <source src="<?php echo $musicPath?>" type="audio/mpeg">
+            <source id="audioSource" src="<?php echo $musicPath?>" type="audio/mpeg">
         </audio>
         <script>
           var audio = document.getElementById('audioPlayer');
-       
+          const audioSource =document.getElementById("audioSource");
           if (localStorage.getItem('isMusicPlaying') === 'true') {
                 audio.play();
             } else {
@@ -42,6 +42,26 @@ if (isset($_SESSION['userId'])){
             echo 'localStorage.setItem("isMusicPlaying", "false");';
         }
           ?>
+          async function updateMusicPath(){
+            try{
+                const response = await fetch('../Utils/processusGetMusicPath.php');
+                const data = await response.json();
+                if (data.musicPath && data.musicPath !== audioSource.src) {
+                    audioSource.src = data.musicPath;
+                    audio.load();
+                    audio.addEventListener('canplaythrough', () => {
+                    audio.play().catch(error => {
+                       console.error('Erreur lors de la lecture de la musique:', error);
+                });
+            });
+                }
+            } catch (error) {
+                console.error('Erreur lors de la mise à jour de la musique:', error);
+            }
+            }
+            updateMusicPath();
+            setInterval(updateMusicPath, 60000); 
+        
         </script>
         <a href="index.php">
             <input id="Logo" type="submit" value=""> 

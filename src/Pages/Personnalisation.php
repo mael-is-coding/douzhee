@@ -1,4 +1,5 @@
 <?php
+   ob_start();
     require_once("../CRUD/CRUDJoueur.php");
     require_once("../Utils/headerInit.php");
     require_once("../CRUD/CRUDSkinAchete.php");
@@ -6,6 +7,7 @@
 
     $allAchats = readAllAchatByUser($_SESSION['userId']);
     $achat = readEffecuteAchatById($_SESSION['userId']);
+   
 
 ?>
     <link rel="stylesheet" href="../../assets/css/styleHeader.css"> 
@@ -57,18 +59,20 @@
                 <div class="radio-group">
                 <?php
                     foreach($achat as $achats){
-                        $etatSkin = $achats['etatSkin'];
-                        $idSkin = $achats['idSkin'];
-                        if ($achats['etatSkin'] == 1) {
-                            $etatSkinChecked = 1; 
-                            break; 
+                        if ($achats['idSkin'] > 4){
+                            $etatSkin = $achats['etatSkin'];
+                            $idSkin2 = $achats['idSkin'];
+                            if ($achats['etatSkin'] == 1) {
+                                $etatSkinChecked = 1; 
+                                break; 
                         }
                     }
+                        }
                     ?>
-                    <input type="radio" id="Musique5" name="musique" value="musique5" <?php echo ($etatSkinChecked == 1 && $idSkin == 5) ? 'checked' : ''; ?> disabled>
-                    <input type="radio" id="Musique6" name="musique" value="musique6" <?php echo ($etatSkinChecked == 1 && $idSkin == 6) ? 'checked' : ''; ?> disabled>
-                    <input type="radio" id="Musique7" name="musique" value="musique7" <?php echo ($etatSkinChecked == 1 && $idSkin == 7) ? 'checked' : ''; ?> disabled>
-                    <input type="radio" id="Musique8" name="musique" value="musique8" <?php echo ($etatSkinChecked == 1 && $idSkin == 8) ? 'checked' : ''; ?> disabled>
+                    <input type="radio" id="Musique5" name="musique" value="musique5" <?php echo ($etatSkinChecked == 1 && $idSkin2 == 5) ? 'checked' : ''; ?> disabled>
+                    <input type="radio" id="Musique6" name="musique" value="musique6" <?php echo ($etatSkinChecked == 1 && $idSkin2 == 6) ? 'checked' : ''; ?> disabled>
+                    <input type="radio" id="Musique7" name="musique" value="musique7" <?php echo ($etatSkinChecked == 1 && $idSkin2 == 7) ? 'checked' : ''; ?> disabled>
+                    <input type="radio" id="Musique8" name="musique" value="musique8" <?php echo ($etatSkinChecked == 1 && $idSkin2 == 8) ? 'checked' : ''; ?> disabled>
                 </div>
             </div>
             <button id="buttonPers" type="submit">Enregistrer les modifications</button>
@@ -107,6 +111,7 @@ if (is_array($allAchats)) {
     </script>
 
     <?php
+ 
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         if (!empty($_POST['pseudo'])){
             updatePseudoJoueur($_SESSION['userId'], $_POST['pseudo']);
@@ -204,6 +209,8 @@ if (is_array($allAchats)) {
     
 
 }
+    ob_end_clean();
     header('Location: Profil.php');
+    exit;
 }
 ?>

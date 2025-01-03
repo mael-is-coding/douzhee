@@ -46,7 +46,10 @@ if (isset($_SESSION['userId'])){
             try{
                 const response = await fetch('../Utils/processusGetMusicPath.php');
                 const data = await response.json();
-                if (data.musicPath && data.musicPath !== audioSource.src) {
+                let basePath = "../../assets/images/musiqueBoutique/";
+                let fileName = audioSource.src.split('/').pop();
+                let newaudioSource = basePath +fileName;
+                if (data.musicPath != newaudioSource) {
                     audioSource.src = data.musicPath;
                     audio.load();
                     audio.addEventListener('canplaythrough', () => {

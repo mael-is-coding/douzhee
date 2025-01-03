@@ -631,6 +631,18 @@ input[type="radio"]#Des2{
 input[type="radio"]#Des3{
     background-image: url('../../assets/images/imagePersonnalisation/dés_2.png');
 }
+input[type="radio"]#Musique5{
+    background-image: url('../../assets/images/imagePersonnalisation/imgMusique.png');
+}
+input[type="radio"]#Musique6{
+    background-image: url('../../assets/images/imagePersonnalisation/imgMusiqueVerrouille.png');
+}
+input[type="radio"]#Musique7{
+    background-image: url('../../assets/images/imagePersonnalisation/imgMusiqueVerrouille.png');
+}
+input[type="radio"]#Musique8{
+    background-image: url('../../assets/images/imagePersonnalisation/imgMusiqueVerrouille.png');
+}
 input[type="radio"]:checked {
     position: relative;
     border: 2px solid green;
@@ -781,5 +793,27 @@ input[type="radio"]:checked:after{
     transform: translateX(-50%);
     font-style: italic;
     border-radius: 10px;
+}
+#fenModalMusic{
+    display: none; 
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+}
+.contentMusic{
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
 }
 

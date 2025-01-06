@@ -332,6 +332,10 @@ io.on('connection', (socket) => {
     socket.on('transmitionScoreTot', (data) => {
         io.to(data.gameId).emit('transmitionScoreTot', data);
     });
+
+    socket.on('transmitionBonus', (data) => {
+        io.to(data.gameId).emit('transmitionBonus', data);
+    });
 });
 
 // Écouter sur le port 8080

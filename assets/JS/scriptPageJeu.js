@@ -254,7 +254,7 @@ function reprisePartie(nbRoll){
     }
 }
 
-socket.on('reloadPage', (playerId) => {
+socket.on('reloadPage', (playerIdDest) => {
     const donneesJoueur = JSON.parse(localStorage.getItem('donneesJoueur'));
 
     const nbRoll = donneesJoueur.nbRoll;
@@ -262,16 +262,26 @@ socket.on('reloadPage', (playerId) => {
         reprisePartie(nbRoll);
     }
 
+    if(donneesJoueur.bonusSecSup === true){
+        socket.emit('transmitionBonus', {playerIdDest: playerIdDest, gameId: gameId, position: donneesJoueur.position});
+    }
+
     if(donneesJoueur.listePointsObt.length !== 0 || donneesJoueur.listePointsCombi.length !== 0){
-        socket.emit('transmitionPoints', {playerIdDest: playerId, gameId: gameId, listePointsCombi: donneesJoueur.listePointsCombi, listePointsObt: donneesJoueur.listePointsObt, position: donneesJoueur.position});
+        socket.emit('transmitionPoints', {playerIdDest: playerIdDest, gameId: gameId, listePointsCombi: donneesJoueur.listePointsCombi, listePointsObt: donneesJoueur.listePointsObt, position: donneesJoueur.position});
     }
 
     if(donneesJoueur.listeDes.length !== 0){
-        socket.emit('transmitionDes', {playerIdDest: playerId, gameId: gameId, listeDes: donneesJoueur.listeDes, desGardes: donneesJoueur.listeDesGardes});
+        socket.emit('transmitionDes', {playerIdDest: playerIdDest, gameId: gameId, listeDes: donneesJoueur.listeDes, desGardes: donneesJoueur.listeDesGardes});
     }
 
     if(donneesJoueur.scoreSecSup !== 0 || donneesJoueur.scoreSecInf !== 0){
-        socket.emit('transmitionScore', {playerIdDest: playerId, gameId: gameId, scoreSecSup: donneesJoueur.scoreSecSup, scoreSecInf: donneesJoueur.scoreSecInf, position: donneesJoueur.position});
+        socket.emit('transmitionScore', {playerIdDest: playerIdDest, gameId: gameId, scoreSecSup: donneesJoueur.scoreSecSup, scoreSecInf: donneesJoueur.scoreSecInf, position: donneesJoueur.position});
+    }
+});
+
+socket.on('transmitionBonus', (data) => {
+    if(data.playerIdDest === playerId){
+        afficheBonus(data.position);
     }
 });
 
@@ -327,9 +337,7 @@ function afficheScore(data){
         thScoreSup.textContent = data.scoreSecSup;
 
         if(data.bonus === true){
-            const bonus = document.querySelectorAll('.bonus');
-            bonus[data.position-1].value = '35';
-            bonus[data.position-1].classList.add('gagne');
+            afficheBonus(data.position);
         }
     } 
     if(data.scoreSecInf){
@@ -337,6 +345,12 @@ function afficheScore(data){
         const thScoreInf = document.getElementById(idInf);
         thScoreInf.textContent = data.scoreSecInf;
     }
+}
+
+function afficheBonus(position){
+    const bonus = document.querySelectorAll('.bonus');
+    bonus[position-1].value = '35';
+    bonus[position-1].classList.add('gagne');
 }
 
 /**
@@ -363,19 +377,19 @@ socket.on('affichePointsCombinaisons', (result) => {
         const index = (11 * nbPlayers) + (result.position - 1);
         if(result.playerId === playerId){
             updateInfo({nbDouzhee: true});
+
+            if(donneesJoueur.nbRoll === 3){
+                // Succès pour le premier coup
+            }
+            if(donneesJoueur.nbDouzhee === 3){
+                // Succès pour 3 Douzhee
+            }
         }
         if(inputs[index].value === '50'){
             inputs[index].value = parseInt(inputs[index].value) + 25; // Ajout de 25 points
             if(result.playerId === playerId){
                 updateInfo({scoreSecInf: 25});
                 const scoreInf = donneesJoueur.scoreSecInf + 25;
-
-                if(donneesJoueur.nbRoll === 3){
-                    // Succès pour le premier coup
-                }
-                if(donneesJoueur.nbDouzhee === 3){
-                    // Succès pour 3 Douzhee
-                }
 
                 socket.emit('affichageScore', {gameId: gameId, position: position, scoreSecInf: scoreInf});
             }

@@ -1,0 +1,30 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    flex-direction: column;
+    gap: 20px;
+}
+
+table, td {
+    background-color: #d4d0d6;
+    border-collapse: collapse;
+    border: 1px solid black;
+    width: 60%;
+    height: 10vh;
+    border-radius: 20px;
+    overflow: hidden;
+    text-align: center;
+}
+
+td:not(tr:first-child){
+    width: 33%;
+}
+
+
+

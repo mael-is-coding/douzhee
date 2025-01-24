@@ -49,28 +49,28 @@ function updateJoueur(int $id, string $pseudo = null, string $mdp = null, int $d
     $statement = $connection->prepare($UpdateQuery);
 
     if(isNull($pseudo))
-        $statement->bindParam("pseudo", $pseudo);
-    else $statement->bindParam("pseudo", $oldPseudo);
+        $statement->bindParam(":pseudo", $pseudo);
+    else $statement->bindParam(":pseudo", $oldPseudo);
 
     if(isNull($mdp))
-        $statement->bindParam("mdp", $mpd);
-    else $statement->bindParam("mdp", $oldMdp);
+        $statement->bindParam(":mdp", $mpd);
+    else $statement->bindParam(":mdp", $oldMdp);
 
     if(isNull($email))
-        $statement->bindParam("email", $email);
-    else $statement->bindParam("email", $oldEmail);
+        $statement->bindParam(":email", $email);
+    else $statement->bindParam(":email", $oldEmail);
 
     if(isNull($bio))
-        $statement->bindParam("bio", $bio);
-    else $statement->bindParam("bio", $oldBio);
+        $statement->bindParam(":bio", $bio);
+    else $statement->bindParam(":bio", $oldBio);
 
     if(isNull($douzCoin))
-        $statement->bindParam("douzCoin", $douzCoin);
-    else $statement->bindParam("douzCoin", $oldDouzCoin);
+        $statement->bindParam(":douzCoin", $douzCoin);
+    else $statement->bindParam(":douzCoin", $oldDouzCoin);
 
     if(isNull($idPartie))
-        $statement->bindParam("idPartie", $idPartie);
-    else $statement->bindParam("idPartie", $oldIdPartie);
+        $statement->bindParam(":idPartie", $idPartie);
+    else $statement->bindParam(":idPartie", $oldIdPartie);
 
     return $statement->execute();
 }
@@ -105,8 +105,8 @@ function updateDouzCoin(int $id, string $douzCoin): bool {
 
     $statement = $connection->prepare($updateQuery);
 
-    $statement->bindParam("douzCoin", $douzCoin);
-    $statement->bindParam("id", $id);
+    $statement->bindParam(":douzCoin", $douzCoin);
+    $statement->bindParam(":id", $id);
 
     return $statement->execute();
 }
@@ -125,8 +125,8 @@ function updateMDP(int $id, string $mdp): bool {
 
     $statement = $connection->prepare($updateQuery);
 
-    $statement->bindParam("mdp", $hashedPassword);
-    $statement->bindParam("id", $id);
+    $statement->bindParam(":mdp", $hashedPassword);
+    $statement->bindParam(":id", $id);
 
     return $statement->execute();
 }
@@ -144,9 +144,9 @@ function updateEmail(int $id, string $email, string $mdp) {
 
     $statement = $connection->prepare($updateQuery);
 
-    $statement->bindParam("mdp", $mdp);
-    $statement->bindParam("email", $email);
-    $statement->bindParam("id", $id);
+    $statement->bindParam(":mdp", $mdp);
+    $statement->bindParam(":email", $email);
+    $statement->bindParam(":id", $id);
 
     return $statement->execute();
 } 
@@ -162,8 +162,8 @@ function updateBio(int $id, string $bio): bool {
     $updateQuery = "UPDATE Joueur SET Biographie = :bio WHERE id = :id";
 
     $statement = $connection->prepare($updateQuery);
-    $statement->bindParam("bio", $bio);
-    $statement->bindParam("id", $id);
+    $statement->bindParam(":bio", $bio);
+    $statement->bindParam(":id", $id);
 
     return $statement->execute();
 }
@@ -179,8 +179,8 @@ function updateJoueurIdPartie(int $id, int $idPartie):bool {
     $updateQuery = "UPDATE Joueur SET idPartie = :idPartie WHERE id = :id";
 
     $statement = $connection->prepare($updateQuery);
-    $statement->bindParam("idPartie", $idPartie);
-    $statement->bindParam("id", $id);
+    $statement->bindParam(":idPartie", $idPartie);
+    $statement->bindParam(":id", $id);
 
     return $statement->execute();
 }
@@ -209,8 +209,11 @@ function readJoueur(int $id): ?Joueur {
             $bio = $results ["biographie"];
             $dateInsc = $results ["dateInscription"];
             $idPartieEnCours = $results ["idPartieEnCours"];
+            $idTheme = $results["idTheme"];
+            $avatarChemin = $results["avatarChemin"];
+            $musiqueChemin = $results["musiqueChemin"];
             
-            return new Joueur ($pseudo, $mdp, $douzCoin, $email, $bio, $dateInsc, $idPartieEnCours);
+            return new Joueur ($pseudo, $mdp, $douzCoin, $email, $bio, $dateInsc, $idPartieEnCours, $idTheme, $avatarChemin, $musiqueChemin);
         } else {
             return null;
         }
@@ -240,13 +243,15 @@ function readJoueurByEmail(string $email): ?Joueur {
         $bio = $results ["biographie"];
         $dateInsc = $results ["dateInscription"];
         $idPartieEnCours = $results ["idPartieEnCours"];
+        $idTheme = $results["idTheme"];
+        $avatarChemin = $results["avatarChemin"];
+        $musiqueChemin = $results["musiqueChemin"];
         
-        return new Joueur ($pseudo, $mdp, $douzCoin, $email, $bio, $dateInsc, $idPartieEnCours);
+        return new Joueur ($pseudo, $mdp, $douzCoin, $email, $bio, $dateInsc, $idPartieEnCours, $idTheme, $avatarChemin, $musiqueChemin);
     } else {
         return null;
     }
 }
-
 
 /**
  * @brief retourne l'id de partie du joueur à l'id $id
@@ -255,6 +260,50 @@ function readJoueurByEmail(string $email): ?Joueur {
  */
 function readIdPartieJoueur(int $id): int {
     return (readJoueur($id) != null) ? readJoueur($id)->getIdPartie() : -1;
+}
+
+/**
+ * @brief retourne l'id du thème du joueur à l'id $id
+ * @param int $id id du joueur dont on cherche l'id thème
+ * @return int -1 si le joueur n'existe pas, l'id Thème correspondant à au param id du joueur sinon
+ */
+function readIdThemeJoueur(int $id): int {
+    return (readJoueur($id) != null) ? readJoueur($id)->getIdTheme() : -1;
+}
+
+/**
+ * @brief retourne le chemin de l'avatar du joueur à l'id $id
+ * @param int $id id du joueur dont on cherche l'avatar
+ * @return string|null null si le joueur n'existe pas, le chemin de l'avatar correspondant à au param id du joueur sinon
+ */
+function readAvatarJoueur(int $id): ?string {
+    return (readJoueur($id) != null) ? readJoueur($id)->getAvatarChemin() : null;
+}
+
+/**
+ * @brief retourne le chemin de la musique du joueur à l'id $id
+ * @param int $id id du joueur dont on cherche la musique
+ * @return string|null null si le joueur n'existe pas, le chemin de la musique correspondant à au param id du joueur sinon
+ */
+function readMusiqueJoueur(int $id): ?string {
+    return (readJoueur($id) != null) ? readJoueur($id)->getMusiqueChemin() : null;
+}
+
+/**
+ * @brief met à jour l'id du thème du joueur
+ * @param int $id id du joueur
+ * @param int $idTheme nouvel id du thème à mettre
+ * @return bool true si la requête marche, false sinon
+ */
+function updateJoueurIdTheme(int $id, int $idTheme): bool {
+    $connection = ConnexionSingleton::getInstance();
+    $updateQuery = "UPDATE Joueur SET idTheme = :idTheme WHERE id = :id";
+
+    $statement = $connection->prepare($updateQuery);
+    $statement->bindParam("idTheme", $idTheme);
+    $statement->bindParam("id", $id);
+
+    return $statement->execute();
 }
 
 
@@ -316,7 +365,7 @@ function readBoughtSkinsById(int $idJ) : ?array {
                 $etatSkin = $results["etatSkin"];
                 $typeSkin = $results["typeSkin"];
     
-                array_push($arrayOfSkins, new SkinAchete($idAchat, $idSkin, $dateAchat, $etatSkin, $typeSkin));
+                array_push($arrayOfSkins, new SkinAchete($idAchat, $idSkin, $dateAchat, $typeSkin));
             } else {
                 return null;
             }
@@ -351,9 +400,9 @@ function isNull(mixed $argument) :bool {
 
 function getIdUser($email){
     $connexion = ConnexionSingleton::getInstance();
-    $sql = "Select id from joueur where email = ? ";
+    $sql = "SELECT id FROM joueur WHERE email = ? ";
     $stmt = $connexion->prepare($sql);
-    $stmt->bindParam(1,$email);
+    $stmt->bindParam(1, $email, PDO::PARAM_STR);
     $stmt->execute();
     $idUser = $stmt->fetch(PDO::FETCH_ASSOC);
     return $idUser['id'];
@@ -419,17 +468,7 @@ function getBioById($id){
     $bio = $stmt->fetch(PDO::FETCH_ASSOC);
     return $bio;
 }
-function insertUser($email,$mdp,$pseudonyme){
-    $connexion = ConnexionSingleton::getInstance();
-    $sql = "INSERT INTO joueur (email, pseudonyme, mdp, douzCoin, dateInscription, biographie) VALUES (?, ?, ?,0,CURRENT_DATE,'Douzhee est un jeu conçu par des passionees dans le but de divertir les gens')";
-    $stmt = $connexion->prepare($sql);
-    $hashedPassword = password_hash($mdp, PASSWORD_DEFAULT);
-    $stmt->bindParam(1, $email);
-    $stmt->bindParam(2, $pseudonyme);
-    $stmt->bindParam(3, $hashedPassword);
-    $stmt->execute();
 
-}
 function updatePassword($mdp,$email){
     $hashedPassword = password_hash($mdp, PASSWORD_DEFAULT);
     $connexion = ConnexionSingleton::getInstance();
@@ -479,16 +518,17 @@ function decryptage($data,$key){
     }
 }
 
-function readMusicPath($idJ){
+function readMusicPath($idJ) {
     $connection = ConnexionSingleton::getInstance();
-    $selectedQuery = "SELECT musiqueChemin FROM Joueur  WHERE id = :idJ";
+    $selectedQuery = "SELECT musiqueChemin FROM Joueur WHERE id = :idJ";
     $statement = $connection->prepare($selectedQuery);
     $statement->bindParam(":idJ", $idJ);
     $statement->execute();
     $result = $statement->fetch(PDO::FETCH_ASSOC);
     return $result['musiqueChemin'];
 }
-function updateMusicPath($newpath,$idJ){
+
+function updateMusicPath($idJ,$newpath){
     $connection = ConnexionSingleton::getInstance();
     $updateQuery = "UPDATE Joueur SET musiqueChemin = :newpath WHERE id = :id";
     $statement = $connection->prepare($updateQuery);
@@ -497,3 +537,17 @@ function updateMusicPath($newpath,$idJ){
     return $statement->execute();
 }
 
+function readIdPartieJoueurById(int $id): int {
+    return (readJoueur($id) != null) ? readJoueur($id)->getIdPartieEnCours() : -1;
+}
+
+function updateIdPartieJoueurById(int $id, int $idPartie): bool {
+    $connection = ConnexionSingleton::getInstance();
+    $updateQuery = "UPDATE Joueur SET idPartieEnCours = :idPartie WHERE id = :id";
+
+    $statement = $connection->prepare($updateQuery);
+    $statement->bindParam(":idPartie", $idPartie);
+    $statement->bindParam(":id", $id);
+
+    return $statement->execute();
+}

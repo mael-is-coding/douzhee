@@ -37,7 +37,7 @@
         $partie = readPartieByLien($lienPartie);
         $idPartie = $partie->getId();
         if ($idPartie == -1){
-            echo '<script type="text/javascript"> window.onload = function () { alert("Lien invalide"); }</script>';
+            echo '<script type="text/javascript"> window.onload = function () { alert("Lien invalide"), window.location.href="./index.php" }</script>';
             exit();
         }
         $_SESSION['idPartie'] = $idPartie;

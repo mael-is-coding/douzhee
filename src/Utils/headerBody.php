@@ -1,5 +1,4 @@
 <?php
-    require_once("../Utils/redirection.php");
     require_once("../CRUD/CRUDJoueur.php");
     require_once("../CRUD/CRUDSkinAchete.php");
     require_once("../CRUD/CRUDStatistiques.php");

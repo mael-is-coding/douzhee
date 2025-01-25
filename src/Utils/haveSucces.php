@@ -6,7 +6,7 @@
     if(!empty($_POST['testdesecurité'])){
         if(!(readSuccessJoueur($_POST['idJoueur'], $_POST['idSucces']))){
             createSuccessJoueur($_POST['idJoueur'], $_POST['idSucces']);
-            updateNbSucces($_POST['idJoueur']);
+            //updateNbSucces($_POST['idJoueur']);
             $succes = readSuccesById($_POST['idSucces']);
             echo json_encode(['status' => 'success', 'nomSucces' => $succes->getName()]);
         }

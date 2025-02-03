@@ -1,38 +1,47 @@
-<?PHP 
-    require_once $_SERVER['DOCUMENT_ROOT'] . "/douzhee/src/Classes/Succes.php";
-    require_once $_SERVER['DOCUMENT_ROOT'] . "/douzhee/src/Utils/connectionSingleton.php";
+<?php
+    require_once "../Classes/Succes.php";
+    require_once "../Utils/connectionSingleton.php";
 
-    //FONCTIONS READ
+    function createSucces(string $nomSucces, string $conditionSucces, string $typeSucces) :bool {
+        $conn = ConnexionSingleton::getInstance();
+        $stmt = $conn->prepare("INSERT INTO Succes (nomSucces, Condition, typeSucces) VALUES (?, ?, ?)");
+        $stmt->bindParam(1, $nomSucces);
+        $stmt->bindParam(2, $conditionSucces);
+        $stmt->bindParam(3, $typeSucces);
 
-    /**
-     * @brief Récupère tous les succès
-     * @author Nathan
-     * @return array
-     */
-    function readAllSucces(): array{
-        $connection = ConnexionSingleton::getInstance();
-
-        $readSucces = 'SELECT * FROM succes';
-
-        $statement = $connection->prepare($readSucces);
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->execute();
     }
 
-    /**
-     * @brief Récupère un succès en fonction de son id
-     * @author Nathan
-     * @param int $id identifiant du succès
-     * @return Succes instance de Succes
-     */
-    function readSuccesById(int $id): Succes{
-        $connection = ConnexionSingleton::getInstance();
-
-        $readSucces = 'SELECT * FROM succes WHERE id = :id';
-        $statement = $connection->prepare($readSucces);
-        $statement->bindParam(':id', $id, PDO::PARAM_INT);
-        $statement->execute();
-
-        $results = $statement->fetch(PDO::FETCH_ASSOC);
-        return new Succes($results['id'], $results['nomSucces'], $results['Condition'], $results['typeSucces']);
+    function readSucces(int $idSucces) : Succes | null {
+        $connexion = ConnexionSingleton::getInstance();
+        $query = "SELECT * FROM Succes WHERE idSucces = $idSucces";
+    
+        $statement = $connexion->prepare($query);
+    
+        $success = $statement->execute();
+    
+        if($success) {
+            $results = $statement->fetch(PDO::FETCH_ASSOC);
+            if ($results == false) {
+                return null;
+            } return new Succes($results['idSucces'], $results['nomSucces'], $results['Condition'], $results['typeSucces']);
+        }
     }
+
+    function readAllSucces() : ?array {
+        $connexion = ConnexionSingleton::getInstance();
+        $query = "SELECT * FROM Succes";
+    
+        $statement = $connexion->prepare($query);
+    
+        $success = $statement->execute();
+    
+        if($success) {
+            $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+            if ($results == false) {
+                return null;
+            } return $results;
+        }
+    }
+
+?>

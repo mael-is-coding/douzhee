@@ -1,9 +1,6 @@
 <?php
     require_once("../CRUD/CRUDJoueur.php");
-    require_once("../Utils/headerInit.php");
-    require_once("../CRUD/CRUDStatistiques.php");
-    require_once("../CRUD/CRUDClassement.php");
-    require_once("../CRUD/CRUDSkinAchete.php");
+    require_once("../Utils/headerInit.php");    
     $regexEmail = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
 ?>
     <link rel="stylesheet" href="../../assets/css/styleCIRV.css">
@@ -32,14 +29,8 @@
             else{
                 if (preg_match($regexEmail, $_POST['E-mail'])){
                     createJoueur($_POST['Pseudo'],$_POST['Password'],$_POST['E-mail']);
-                    $_SESSION["newconnected"] = 1;
-                    $_SESSION['userId'] = getIdUser($_POST['E-mail']);
-                    createStatistiques($_SESSION['userId']);
-                    $pseudo = getPseudoById($_SESSION['userId']);
-                    createClassement($pseudo['pseudonyme'],$_SESSION['userId']);
-                    $_SESSION['timeStart'] = microtime(true); 
-                    createSkinAchete(1,$_SESSION['userId'],"Theme",date("Y/m/d"));
-                    createSkinAchete(5,$_SESSION['userId'],"Musique",date("Y/m/d"));
+                    $_SESSION['userId'] = readIdJoueur($_POST['E-mail']);
+                    $_SESSION['timeStart'] = microtime(true);
                     header('Location: Index.php');
                 }
                 else{

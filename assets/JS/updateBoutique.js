@@ -9,11 +9,13 @@ document.addEventListener('DOMContentLoaded', function() {
     .then(response => response.json())
     .then(data => {
         if (data.status === 'success') {
-            var allAchats = data.data;
+            var allAchatsThemes = data.allAchatsThemes;
+            var allAchatsMusiques = data.allAchatsMusiques;
 
-            allAchats.forEach(achat => {
-                const themeId = parseInt(achat.idSkin, 10);
-                const theme = document.getElementById(`${themeId}`);
+            allAchatsThemes.forEach(achat => {
+                const themeId = achat.idTheme;
+                const themeDiv = document.querySelector('#Theme');
+                const theme = themeDiv.querySelector('#Theme' + themeId);
                 if (theme) { // Vérifiez si l'élément existe
                     const themeImg = theme.querySelector('img');
                     if (themeImg) { // Vérifiez si l'image existe
@@ -21,8 +23,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 }
             });
-        }
-        else {
+
+            allAchatsMusiques.forEach(achat => {
+                const musicId = achat.idMusique;
+                const musicDiv = document.querySelector('#Musique');
+                const music = musicDiv.querySelector('#Musique' + musicId);
+                if (music) { // Vérifiez si l'élément existe
+                    const musicImg = music.querySelector('img');
+                    if (musicImg) { // Vérifiez si l'image existe
+                        music.classList.add('sold');
+                    }
+                }
+            });
+        } else {
             console.error('Error:', data.message);
         }
     })

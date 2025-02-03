@@ -1,14 +1,15 @@
 <?php
+    require_once("../CRUD/CRUDJoueur.php");
+    require_once("../CRUD/CRUDAcheterTheme.php");
+    require_once("../CRUD/CRUDAcheterMusique.php");
     session_start();
 
     if (!empty($_POST['testdesecurité'])) {
-        require_once("../CRUD/CRUDJoueur.php");
-        require_once("../CRUD/CRUDSkinAchete.php");
-
         if (isset($_SESSION['userId'])) {
-            $allAchats = readAllAchatByUser($_SESSION['userId']);
-            if (is_array($allAchats)) {
-                echo json_encode(['status' => 'success', 'data' => $allAchats]);
+            $allAchatsThemes = readAllAcheterTheme($_SESSION['userId']);
+            $allAchatsMusiques = readAllAcheterMusique($_SESSION['userId']);
+            if (is_array($allAchatsThemes) && is_array($allAchatsMusiques)) {
+                echo json_encode(['status' => 'success', 'allAchatsThemes' => $allAchatsThemes, 'allAchatsMusiques' => $allAchatsMusiques]);
             } else {
                 echo json_encode(['status' => 'error', 'message' => 'No achats found']);
             }
@@ -16,6 +17,6 @@
             echo json_encode(['status' => 'error', 'message' => 'User not logged in']);
         }
     } else {
-        echo "tu t'es cru ou toi, hein?";
+        echo json_encode(['status' => 'error', 'message' => 'Invalid request']);
     }
 ?>

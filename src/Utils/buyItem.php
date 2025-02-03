@@ -1,19 +1,26 @@
 <?php 
-    require_once("../CRUD/CRUDSkinAchete.php");
+    require_once("../CRUD/CRUDMusique.php");
+    require_once("../CRUD/CRUDTheme.php");
     require_once("../CRUD/CRUDJoueur.php");
+    require_once("../CRUD/CRUDAcheterMusique.php");
+    require_once("../CRUD/CRUDAcheterTheme.php");
     session_start();
 
     header('Content-Type: application/json');
 
     if(isset($_POST['id']) && isset($_POST['testdesecurité'])) {
-        $idSkin = intval($_POST['id']);
+        $idItem = intval($_POST['id']);
         $cost = intval($_POST['cost']);
         $userId = $_SESSION['userId'];
-        $userMoney = getMoneyById($userId) ?? 0; 
+        $userMoney = readDouzCoin($userId); 
         if ($userMoney >= $cost) {
             $newMoney = $userMoney - $cost;
             updateDouzCoin($userId, $newMoney);
-            createSkinAchete($idSkin, $userId, $_POST['type'], date("Y-m-d"));
+            if ($_POST['type'] === 'Theme') {
+                creatAcheterTheme($userId, $idItem);
+            } else {
+                creatAcheterMusique($userId, $idItem);
+            }
             echo json_encode(['status' => 'success']);
         } else {
             echo json_encode(['status' => 'unsuccess', 'error' => 'Fonds insuffisants.']);

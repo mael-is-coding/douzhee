@@ -1,8 +1,7 @@
 <?php
     require_once("../CRUD/CRUDJoueur.php");
     require_once("../Utils/headerInit.php");
-    require_once("../CRUD/CRUDStatistiques.php");
-    $statsUser = readStatistiquesByIdUser($_SESSION['userId']);
+    $statsUser = readJoueur($_SESSION['userId']);
 ?>
     <link rel="stylesheet" href="../../assets/css/Theme.css">
     <link rel="stylesheet" href="../../assets/css/styleHeader.css"> 
@@ -13,11 +12,11 @@
     <div class="States">
         <div class="State">
             <h2>Parties Jouées :</h2>
-            <?php echo $statsUser->getnbPartieJoues() ?>
+            <?php echo $statsUser->getNbPartiesJouees() ?>
         </div>
         <div class="State">
             <h2>Parties Gagnées <img src="../../assets/images/imageStates/nbPartiesGagnes.png"></img> :</h2>
-            <?php echo $statsUser->getNbPartiesGagnees()?>
+            <?php echo $statsUser->getNbPartieGagnees()?>
         </div>
         <div class="State">
             <h2>Ratio Victoire :</h2>
@@ -29,7 +28,7 @@
         </div>
         <div class="State">
             <h2>Score <img src="../../assets/images/imageStates/scoremax.png"></img> :</h2>
-            <?php echo $statsUser->getScoreMaximal() ?>
+            <?php echo $statsUser->getScoreMax() ?>
         </div>
         <div class="State">
             <h2>Douzhee <img src="../../assets/images/imageStates/nbDouzhee.png"></img> :</h2>

@@ -3,10 +3,9 @@
     require_once("../CRUD/CRUDJoueur.php");
     require_once("../CRUD/CRUDPartie.php");
     require_once("../CRUD/CRUDJouerPartie.php");
-    require_once("../Utils/connectionSingleton.php");
 
     var_dump($_SESSION['userId']);
-    if (readIdPartieJoueur($_SESSION['userId']) == 0){
+    if (readPartieEnCours($_SESSION['userId'])){
         header("Location: ./game.php");
         exit();
     }

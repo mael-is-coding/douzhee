@@ -16,31 +16,29 @@ document.addEventListener('DOMContentLoaded', function() {
         item.addEventListener('click', function() {
             windowAchat.classList.remove('disabled');
             windowAchat.classList.add('actived');
-
-            if (item.classList.contains('itemTheme')) {
-                audio.classList.add('notSelected');
-            }else{
-                audio.src = '../../assets/audio/MusicAccueil' + item.id + '.mp3';
-            }
-
+            
             windowAchatImg.src = item.querySelector('img').src;
-            windowAchatImg.id = item.id;
+            windowAchatImg.id = item.id.match(/\d+/)[0];
 
             if (item.classList.contains('sold')) {
                 windowAchatcost.textContent = 'Vous avez déjà acheté cet item';
                 windowAchatButton.classList.add('disabled');
+                audio.classList.add('notSelected');
             } else {
+                var formData = new FormData();
                 windowAchatButton.classList.remove('disabled');
                 if (item.classList.contains('itemTheme')) {
-                    type = "Theme"
-                } else {
-                    type = "Musique"
+                    audio.classList.add('notSelected');
+                    formData.append('type', 'Theme');
+                    type = 'Theme';
+                }else{
+                    formData.append('type', 'Music');
+                    type = 'Music';
                 }
-                var formData = new FormData();
-                formData.append('id', item.id);
+                formData.append('id', item.id.match(/\d+/)[0]);
                 formData.append('testdesecurité', true);
 
-                fetch('../Utils/getItemCost.php', {
+                fetch('../Utils/getItemInfo.php', {
                     method: 'POST',
                     body: formData
                 })
@@ -48,6 +46,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(data => {
                     if (data.status === 'success') {
                         windowAchatcost.textContent = `Cela vous coûtera ${data.resultat} douzcoin`;
+                        if (data.chemin != null) {
+                            audio.src = data.chemin;
+                        }
                     } else {
                         windowAchatcost.textContent = 'Erreur lors de la récupération du coût';
                         console.error("Erreur : " + data.message);

@@ -163,6 +163,11 @@ body {
     visibility: hidden;
 }
 
+.error {
+    color: red;
+    text-align: center;
+}
+
 .disabledButton {
     pointer-events: none;
 }

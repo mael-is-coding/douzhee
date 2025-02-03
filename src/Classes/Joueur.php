@@ -5,129 +5,112 @@
  * @contributors Cédric, Milan
  * @brief Modélise un joueur
  */
-
 class Joueur {
 
+    private string $idJoueur;
     private string $pseudo;
     private string $mdp;
-    private int $douzCoin;
+    private int $douzCoins;
     private string $email;
     private string|null $bio;
-    private string $dateInsc;
-    private int $idPartieEnCours;
-    private int $idTheme;
+    private string $dateInscription;
     private string $avatarChemin;
-    private string $musiqueChemin;
+    private int $idMusique;
+    private int $idTheme;
+    private int $nbPartieGagnees;
+    private int $scoreMax;
+    private int|null $tempsJeu;
+    private float $ratioVictoire;
+    private int $nbSucces;
+    private int $nbPartiesJouees;
+    private int $nbDouzhee;
 
-    function __construct(string $pseudo, string $mdp, int $douzCoin, string $email, string|null $bio, string $dateInsc, int $idPartie, int $idTheme, string $avatarChemin, string $musiqueChemin) {
+    function __construct(string $idJoueur, string $pseudo, string $mdp, int $douzCoins, string $email, string|null $bio, string $dateInscription, string $avatarChemin, int $idMusique, int $idTheme, int $nbPartieGagnees, int $scoreMax, int|null $tempsJeu, float $ratioVictoire, int $nbSucces, int $nbPartiesJouees, int $nbDouzhee) {
+        $this->idJoueur = $idJoueur;
         $this->pseudo = $pseudo;
         $this->mdp = $mdp;
-        $this->douzCoin = $douzCoin;
+        $this->douzCoins = $douzCoins;
         $this->email = $email;
         $this->bio = $bio;
-        $this->dateInsc = $dateInsc;
-        $this->idPartieEnCours = $idPartie;
-        $this->idTheme = $idTheme;
+        $this->dateInscription = $dateInscription;
         $this->avatarChemin = $avatarChemin;
-        $this->musiqueChemin = $musiqueChemin;
+        $this->idMusique = $idMusique;
+        $this->idTheme = $idTheme;
+        $this->nbPartieGagnees = $nbPartieGagnees;
+        $this->scoreMax = $scoreMax;
+        $this->tempsJeu = $tempsJeu;
+        $this->ratioVictoire = $ratioVictoire;
+        $this->nbSucces = $nbSucces;
+        $this->nbPartiesJouees = $nbPartiesJouees;
+        $this->nbDouzhee = $nbDouzhee;
     }
 
-    // PSEUDO
-    function getPseudo():string {
+    function getIdJoueur(): string {
+        return $this->idJoueur;
+    }
+
+    function getPseudo(): string {
         return $this->pseudo;
     }
 
-    function setPseudo(string $psd):void {
-        $this->pseudo = $psd;
-    }
-
-    // MDP
-    function setMDP(string $mdp): void {
-        $this->mdp = $mdp;
-    } 
-
-    function getMDP() :string {
+    function getMdp(): string {
         return $this->mdp;
     }
 
-    // DOUZCOIN
-    function getDouzCoin():int {
-        return $this->douzCoin;
+    function getDouzCoins(): int {
+        return $this->douzCoins;
     }
 
-    function setDouzCoin(int $douzCoin):void {
-        $this->douzCoin = $douzCoin;
-    }
-
-    // EMAIL
-    function getEmail() :string {
+    function getEmail(): string {
         return $this->email;
     }
 
-    function setEmail(string $email) :void {
-        $this->email = $email;
-    }
-
-    // BIO
-    function getBio() :string {
+    function getBio(): string|null {
         return $this->bio;
     }
 
-    function setBio(string $bio) {
-        $this->bio = $bio; 
-    } 
-
-    // dateInsc
-    function getDateInsc(): string {
-        return $this->dateInsc;
+    function getDateInscription(): string {
+        return $this->dateInscription;
     }
 
-    function setDateInsc($date): void {
-        $this->dateInsc = $date;
-    }
-
-    // idPartie
-    function getIdPartie():int {
-        return $this->idPartieEnCours;
-    }
-
-    function setIdPartie(int $idPartie):void {
-        $this->idPartieEnCours = $idPartie;
-    }
-
-    // idTheme
-    function getIdTheme():int {
-        return $this->idTheme;
-    }
-
-    function setIdTheme(int $idTheme):void {
-        $this->idTheme = $idTheme;
-    }
-
-    // avatarChemin
-    function getAvatarChemin():string {
+    function getAvatarChemin(): string {
         return $this->avatarChemin;
     }
 
-    function setAvatarChemin(string $avatarChemin):void {
-        $this->avatarChemin = $avatarChemin;
+    function getIdMuisque(): int {
+        return $this->idMusique;
     }
 
-    // musiqueChemin
-    function getMusiqueChemin():string {
-        return $this->musiqueChemin;
+    function getIdTheme(): int {
+        return $this->idTheme;
     }
 
-    function setMusiqueChemin(string $musiqueChemin):void {
-        $this->musiqueChemin = $musiqueChemin;
+    function getNbPartieGagnees(): int {
+        return $this->nbPartieGagnees;
     }
 
-    // idPartieEnCours
-    function getIdPartieEnCours(){
-        return $this->idPartieEnCours;
+    function getScoreMax(): int {
+        return $this->scoreMax;
     }
 
-    function setIdPartieEnCours(int $idPartieEnCours){
-        $this->idPartieEnCours = $idPartieEnCours;
+    function getTempsJeu(): int|null {
+        return $this->tempsJeu;
+    }
+
+    function getRatioVictoire(): float {
+        return $this->ratioVictoire;
+    }
+
+    function getNbSucces(): int {
+        return $this->nbSucces;
+    }
+
+    function getNbPartiesJouees(): int {
+        return $this->nbPartiesJouees;
+    }
+
+    function getNbDouzhee(): int {
+        return $this->nbDouzhee;
     }
 }
+?>

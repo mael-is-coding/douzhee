@@ -5,7 +5,7 @@
         session_start();
 
         if (isset($_SESSION['userId'])) {
-            $avatarUrl = readAvatarById($_SESSION['userId']);
+            $avatarUrl = readAvatar($_SESSION['userId']);
             echo json_encode(['status' => 'success', 'avatarUrl' => $avatarUrl]);
         } else {
             echo json_encode(['status' => 'error', 'message' => 'User not logged in']);

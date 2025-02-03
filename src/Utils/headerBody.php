@@ -1,11 +1,10 @@
 <?php
     require_once("../CRUD/CRUDJoueur.php");
-    require_once("../CRUD/CRUDSkinAchete.php");
-    require_once("../CRUD/CRUDStatistiques.php");
+    require_once("../CRUD/CRUDMusique.php");
     require_once("../Utils/headerInit.php");
     
     if (isset($_SESSION['userId'])){
-        $musicPath = readMusicPath($_SESSION['userId']);
+        $musicPath = readCheminMusique(readIdMusiqueJoueur($_SESSION['userId']));
        
     }
     if (isset($_SESSION['timeStart'])){
@@ -24,27 +23,17 @@
             <input id="Logo" type="submit" value=""> 
         </a>
         
-        <?php if (isset($_SESSION['userId'])):
-            // On vérifie si les variables de session sont définies
-            if (!isset($_SESSION['douzeCoin'])){
-                $_SESSION['douzeCoin'] = getMoneyById($_SESSION['userId']); // Pour éviter de faire des requêtes inutiles
-            }
-            if (!isset($_SESSION['pseudo'])){
-                $_SESSION['pseudo'] = getPseudoById($_SESSION['userId'])['pseudonyme']; // Pour éviter de faire des requêtes inutiles;
-            }
-            ?>
+        <?php if (isset($_SESSION['userId'])): ?>
         
             <div class="selection_droite">
-                <span id="money"><?php echo getMoneyById($_SESSION['userId']); ?></span>
+                <span id="money"><?php echo readDouzCoin($_SESSION['userId']); ?></span>
                 <img src="../../assets/images/imgheader/coin_dollar_finance_icon_125510 1.png" alt="Money du Jeu" width="27" height="27" id="coin">
                 
-                <span id="pseudo"><?php echo getPseudoById($_SESSION['userId'])['pseudonyme']; ?></span>
+                <span id="pseudo"><?php echo readPseudo($_SESSION['userId']); ?></span>
                 
                 <form action="Profil.php" method="GET">
                     <input id="profil" type="submit" value="">
                 </form>
-
-                
             </div>
         <?php else: ?>
             <div class="selection_droite">

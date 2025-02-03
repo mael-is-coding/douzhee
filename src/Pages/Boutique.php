@@ -1,6 +1,8 @@
 <?php
     require_once("../Utils/headerInit.php");
-    require_once("../CRUD/CRUDSkinAchetable.php");
+    require_once("../CRUD/CRUDTheme.php");
+    require_once("../CRUD/CRUDMusique.php");
+    
     if (!isset($_SESSION['userId'])){
         require_once("../Utils/redirection.php");
     }
@@ -26,6 +28,7 @@
                     </audio>
                 </div>
                 <p id="prixAchat"></p>
+                <p class="error invisible">Fonds insuffisants</p>
                 <button id="btnAchat">Acheter</button>
                 <i class="fa-solid fa-xmark"></i>
             </div>
@@ -47,8 +50,8 @@
                         <?php $i = 0; ?>
                         <?php foreach($allThemes as $theme): 
                             $i++;?>
-                            <div class="item itemTheme" id="<?= $theme["id"] ?>">
-                                <img src="../../assets/Images/imagePersonnalisation/Theme<?= $theme["id"] ?>.png" alt="<?= $theme["nomSkin"] ?>">
+                            <div class="item itemTheme" id="Theme<?= $theme["idTheme"] ?>">
+                                <img src="<?= $theme["imgChemin"]?>" alt="<?= $theme["nomTheme"] ?>">
                             </div>
                             <?php if ($i%20==0 && sizeof($allThemes) != $i):?>
                                     </div>
@@ -67,8 +70,8 @@
                         <?php $i = 0; ?>
                         <?php foreach($allMusics as $music): 
                             $i++;?>
-                            <div class="item itemMusic" id="<?= $music["id"] ?>">
-                                <img src="../../assets/Images/imagePersonnalisation/imgMusique.png" alt="<?= $music["nomSkin"] ?>">
+                            <div class="item itemMusic" id="Musique<?= $music["idMusique"] ?>">
+                                <img src="<?= $music["imgChemin"]?>" alt="<?= $music["nomMusique"] ?>">
                             </div>
                             <?php if ($i%20==0 && sizeof($allMusics) != $i):?>
                                     </div>

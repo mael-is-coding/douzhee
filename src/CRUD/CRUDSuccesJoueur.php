@@ -1,67 +1,42 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . "/douzhee/src/Utils/connectionSingleton.php";
-require_once $_SERVER['DOCUMENT_ROOT'] . "/douzhee/src/CRUD/CRUDStatistiques.php";
+    require_once "../Classes/SuccesJoueur.php";
+    require_once "../Utils/connectionSingleton.php";
 
-/**
- * @author Mael
- * @param int $idJoueur
- * @param int $idSucces
- * @return bool
- */
-function readSuccessJoueur(int $idJoueur, int $idSucces) : bool {
-    $connexion = ConnexionSingleton::getInstance();
-    $query = "SELECT * FROM SuccesJoueur WHERE $idJoueur = idJoueur AND $idSucces = idSucces";
+    function createSuccessJoueur($idJoueur, $idSucces) :bool {
+        $conn = ConnexionSingleton::getInstance();
+        $stmt = $conn->prepare("INSERT INTO SuccesJoueur (idJoueur, idSucces) VALUES (?, ?)");
+        $stmt->bindParam(1, $idJoueur);
+        $stmt->bindParam(2, $idSucces);
 
-    $statement = $connexion->prepare($query);
-
-    $success = $statement->execute();
-
-    if($success) {
-        $results = $statement->fetch(PDO::FETCH_ASSOC);
-        if ($results == false) {
-            return false;
-        } return true;
+        return $stmt->execute();
     }
-}
 
-/**
- * ---
- * @author Mael
- * @param int $idJoueur
- * @param int $idSucces
- * @return bool
- */
-function createSuccessJoueur(int $idJoueur, int $idSucces): bool {
-    $connexion = ConnexionSingleton::getInstance();
-    $query = "INSERT INTO SuccesJoueur (idJoueur, idSucces) VALUES ($idJoueur, $idSucces)";
-
-    $statement = $connexion->exec($query);
-
-    if($statement == 0) {
-        return false;
-    } else{
-        return true;
+    function readSuccessJoueur(string $idJoueur, int $idSucces): bool {
+        $connection = ConnexionSingleton::getInstance();
+        $stmt = $connection->prepare("SELECT COUNT(*) FROM SuccesJoueur WHERE idJoueur = ? AND idSucces = ?");
+        
+        $stmt->bindParam(1, $idJoueur, PDO::PARAM_STR);
+        $stmt->bindParam(2, $idSucces, PDO::PARAM_INT);
+        
+        $stmt->execute();
+        $count = $stmt->fetchColumn();
+        
+        return $count > 0;
     }
-}
 
-/**
- * @author Mael
- * @param int $idJoueur
- * @return array|bool
- */
-function readAllWithIdJ(int $idJoueur): ?array {
-    $connexion = ConnexionSingleton::getInstance();
-    $query = "SELECT * FROM SuccesJoueur WHERE idJoueur = $idJoueur";
-
-    $statement = $connexion->prepare($query);
-
-    $success = $statement->execute();
-
-    if($success) {
-        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-        if ($results == false) {
-            return false;
-        } return $results;
+    function readAllSuccessJoueur(string $idJoueur): ?array {
+        $connection = ConnexionSingleton::getInstance();
+        $stmt = $connection->prepare("SELECT * FROM SuccesJoueur WHERE idJoueur = ?");
+        
+        $stmt->bindParam(1, $idJoueur, PDO::PARAM_STR);
+        
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        if(gettype($results) != "boolean") {
+            return $results;
+        }
+        return null;
     }
-}
-
+    
+?>

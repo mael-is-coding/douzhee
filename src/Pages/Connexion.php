@@ -27,60 +27,59 @@
             <button type="submit">Connexion</button>
         </form>
         <a href="Reinitialisation.php">Mot de passe oublié ?</a>
-        <div class = "link">Nouveau ici ? <a href="Inscription.php">Inscrivez vous</a>
+        <div class = "link">
+            Nouveau ici ? 
+            <a href="Inscription.php">Inscrivez vous</a>
         </div>
     </div>
 </body>
 </html>
 <?php
-    if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-        if (!empty($_COOKIE[$cookiename] ) && !empty($_COOKIE[$cookiename2])){
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if (!empty($_COOKIE[$cookiename]) && !empty($_COOKIE[$cookiename2])) {
             $email = decryptage($_COOKIE[$cookiename], $key);
             $mdp = decryptage($_COOKIE[$cookiename2], $key);
-            $trouve = verifUser($email,$mdp);
-            if ($trouve){
-                $_SESSION['userId'] = getIdUser($email);
-                $_SESSION['timeStart'] = microtime(true); 
+            $trouve = verifUser($email, $mdp);
+            if ($trouve) {
+                $_SESSION['userId'] = readIdJoueur($email);
+                $_SESSION['timeStart'] = microtime(true);
                 $_SESSION['isconnected'] = 1;
                 $_POST['email'] = $email;
                 $_POST['mdp'] = $mdp;
-                
-            } 
+            }
         }
-        if (!empty($_POST['E-mail']) && !empty($_POST['Password'])){  
-                $email = $_POST['E-mail'];
-                $mdp = $_POST['Password'];    
-                if (!empty($_POST['checkbox'])){
-                    $cryptedEmail = cryptage($email,$key);
-                    $cryptedPassword = cryptage($mdp,$key);
-                    setcookie($cookiename, $cryptedEmail, [
-                        'expires' => time() + (60 * 60 * 2),
-                        'path' => '/',
-                        'secure' => true,     
-                        'httponly' => true,   
-                        'samesite' => 'Strict' 
-                    ]);
-                    setcookie($cookiename2, $cryptedPassword, [
-                        'expires' => time() + (60 * 60 * 2),
-                        'path' => '/',
-                        'secure' => true,     
-                        'httponly' => true,   
-                        'samesite' => 'Strict' 
-                    ]);
-                }
-                $trouve = verifUser($_POST['E-mail'],$_POST['Password']);
-                if ($trouve){
-                        $_SESSION['userId'] = getIdUser($_POST['E-mail']);
-                        $_SESSION['timeStart'] = microtime(true); 
-                        $_SESSION['isconnected'] = 1;
-                        header('Location: Index.php');
-                        exit();
-                } else {
-                        echo '<script 
-                                    type="text/javascript"> window.onload = function () { alert("Mauvais mot de passe ou email"); }
-                                    </script>';
-                }
+        if (!empty($_POST['E-mail']) && !empty($_POST['Password'])) {
+            $email = $_POST['E-mail'];
+            $mdp = $_POST['Password'];
+            if (!empty($_POST['checkbox'])) {
+                $cryptedEmail = cryptage($email, $key);
+                $cryptedPassword = cryptage($mdp, $key);
+                setcookie($cookiename, $cryptedEmail, [
+                    'expires' => time() + (60 * 60 * 2),
+                    'path' => '/',
+                    'secure' => true,
+                    'httponly' => true,
+                    'samesite' => 'Strict'
+                ]);
+                setcookie($cookiename2, $cryptedPassword, [
+                    'expires' => time() + (60 * 60 * 2),
+                    'path' => '/',
+                    'secure' => true,
+                    'httponly' => true,
+                    'samesite' => 'Strict'
+                ]);
+            }
             
+            $trouve = verifUser($email, $mdp);
+            if ($trouve) {
+                $_SESSION['userId'] = readIdJoueur($email);
+                $_SESSION['timeStart'] = microtime(true);
+                $_SESSION['isconnected'] = 1;
+                header('Location: Index.php');
+                exit();
+            } else {
+                echo '<script type="text/javascript"> window.onload = function () { alert("Mauvais mot de passe ou email"); }</script>';
+            }
         }
     }
 ?>

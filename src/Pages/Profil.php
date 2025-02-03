@@ -9,9 +9,9 @@
 <body>
     <?php require_once("../Utils/headerBody.php"); ?>
     <div class="PageProfil themeItem2">
-        <img src="<?php echo readAvatarById($_SESSION['userId'])?>" alt="Avatar" width="90" height="90" id="avatar">
-        <h2 id="Pseudo"><?php echo getPseudoById($_SESSION['userId'])['pseudonyme']; ?></h2>
-        <p id="bio"><?php echo getBioById($_SESSION['userId'])['biographie']; ?></p>
+        <img src="<?php echo readAvatar($_SESSION['userId'])?>" alt="Avatar" width="90" height="90" id="avatar">
+        <h2 id="Pseudo"><?php echo readPseudo($_SESSION['userId']); ?></h2>
+        <p id="bio"><?php echo readBio($_SESSION['userId']); ?></p>
         <div class="buttons">
             <button onclick="location.href='States.php'">Statistiques</button>
             <button onclick="location.href='Personnalisation.php'">Personnalisation</button>
@@ -22,8 +22,3 @@
     <script type="module" src="../../assets/JS/scriptHeaderBody.js"></script>
 </body>
 </html>
-<script>
-    const header =document.querySelector('header');
-    const div =document.querySelector('.PageProfil');
-    div.style.backgroundColor = header.style.backgroundColor;
-</script>

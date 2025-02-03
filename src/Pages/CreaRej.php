@@ -3,12 +3,11 @@
     require_once("../CRUD/CRUDJoueur.php");
     require_once("../CRUD/CRUDPartie.php");
     require_once("../CRUD/CRUDJouerPartie.php");
-    require_once("../CRUD/CRUDAppartientA.php");
     if (!isset($_SESSION['userId'])){
         require_once("../Utils/redirection.php");
     }
 
-    if (readIdPartieJoueur($_SESSION['userId']) != 0){
+    if (readPartieEnCours($_SESSION['userId'])){
         header("Location: ./game.php");
         exit();
     }
@@ -20,14 +19,13 @@
         $idJoueur = $_SESSION['userId'];
         $lienPartie = bin2hex(random_bytes(10)); // Génère un lien de 20 caractères
         $_SESSION['lienPartie'] = $lienPartie;
-        $idPartie = createPartie($nombre_joueur, $_SESSION['lienPartie']);
+        $idPartie = createPartie($lienPartie, date("Y-m-d H:i:s"), $nombre_joueur);
         if ($idPartie == -1){
             echo '<script type="text/javascript"> window.onload = function () { alert("Lien déjà utilisé"); }</script>';
         }
         $_SESSION['idPartie'] = $idPartie;
-        $idJouerPartie = createJouerPartie($idJoueur, $idPartie, 1);
+        $idJouerPartie = createJoueurPartie($idJoueur, $idPartie, 1);
         $_SESSION["position"] = 1;
-        updateIdPartieJoueurById($idJoueur, $idPartie);
         header("Location: ./loading.php");
         exit();
     }
@@ -35,7 +33,7 @@
     if(isset($_POST['lien_partie'])) {
         $lienPartie = $_POST['lien_partie'];
         $partie = readPartieByLien($lienPartie);
-        $idPartie = $partie->getId();
+        $idPartie = $partie->getIdPartie();
         if ($idPartie == -1){
             echo '<script type="text/javascript"> window.onload = function () { alert("Lien invalide"), window.location.href="./index.php" }</script>';
             exit();
@@ -43,24 +41,21 @@
         $_SESSION['idPartie'] = $idPartie;
         $_SESSION['lienPartie'] = $lienPartie;
         $idJoueur = $_SESSION['userId'];
-        $nbJoueurs = $partie->getNbJoueurs();
+        $nbJoueurs = $partie->getNbJoueur();
 
         if (readPositionIsUsed($idPartie, 2) == 0 && $nbJoueurs >= 2) {
-            $idJouerPartie = createJouerPartie($idJoueur, $idPartie, 2);
+            $idJouerPartie = createJoueurPartie($idJoueur, $idPartie, 2);
             $_SESSION["position"] = 2;
-            updateIdPartieJoueurById($idJoueur, $idPartie);
             header("Location: ./loading.php");
             exit();
         } elseif (readPositionIsUsed($idPartie, 3) == 0 && $nbJoueurs >= 3) {
-            $idJouerPartie = createJouerPartie($idJoueur, $idPartie, 3);
+            $idJouerPartie = createJoueurPartie($idJoueur, $idPartie, 3);
             $_SESSION["position"] = 3;
-            updateIdPartieJoueurById($idJoueur, $idPartie);
             header("Location: ./loading.php");
             exit();
         } elseif (readPositionIsUsed($idPartie, 4) == 0 && $nbJoueurs >= 4) {
-            $idJouerPartie = createJouerPartie($idJoueur, $idPartie, 4);
+            $idJouerPartie = createJoueurPartie($idJoueur, $idPartie, 4);
             $_SESSION["position"] = 4;
-            updateIdPartieJoueurById($idJoueur, $idPartie);
             header("Location: ./loading.php");
             exit();
         } else {

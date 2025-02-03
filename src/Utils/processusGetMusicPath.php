@@ -1,10 +1,10 @@
 <?php
+    require_once("../CRUD/CRUDJoueur.php");
+    session_start();
+
     if (!empty($_POST['testdesecurité'])){
-        session_start();
-        require_once("../CRUD/CRUDJoueur.php");
-        header('Content-Type: application/json');
         if (isset($_SESSION['userId'])) {
-            $musicPath = readMusicPath($_SESSION['userId']);
+            $musicPath = readCheminMusique($_SESSION['userId']);
             echo json_encode(['musicPath' => $musicPath]);
             exit();
         } else {

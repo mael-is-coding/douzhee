@@ -1,24 +1,23 @@
 <?php
 require_once("../CRUD/CRUDJoueur.php");
-require_once("../CRUD/CRUDClassement.php");
 require_once("../CRUD/CRUDSucces.php");
 
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $input = file_get_contents("php://input");
-    $data = json_decode($input, true);  
+    $data = json_decode($input, true);
 
     if (isset($data['Id']) && is_numeric($data['Id'])) {
         $idSucces = (int) $data['Id'];
-        $succes = readSuccesById($idSucces);
+        $succes = readSucces($idSucces);
         if ($succes !== null) {
             $response = [
-                'nom' => $succes->getName(),
-                'condition' => $succes->getCondition()
+                'nom' => $succes->getNomSucces(),
+                'condition' => $succes->getConditionSucces(),
             ];
             echo json_encode($response);
-        } else { 
+        } else {
             echo json_encode(['error' => 'Succès non trouvé ou données invalides.']);
         }
     } else {
@@ -27,4 +26,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } else {
     echo json_encode(['error' => 'Méthode non autorisée']);
 }
-?>

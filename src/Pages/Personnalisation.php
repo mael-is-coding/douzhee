@@ -1,15 +1,16 @@
 <?php
     require_once("../Utils/headerInit.php");
     require_once("../CRUD/CRUDJoueur.php");
-    require_once("../CRUD/CRUDSkinAchete.php");
+    require_once("../CRUD/CRUDAcheterTheme.php");
+    require_once("../CRUD/CRUDAcheterMusique.php");
 
     if (!isset($_SESSION['userId'])){
         require_once("../Utils/redirection.php");
     }
 
     $joueur = readJoueur($_SESSION['userId']);
-    $allThemeAchete = readAllThemeByUser($_SESSION['userId']);
-    $allMusiqueAchete = readAllMusicByUser($_SESSION['userId']);
+    $allThemeAchete = readAllAcheterTheme($_SESSION['userId']);
+    $allMusiqueAchete = readAllAcheterMusique($_SESSION['userId']);
 ?>
     <link rel="stylesheet" href="../../assets/css/Theme.css">
     <link rel="stylesheet" href="../../assets/css/styleHeader.css"> 
@@ -38,8 +39,8 @@
             <h2>Themes</h2>
             <div>
                 <?php foreach ($allThemeAchete as $theme) { ?>
-                    <div class='item themeItem' id='<?php echo $theme['idSkin']; ?>'>
-                        <img src='../../assets/images/imagePersonnalisation/Theme<?php echo $theme['idSkin']; ?>.png' alt='Theme Image'>
+                    <div class='item themeItem' id='<?php echo $theme['idTheme']; ?>'>
+                        <img src='../../assets/images/imagePersonnalisation/Theme<?php echo $theme['idTheme']; ?>.png' alt='Theme Image'>
                     </div>
                 <?php } ?>
             </div>
@@ -49,7 +50,7 @@
             <h2>Musiques</h2>
             <div>
                 <?php foreach ($allMusiqueAchete as $musique) { ?>
-                    <div class='item musicItem' id='<?php echo $musique['idSkin']; ?>'>
+                    <div class='item musicItem' id='<?php echo $musique['idMusique']; ?>'>
                         <img src='../../assets/images/imagePersonnalisation/imgMusique.png' alt='Musique Image'>
                     </div>
                 <?php } ?>

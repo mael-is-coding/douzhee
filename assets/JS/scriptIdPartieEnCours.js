@@ -1,4 +1,4 @@
-export async function getIdPartieEnCours() {
+export async function getPartieEnCours() {
     let formData = new FormData();
     formData.append('testdesecurité', true);
 
@@ -11,10 +11,9 @@ export async function getIdPartieEnCours() {
     return data.idPartieEnCours;
 }
 
-export function setIdPartieEnCours(idPartie){
+export function setPartieEnCours(){
     let formData = new FormData();
     formData.append('testdesecurité', true);
-    formData.append('idPartie', idPartie);
     fetch('../Utils/setIdPartieEnCours.php', {
         method: 'POST',
         body: formData

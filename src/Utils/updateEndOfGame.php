@@ -1,5 +1,5 @@
 <?php
-    require_once("../CRUD/CRUDStatistiques.php");
+    require_once("../CRUD/CRUDJoueur.php");
     session_start();
 
     if(!empty($_POST['testdesecurité'])){

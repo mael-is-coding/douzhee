@@ -1,6 +1,7 @@
 <?php
     require_once "../Classes/Joueur.php";
     require_once "../Utils/connectionSingleton.php";
+    require_once "../CRUD/CRUDJoueurPartie.php";
 
     /**
      * @brief insère un nouveau joueur dans la table Joueur selon les paramètres spécifiés. tout les paramètres sont obligatoires.
@@ -106,6 +107,38 @@
         }
     }
 
+    function readJoueurByEmail(string $email): ?Joueur {
+        $connection = ConnexionSingleton::getInstance();
+        $stmt = $connection->prepare("SELECT * FROM Joueur WHERE email = ?");
+        $stmt->bindParam(1, $email);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        if ($result) {
+            return new Joueur(
+                $result['idJoueur'],
+                $result['pseudo'],
+                $result['mdp'],
+                (int)$result['douzCoins'],
+                $result['email'],
+                $result['bio'],
+                $result['dateInscription'],
+                $result['avatarChemin'],
+                (int)$result['idMusique'],
+                (int)$result['idTheme'],
+                (int)$result['nbPartieGagnees'],
+                (int)$result['scoreMax'],
+                $result['tempsJeu'],
+                (float)$result['ratioVictoire'],
+                (int)$result['nbSucces'],
+                (int)$result['nbPartiesJouees'],
+                (int)$result['nbDouzhee']
+            );
+        } else {
+            return null;
+        }
+    }
+
     function updateTempsJeu(string $idJoueur, int $tempsJeu) : bool {
         $connection = ConnexionSingleton::getInstance();
         $stmt = $connection->prepare("UPDATE Joueur SET tempsJeu = tempsJeu + ? WHERE idJoueur = ?");
@@ -163,4 +196,107 @@
         return $stmt->execute();
     }
 
+    /**
+     * @brief Met à jour le nombre de Douzhee d'un joueur
+     * @author Nathan
+     * @param int $idUser identifiant du joueur
+     * @param int $nbDouzhee nombre de Douzhee a ajouter
+     * @return void
+     */
+    function updateNbDouzhee(string $idUser, int $nbDouzhee): void{
+        $connection = ConnexionSingleton::getInstance();
+
+        $updateNbDouzhee = 'UPDATE Joueur SET nbDouzhee = nbDouzhee + :nbDouzhee WHERE id = :idUser';
+        $statement = $connection->prepare($updateNbDouzhee);
+        $statement->bindParam(':idUser', $idUser, PDO::PARAM_INT);
+        $statement->bindParam(':nbDouzhee', $nbDouzhee, PDO::PARAM_INT);
+        $statement->execute();
+    }
+
+    function updateEndOfGame(string $idUser, string $idGame): void {
+        $connection = ConnexionSingleton::getInstance();
+        $joueur = readJoueur($idUser);
+    
+        $updateNbParties = 'UPDATE Joueur SET nbPartiesJouees = nbPartiesJouees + 1 WHERE id = :idUser';
+        $statement = $connection->prepare($updateNbParties);
+        $statement->bindParam(':idUser', $idUser, PDO::PARAM_INT);
+        $statement->execute();
+    
+        if (readEstGagnant($idUser, $idGame)) {
+            $updateVictory = 'UPDATE Joueur SET nbPartiesGagnees = nbPartiesGagnees + 1 WHERE id = :idUser';
+            $statement = $connection->prepare($updateVictory);
+            $statement->bindParam(':idUser', $idUser, PDO::PARAM_INT);
+            $statement->execute();
+        }
+    
+        $updateRatio = 'UPDATE Joueur SET ratioVictoire = ROUND(nbPartiesGagnees / nbPartieJoues, 2) WHERE id = :idUser';
+        $statement = $connection->prepare($updateRatio);
+        $statement->bindParam(':idUser', $idUser, PDO::PARAM_INT);
+        $statement->execute();
+    
+        $partie = readJoueurPartie($idUser, $idGame);
+        if ($partie->getScore() > $joueur->getScoreMax()) {
+            $updateBestScore = 'UPDATE Joueur SET scoreMax = :newScore WHERE id = :idUser';
+            $statement = $connection->prepare($updateBestScore);
+            $scoreJoueur = $partie->getScore();
+            $statement->bindParam(':newScore', $scoreJoueur, PDO::PARAM_INT);
+            $statement->bindParam(':idUser', $idUser, PDO::PARAM_INT);
+            $statement->execute();
+        }
+    }
+
+    /**
+     * @brief Incrémente de 1 le nombre de succès d'un joueur donné
+     * @author Nathan
+     * @param int $idUser identifiant du joueur
+     * @return void
+     */
+    function updateNbSucces(int $idUser): void{
+        $connection = ConnexionSingleton::getInstance();
+
+        $updateSucces = 'UPDATE Joueur SET nbSucces = nbSucces + 1 WHERE id = :idUser';
+        $statement = $connection->prepare($updateSucces);
+        $statement->bindParam(':idUser', $idUser, PDO::PARAM_INT);
+        $statement->execute();
+    }
+
+    function updateBio(string $idJoueur, string $bio) : bool {
+        $connection = ConnexionSingleton::getInstance();
+        $stmt = $connection->prepare("UPDATE Joueur SET bio = ? WHERE idJoueur = ?");
+
+        $stmt->bindParam(1, $bio);
+        $stmt->bindParam(2, $idJoueur);
+
+        return $stmt->execute();
+    }
+
+    function updateMusicPath(string $idJoueur, int $idMusique) : bool {
+        $connection = ConnexionSingleton::getInstance();
+        $stmt = $connection->prepare("UPDATE Joueur SET idMusique = ? WHERE idJoueur = ?");
+
+        $stmt->bindParam(1, $idMusique);
+        $stmt->bindParam(2, $idJoueur);
+
+        return $stmt->execute();
+    }
+
+    function updateJoueurIdTheme(string $idJoueur, int $idTheme) : bool {
+        $connection = ConnexionSingleton::getInstance();
+        $stmt = $connection->prepare("UPDATE Joueur SET idTheme = ? WHERE idJoueur = ?");
+
+        $stmt->bindParam(1, $idTheme);
+        $stmt->bindParam(2, $idJoueur);
+
+        return $stmt->execute();
+    }
+
+    function updatePseudoJoueur(string $idJoueur, string $pseudo) : bool {
+        $connection = ConnexionSingleton::getInstance();
+        $stmt = $connection->prepare("UPDATE Joueur SET pseudo = ? WHERE idJoueur = ?");
+
+        $stmt->bindParam(1, $pseudo);
+        $stmt->bindParam(2, $idJoueur);
+
+        return $stmt->execute();
+    }
 ?>

@@ -2,8 +2,8 @@ import { updateScoreJouerPartie, updateEstGagnantJouerPartie } from "./updateJou
 import { checkSuccess } from "./checkSucces.js";
 import { updateEndOfGame } from "./updateFinDePartie.js";
 import { updateNbDouzhee } from "./updateFinDePartie.js";
-import { setIdPartieEnCours } from "./scriptIdPartieEnCours.js";
-import { updateStatutPartie, updateScoreTotalPartie, videLienPartie } from "./updatePartie.js";
+import { setPartieEnCours } from "./scriptIdPartieEnCours.js";
+import { updateStatutPartie, updateScoreTotalPartie} from "./updatePartie.js";
 /**
  * @author Nathan
  */
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         donneesJoueurSingleton = donneesJoueur;
 
         if(position === 1){
-            updateStatutPartie(gameId, "En cours");
+            updateStatutPartie(gameId, 1);
             socket.emit('finDeTour', {gameId: gameId, position: nbPlayers, nbJoueurs: nbPlayers});
         }
     } else{
@@ -707,11 +707,9 @@ function finDePartie() {
     updateScoreJouerPartie(gameId, parseInt(donneesJoueur.scoreTot));
     updateNbDouzhee(donneesJoueur.nbDouzhee);
     updateEndOfGame(gameId);
-    setIdPartieEnCours(0);
     if(position === 1){
-        updateStatutPartie(gameId, "Terminée");
+        updateStatutPartie(gameId, 2);
         updateScoreTotalPartie(gameId, scoreTotPartie);
-        videLienPartie(gameId);
     }
 
     //Procédures de fin de partie
@@ -719,3 +717,14 @@ function finDePartie() {
     window.alert(msg);
     window.location.href = './index.php';
 }
+
+
+//Fonction de test
+const buttonTest = document.getElementById('test');
+buttonTest.addEventListener('click', () => {
+    socket.emit('test', {gameId: gameId});
+});
+
+socket.on('test', () => {
+    finDePartie();
+});

@@ -3,7 +3,7 @@
     session_start();
 
     if(!empty($_POST['testdesecurité'])){
-        echo json_encode(['idPartieEnCours' => readIdPartieEnCours($_SESSION['userId'])]);
+        echo json_encode(['idPartieEnCours' => readPartieEnCours($_SESSION['userId'])]);
     } else {
         echo "tu t'es cru ou toi, hein?";
     }

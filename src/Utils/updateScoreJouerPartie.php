@@ -1,5 +1,5 @@
 <?php
-require_once("../CRUD/CRUDJouerPartie.php");
+require_once("../CRUD/CRUDJoueurPartie.php");
 session_start();
 
 if (!empty($_POST['testdesecurité'])) {

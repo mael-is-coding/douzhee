@@ -18,27 +18,24 @@ document.addEventListener('DOMContentLoaded', function() {
             windowAchat.classList.add('actived');
             
             windowAchatImg.src = item.querySelector('img').src;
-            windowAchatImg.id = item.id.match(/\d+/)[0];
+            windowAchatImg.id = item.id;
 
             if (item.classList.contains('sold')) {
                 windowAchatcost.textContent = 'Vous avez déjà acheté cet item';
                 windowAchatButton.classList.add('disabled');
-                audio.classList.add('notSelected');
             } else {
                 var formData = new FormData();
                 windowAchatButton.classList.remove('disabled');
                 if (item.classList.contains('itemTheme')) {
                     audio.classList.add('notSelected');
                     formData.append('type', 'Theme');
-                    type = 'Theme';
                 }else{
                     formData.append('type', 'Music');
-                    type = 'Music';
                 }
-                formData.append('id', item.id.match(/\d+/)[0]);
+                formData.append('id', item.id);
                 formData.append('testdesecurité', true);
 
-                fetch('../Utils/getItemInfo.php', {
+                fetch('../Utils/getItemCost.php', {
                     method: 'POST',
                     body: formData
                 })

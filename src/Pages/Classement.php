@@ -1,8 +1,6 @@
-
 <?php
     require_once("../CRUD/CRUDJoueur.php");
     require_once("../Utils/headerInit.php");
-    require_once("../CRUD/CRUDClassement.php");
 
     if (!isset($_SESSION['userId'])){
         require_once("../Utils/redirection.php");

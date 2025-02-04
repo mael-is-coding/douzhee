@@ -16,12 +16,15 @@ document.addEventListener('DOMContentLoaded', function() {
     .then(response => response.json())
     .then(data => {
         if (data.status === 'success') {
-            themeSelected = document.getElementById(data.theme);
-            themeSelected.classList.add('selected');
+            themeSelected = document.querySelector(`#themeContainer [id='${data.theme}']`);
+            if (themeSelected) {
+                themeSelected.classList.add('selected');
+            }
 
-            var fourthCharFromEnd = data.music.charAt(data.music.length - 5);
-            musicSelected = document.getElementById(fourthCharFromEnd);
-            musicSelected.classList.add('selected');
+            musicSelected = document.querySelector(`#musiqueContainer [id='${data.music}']`);
+            if (musicSelected) {
+                musicSelected.classList.add('selected');
+            }
         }
     });
 
@@ -52,11 +55,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var saveButton = document.querySelector('#valider');
     saveButton.addEventListener('click', function() {
-        var musicsPath = '../../assets/audio/MusicAccueil' + musicSelected.id + '.mp3';
 
         var formData = new FormData();
         formData.append('theme', themeSelected.id);
-        formData.append('music', musicsPath);
+        formData.append('music', musicSelected.id);
         formData.append('pseudo', pseudo.value);
         formData.append('description', description.value);
         formData.append('testdesecurité', true);

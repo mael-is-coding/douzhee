@@ -1,9 +1,9 @@
 <?php
-    require_once("../CRUD/CRUDJoueur.php");
+    require_once("../CRUD/CRUDJoueurPartie.php");
     session_start();
 
     if(!empty($_POST['testdesecurité'])){
-        updateIdPartieJoueurById($_SESSION['userId'], $_POST['idPartie']);
+        deletePartieEnCour($_SESSION['userId']);
     } else {
         echo "tu t'es cru ou toi, hein?";
     }

@@ -3,7 +3,7 @@
     session_start();
 
     if(!empty($_POST['testdesecurité'])){
-        updateStatut($_POST['statut'], $_POST['idPartie']);
+        updateStatutPartie($_POST['idPartie'], $_POST['statut']);
     } else {
         echo "tu t'es cru ou toi, hein?";
     }

@@ -2,11 +2,10 @@
     require_once("../Utils/headerInit.php");
     require_once("../CRUD/CRUDJoueur.php");
     require_once("../CRUD/CRUDPartie.php");
-    require_once("../CRUD/CRUDJouerPartie.php");
+    require_once("../CRUD/CRUDJoueurPartie.php");
 
-    var_dump($_SESSION['userId']);
-    if (readPartieEnCours($_SESSION['userId'])){
-        header("Location: ./game.php");
+    if (!(readPartieEnCommencement($_SESSION['userId'])) && !(readPartieEnCours($_SESSION['userId']))) {
+        header("Location: ./index.php");
         exit();
     }
 ?>
@@ -16,8 +15,8 @@
 <body>
     <script type="module" src="../../assets/JS/scriptTheme.js"></script>
     <?php
-        $requiredPlayers = readPartieById($_SESSION['idPartie'])->getNbJoueurs(); // nombre de joueurs requis pour commencer la partie
-        $connectedPlayers = readConnectedPlayers(); // nombre de joueurs connectés
+        $requiredPlayers = readPartie($_SESSION['idPartie'])->getNbJoueur();; // nombre de joueurs requis pour commencer la partie
+        $connectedPlayers = readConnectedPlayers($_SESSION['idPartie']); // nombre de joueurs connectés
         $idsInputs = 0; // id pour les inputs
 
         $idSup = 1;
@@ -286,7 +285,7 @@
             <div class="ligne1">
                 <div class="joueur-avatar">
                     <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
-                    <p class="joueur-nom"><?= $users[0]; ?></p>
+                    <p class="joueur-nom"><?= $users[0]['pseudo']; ?></p>
                 </div>
                 <div class="joueur-avatar">
                 </div>
@@ -299,7 +298,7 @@
                 </div>
                 <div class="joueur-avatar">
                     <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
-                    <p class="joueur-nom"><?= $users[1]; ?></p>
+                    <p class="joueur-nom"><?= $users[1]['pseudo']; ?></p>
                 </div>
             </div>
         
@@ -308,11 +307,11 @@
             <div class="ligne1">
                 <div class="joueur-avatar">
                     <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
-                    <p class="joueur-nom"><?= $users[0]; ?></p>
+                    <p class="joueur-nom"><?= $users[0]['pseudo']; ?></p>
                 </div>
                 <div class="joueur-avatar">
                     <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
-                    <p class="joueur-nom"><?= $users[1]; ?></p>
+                    <p class="joueur-nom"><?= $users[1]['pseudo']; ?></p>
                 </div>
             </div>
 
@@ -321,7 +320,7 @@
             <div class="ligne3">
                 <div class="joueur-avatar">
                     <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
-                    <p class="joueur-nom"><?= $users[2]; ?></p>
+                    <p class="joueur-nom"><?= $users[2]['pseudo']; ?></p>
                 </div>
                 <div class="joueur-avatar">
                 </div>
@@ -332,11 +331,11 @@
             <div class="ligne1">
                 <div class="joueur-avatar">
                     <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
-                    <p class="joueur-nom"><?= $users[0]; ?></p>
+                    <p class="joueur-nom"><?= $users[0]['pseudo']; ?></p>
                 </div>
                 <div class="joueur-avatar">
                     <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
-                    <p class="joueur-nom"><?= $users[1]; ?></p>
+                    <p class="joueur-nom"><?= $users[1]['pseudo']; ?></p>
                 </div>
             </div>
 
@@ -345,11 +344,11 @@
             <div class="ligne3">
                 <div class="joueur-avatar">
                     <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
-                    <p class="joueur-nom"><?= $users[2]; ?></p>
+                    <p class="joueur-nom"><?= $users[2]['pseudo']; ?></p>
                 </div>
                 <div class="joueur-avatar">
                     <div class="img-joueur"><img src="../../assets/Images/imgGames/pdp.png" alt="icon"></div>
-                    <p class="joueur-nom"><?= $users[3]; ?></p>
+                    <p class="joueur-nom"><?= $users[3]['pseudo']; ?></p>
                 </div>
             </div>
         <?php }?>
@@ -364,6 +363,8 @@
     </div>
     <button id="chat-toggle">💬</button>
 
+    <button id="test">Test</button>
+
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     <script src="../../assets/JS/connectionWebSocket.js"></script>
     <script>
@@ -372,7 +373,7 @@
         const nbPlayers = <?= json_encode($requiredPlayers); ?>; // Récupérer le nombre de joueurs
 
         const gameId = <?= json_encode($_SESSION['idPartie']); ?>; // Récupérer l'ID de la partie
-        const pseudoid = <?= json_encode($_SESSION['pseudo']); ?>; // Récupérer le pseudo du joueur
+        const pseudoid = <?= json_encode(readPseudo($_SESSION["userId"])); ?>; // Récupérer le pseudo du joueur
 
         const requiredPlayers = <?= json_encode($requiredPlayers); ?>; // Récupérer le nombre de joueurs requis pour commencer la partie
         const connectedPlayers = <?= json_encode($connectedPlayers); ?>; // Récupérer le nombre de joueurs connectés

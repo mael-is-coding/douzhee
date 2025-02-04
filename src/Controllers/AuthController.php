@@ -3,18 +3,15 @@
 header("Access-Control-Allow-Origin: http://localhost");
 header("Access-Control-Allow-Headers: application/json");
 
-require_once $_SERVER ["DOCUMENT_ROOT"] . "/douzhee/src/CRUD/CRUDAppartientA.php";
-require_once $_SERVER ["DOCUMENT_ROOT"] . "/douzhee/src/CRUD/CRUDClassement.php";
-require_once $_SERVER ["DOCUMENT_ROOT"] . "/douzhee/src/CRUD/CRUDConsulte.php";
-require_once $_SERVER ["DOCUMENT_ROOT"] . "/douzhee/src/CRUD/CRUDEffectueAchat.php";
-require_once $_SERVER ["DOCUMENT_ROOT"] . "/douzhee/src/CRUD/CRUDJouerPartie.php";
-require_once $_SERVER ["DOCUMENT_ROOT"] . "/douzhee/src/CRUD/CRUDJoueur.php";
-require_once $_SERVER ["DOCUMENT_ROOT"] . "/douzhee/src/CRUD/CRUDObtient.php";
-require_once $_SERVER ["DOCUMENT_ROOT"] . "/douzhee/src/CRUD/CRUDPartie.php";
-require_once $_SERVER ["DOCUMENT_ROOT"] . "/douzhee/src/CRUD/CRUDSkinAchete.php";
-require_once $_SERVER ["DOCUMENT_ROOT"] . "/douzhee/src/CRUD/CRUDSkinAchetable.php";
-require_once $_SERVER ["DOCUMENT_ROOT"] . "/douzhee/src/CRUD/CRUDStatistiques.php";
-require_once $_SERVER ["DOCUMENT_ROOT"] . "/douzhee/src/CRUD/CRUDSucces.php";
+require_once("../CRUD/CRUDJoueur.php");
+require_once("../CRUD/CRUDPartie.php");
+require_once("../CRUD/CRUDJoueurPartie.php");
+require_once("../CRUD/CRUDTheme.php");
+require_once("../CRUD/CRUDMusique.php");
+require_once("../CRUD/CRUDAcheterTheme.php");
+require_once("../CRUD/CRUDAcheterMusique.php");
+require_once("../CRUD/CRUDSuccess.php");
+require_once("../CRUD/CRUDSuccessJoueur.php");
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // echo json_encode(file_get_contents("php://input"));

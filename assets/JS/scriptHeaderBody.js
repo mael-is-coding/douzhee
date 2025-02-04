@@ -1,22 +1,22 @@
-import { getIdPartieEnCours, setIdPartieEnCours } from "./scriptIdPartieEnCours.js";
+import { getPartieEnCours, setPartieEnCours } from "./scriptIdPartieEnCours.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     const decoButton = document.querySelector("#decoButton");
 
     if(decoButton !== null){
         decoButton.addEventListener('click', async (event) => {
-            const idPartie = await getIdPartieEnCours();
+            const idPartie = await getPartieEnCours();
             let deconnexionValid = false;
-            if(idPartie > 0){
+            if(idPartie){
                 if(window.confirm('Souhaitez-vous vraiment abandonner votre partie en cours ?')){
                     localStorage.removeItem('donneesJoueur');
-                    setIdPartieEnCours(0);
+                    setPartieEnCours();
                     deconnexionValid = true;
                 } else{
                     event.preventDefault();
                 }
             }
-            if(deconnexionValid || idPartie <= 0){
+            if(deconnexionValid || !idPartie){
                 let formData = new FormData();
                 formData.append('testdesecurité', true);
                 await fetch('../Utils/logout.php', {

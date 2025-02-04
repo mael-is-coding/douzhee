@@ -1,6 +1,15 @@
 function checkPlayers() {
     if (connectedPlayers == requiredPlayers) {
         window.location.href = './game.php';
+
+        var formData = new FormData();
+        formData.append('gameId', gameId);
+        formData.append('testdesecurité', true);
+        fetch('../Utils/launchGame.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
     }
 }
 

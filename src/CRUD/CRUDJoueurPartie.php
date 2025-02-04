@@ -36,10 +36,11 @@
         return null;
     }
 
-    function readIdPartieEnCours(string $idJoueur): bool {
+    function readPartieEnCours(string $idJoueur): bool {
         $connexion = ConnexionSingleton::getInstance();
 
-        $query = "SELECT * FROM JoueurPartie WHERE idJoueur = :idJoueur AND estGagant = 0";
+        $query = "SELECT * FROM JoueurPartie JOIN Partie ON JoueurPartie.idPartie = Partie.idPartie WHERE JoueurPartie.idJoueur = :idJoueur AND Partie.statut = 1";
+        
 
         $statement = $connexion->prepare($query);
 
@@ -55,10 +56,11 @@
         return false;
     }
 
-    function readPartieEnCours(string $idJoueur): bool {
+    function readPartieEnCommencement(string $idJoueur): bool {
         $connexion = ConnexionSingleton::getInstance();
 
-        $query = "SELECT * FROM JoueurPartie WHERE idJoueur = :idJoueur";
+        $query = "SELECT * FROM JoueurPartie JOIN Partie ON JoueurPartie.idPartie = Partie.idPartie WHERE JoueurPartie.idJoueur = :idJoueur AND Partie.statut = 0";
+        
 
         $statement = $connexion->prepare($query);
 
@@ -92,5 +94,114 @@
             return true;
         }
         return false;
+    }
+
+    function readConnectedPlayers(string $idPartie): int {
+        $connexion = ConnexionSingleton::getInstance();
+
+        $query = "SELECT COUNT(*) FROM JoueurPartie WHERE idPartie = :idPartie";
+
+        $statement = $connexion->prepare($query);
+
+        $statement->bindParam(':idPartie', $idPartie);
+
+        $statement->execute();
+
+        $results = $statement->fetch(PDO::FETCH_ASSOC);
+
+        return $results['COUNT(*)'];
+    }
+
+    function readAllUsersByIdPartie(string $idPartie): ?array {
+        $connexion = ConnexionSingleton::getInstance();
+
+        $query = "SELECT * FROM JoueurPartie JOIN Joueur ON JoueurPartie.idJoueur = Joueur.idJoueur WHERE JoueurPartie.idPartie = :idPartie";
+
+        $statement = $connexion->prepare($query);
+
+        $statement->bindParam(':idPartie', $idPartie);
+
+        $statement->execute();
+
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        if(gettype($results) != "boolean") {
+            return $results;
+        }
+        return null;
+    }
+
+    function readIdPartieEnCour(string $idJ): string {
+        $connexion = ConnexionSingleton::getInstance();
+
+        $query = "SELECT idPartie FROM JoueurPartie WHERE idJoueur = :idJ AND idPartie IN (SELECT idPartie FROM Partie WHERE statut = 1)";
+
+        $statement = $connexion->prepare($query);
+
+        $statement->bindParam(':idJ', $idJ);
+
+        $statement->execute();
+
+        $results = $statement->fetch(PDO::FETCH_ASSOC);
+
+        return $results['idPartie'];
+    }
+
+    function readEstGagnant(string $idJ, string $idP): bool {
+        $connexion = ConnexionSingleton::getInstance();
+
+        $query = "SELECT estGagnant FROM JoueurPartie WHERE idPartie = :idP AND idJoueur = :idJ";
+
+        $statement = $connexion->prepare($query);
+
+        $statement->bindParam(':idP', $idP);
+        $statement->bindParam(':idJ', $idJ);
+
+        $statement->execute();
+
+        $results = $statement->fetch(PDO::FETCH_ASSOC);
+
+        return $results['estGagnant'];
+    }
+
+    function updateScore(string $idJ, string $idP, int $score): bool {
+        $connexion = ConnexionSingleton::getInstance();
+    
+        $UpdateQuery = "UPDATE JoueurPartie SET score = :score WHERE idPartie = :idP AND idJoueur = :idJ";
+        $statement = $connexion->prepare($UpdateQuery);
+        $statement->bindParam(":score", $score, PDO::PARAM_INT);
+        $statement->bindParam(":idP", $idP, PDO::PARAM_INT);
+        $statement->bindParam(":idJ", $idJ, PDO::PARAM_INT);
+    
+        return $statement->execute();
+    }
+    
+    function updateEstGagnant(string $idJ, string $idP): bool {
+        $connexion = ConnexionSingleton::getInstance();
+    
+        $UpdateQuery = "UPDATE JoueurPartie SET estGagnant = 1 WHERE idPartie = :idP AND idJoueur = :idJ";
+        $statement = $connexion->prepare($UpdateQuery);
+        $statement->bindParam(":idP", $idP, PDO::PARAM_INT);
+        $statement->bindParam(":idJ", $idJ, PDO::PARAM_INT);
+    
+        $result = $statement->execute();
+        if ($result) {
+            error_log("Update estGagnant successfully for user $idJ in game $idP");
+        } else {
+            $errorInfo = $statement->errorInfo();
+            error_log("Failed to update estGagnant for user $idJ in game $idP. Error: " . print_r($errorInfo, true));
+        }
+    
+        return $result;
+    }
+    
+    function deletePartieEnCour(string $idJ): bool {
+        $connexion = ConnexionSingleton::getInstance();
+    
+        $DeleteQuery = "DELETE FROM JoueurPartie WHERE idJoueur = :idJ AND idPartie IN (SELECT idPartie FROM Partie WHERE statut = 1)";
+        $statement = $connexion->prepare($DeleteQuery);
+        $statement->bindParam(":idJ", $idJ, PDO::PARAM_INT);
+    
+        return $statement->execute();
     }
 ?>

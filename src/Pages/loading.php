@@ -2,7 +2,7 @@
     require_once("../Utils/headerInit.php");
     require_once("../CRUD/CRUDJoueur.php");
     require_once("../CRUD/CRUDPartie.php");
-    require_once("../CRUD/CRUDJouerPartie.php");
+    require_once("../CRUD/CRUDJoueurPartie.php");
     require_once("../Utils/connectionSingleton.php");
 ?>
     <link rel="stylesheet" href="../../assets/CSS/Theme.css">
@@ -11,8 +11,8 @@
 <body>
     <script type="module" src="../../assets/JS/scriptTheme.js"></script>
     <?php
-        $requiredPlayers = readPartieById($_SESSION['idPartie'])->getNbJoueurs(); // nombre de joueurs requis pour commencer la partie
-        $connectedPlayers = readConnectedPlayers(); // nombre de joueurs connectés
+        $requiredPlayers = readPartie($_SESSION['idPartie'])->getNbJoueur(); // nombre de joueurs requis pour commencer la partie
+        $connectedPlayers = readConnectedPlayers($_SESSION['idPartie']); // nombre de joueurs connectés
 
         //debugSession();
     ?>

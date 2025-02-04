@@ -223,8 +223,9 @@ io.on('connection', (socket) => {
     // Gestion de la connexion d'un client
     console.log('a user connected');
 
-    socket.on('test', () => {
+    socket.on('test', (data) => {
         console.log('test event received');
+        io.to(data.gameId).emit('test');
     });
 
     socket.on('inputValue', (data) => {

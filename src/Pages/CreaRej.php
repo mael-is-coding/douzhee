@@ -2,17 +2,21 @@
     require_once("../Utils/headerInit.php");
     require_once("../CRUD/CRUDJoueur.php");
     require_once("../CRUD/CRUDPartie.php");
-    require_once("../CRUD/CRUDJouerPartie.php");
+    require_once("../CRUD/CRUDJoueurPartie.php");
     if (!isset($_SESSION['userId'])){
         require_once("../Utils/redirection.php");
     }
 
     if (readPartieEnCours($_SESSION['userId'])){
+        $_SESSION['idPartie'] = readPartieEnCours($_SESSION['userId']);
         header("Location: ./game.php");
         exit();
     }
-
-    $joueurTemp = readJoueur($_SESSION['userId']);
+    
+    if (readPartieEnCommencement($_SESSION['userId'])){
+        header("Location: ./loading.php");
+        exit();
+    }
 
     if(isset($_POST['nombre_joueur'])) {
         $nombre_joueur = $_POST['nombre_joueur'];

@@ -35,7 +35,7 @@
             <textarea id="descriptionInput" rows="4" cols="50"><?php echo $joueur->getBio() ?></textarea>
         </div>
 
-        <div id="skinContainer" class="container containerItem">
+        <div id="themeContainer" class="container containerItem">
             <h2>Themes</h2>
             <div>
                 <?php foreach ($allThemeAchete as $theme) { ?>

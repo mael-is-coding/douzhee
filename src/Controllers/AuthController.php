@@ -10,95 +10,86 @@ require_once("../CRUD/CRUDTheme.php");
 require_once("../CRUD/CRUDMusique.php");
 require_once("../CRUD/CRUDAcheterTheme.php");
 require_once("../CRUD/CRUDAcheterMusique.php");
-require_once("../CRUD/CRUDSuccess.php");
-require_once("../CRUD/CRUDSuccessJoueur.php");
+require_once("../CRUD/CRUDSucces.php");
+require_once("../CRUD/CRUDSuccesJoueur.php");
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // echo json_encode(file_get_contents("php://input"));
-
     $request = json_decode(file_get_contents("php://input"), true);
-
     routing($request);
-}   
-
+}
 
 /**
- * 
- * @return void
+ * Routeur des requêtes d'authentification
  */
 function routing(mixed $request): void {
-    if ($request["object"] === "Joueur")  {
-    // POUR LA CONNECTION D'UN UTILISATEUR EXISTANT
-       if (getAction($request) === "READ") {
-        echo json_encode(["SUCCESS" => "IS A USER AND FOR CONNECTION"]);
-        $email = $request["params"]["email"];
-        $pwd = $request["params"]["pwdHash"];
-
-        $returnedJoueur = readJoueurByEmail($email);
-
-        if($returnedJoueur != null) {
-            echo json_encode(["returnedJoueur" => "is not null"]);
-            if ($returnedJoueur->getMdp() == $pwd) {
-                echo json_encode(["SUCCESS" => "Un utilisateur a ete trouve, le mot de passe est juste"]);
-                exit();
-            } else {
-                echo json_encode(["PWD ERROR" => "Un utilisateur a ete trouve, mais le mdp est errone    "]);
-                echo json_encode(["BD PWD" => $returnedJoueur->getMDP() . "      "]);
-                echo json_encode(["GIVEN PWD" => $request["params"]["pwdHash"]]);
-                exit();
-            }
-        } else {
-            echo json_encode(["EMAIL ERROR" => "EMAIL SEEMS TO BE INVALID OR NOT REGISTERED"]);
-            exit();
-        }
-    // POUR LA CREATION D'UTILISATEUR NON-EXISTANT PUIS CONNEXION
-       } else if (getAction($request) == "CREATE") {
-        $email = $request["params"]["email"];
-        $pwd = $request["params"]["pwd"];
-        $username = $request["params"]["username"];
-
-        $shouldBeNull = readJoueurByEmail($email);
-
-        if ($shouldBeNull != null) {
-            echo json_encode(["ERROR" => "L'email est deja dans la base de donnees, l'utilisateur existe deja"]);
-            exit();
-        } else {
-            $creationSuccess = createJoueur($username, $pwd, $email);
-            if ($creationSuccess) {
-                $newUser = readJoueurByEmail($email);
-                echo json_encode(["newUser" => $newUser->getEmail()]);
-                exit();
-            } else {
-                echo json_encode(["DATABASE ERROR" => "La BD s'est chiée dessus"]);
-                exit();
-            }
-        }
-       } else {
-            echo json_encode(["ERROR" => "NOT A USER AND | OR NOT FOR READING"]);
-            exit();
-       }
-    }  else {
-        echo json_encode(["ERROR" => "INVALID REQUEST"]);
-        exit();
+    if (!isset($request["object"]) || $request["object"] !== "Joueur") {
+        sendResponse(400, ["error" => "Requête invalide"]);
     }
 
-    // POUR LA MISE A JOUR DES DONNÉES D'UN UTILISATEUR EXISTANT
+    switch (getAction($request)) {
+        case "READ":
+            connectUser($request["params"]["email"], $request["params"]["pwdHash"]);
+            break;
+        case "CREATE":
+            createUser($request["params"]["username"], $request["params"]["pwd"], $request["params"]["email"]);
+            break;
+        default:
+            sendResponse(400, ["error" => "Action non valide"]);
+    }
 }
 
-function getAction(mixed $request): string {
-    if ($request["action"] === "CREATE") {
-        return "CREATE";
-    } else if ($request["action"] == "READ") {
-        return "READ";
-    } else if ($request["action"] == "UPDATE") {
-        return "UPDATE";
-    } else if ($request["action"] == "DELETE") {
-        return "DELETE";
+/**
+ * Vérifie l'existence d'un utilisateur et connecte si les identifiants sont valides.
+ */
+function connectUser(string $email, string $pwdHash): void {
+    $joueur = readJoueurByEmail($email);
+
+    if (!$joueur) {
+        sendResponse(404, ["error" => "Email non trouvé"]);
+    }
+    $storedHashedPwd = trim($joueur->getMdp());
+    echo 'Mot de passe envoyé: ' . $pwdHash . PHP_EOL;
+    echo 'Hachage stocké: ' . $storedHashedPwd . PHP_EOL;
+    
+    var_dump(password_verify(trim($pwdHash), trim($storedHashedPwd)));  // Devrait retourner true
+    if (!password_verify($pwdHash, $storedHashedPwd)) {
+        sendResponse(401, ["error" => "Mot de passe incorrect"]);
+    }else{
+        sendResponse(200, ["success" => "Utilisateur connecté"]);
+    }
+
+    
+}
+
+/**
+ * Crée un nouvel utilisateur si l'email n'est pas déjà pris.
+ */
+function createUser(string $username, string $pwd, string $email): void {
+    if (readJoueurByEmail($email)) {
+        sendResponse(409, ["error" => "Email déjà utilisé"]);
+    }
+
+    $hashedPwd = password_hash($pwd, PASSWORD_BCRYPT);
+
+    if (createJoueur($username, $hashedPwd, $email)) {
+        sendResponse(201, ["success" => "Utilisateur créé"]);
     } else {
-        return "ERROR";
+        sendResponse(500, ["error" => "Erreur lors de la création"]);
     }
 }
 
-function isUser(mixed $request): int {
-    return strcasecmp($request["for"], "connection");
+/**
+ * Récupère l'action demandée.
+ */
+function getAction(mixed $request): string {
+    return $request["action"] ?? "ERROR";
+}
+
+/**
+ * Envoie une réponse JSON propre.
+ */
+function sendResponse(int $statusCode, array $response): void {
+    http_response_code($statusCode);
+    echo json_encode($response);
+    exit();
 }

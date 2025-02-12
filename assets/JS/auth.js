@@ -14,20 +14,17 @@ document.addEventListener("DOMContentLoaded", function () {
             let response = await fetch("../Controllers/AuthController.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
+                credentials: "include",
                 body: JSON.stringify({
                     object: "Joueur",
                     action: "READ",
-                    params: { email: email, pwdHash: password }
+                    params: { email: email, pwdHash: password ,rememberMe: rememberMe}
                 })
             });
 
             let result = await response.json();
 
             if (response.ok) {
-                if (rememberMe) {
-                    document.cookie = `Email=${email}; max-age=7200; path=/; Secure; HttpOnly; SameSite=Strict`;
-                    document.cookie = `Password=${password}; max-age=7200; path=/; Secure; HttpOnly; SameSite=Strict`;
-                }
                 window.location.href = "Index.php";
             } else {
                 alert(result.error);

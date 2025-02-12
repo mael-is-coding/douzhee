@@ -6,7 +6,6 @@
     $key = "this-is-a-zikette-key-for-a-pass";
     $newemail = isset($_COOKIE[$cookiename]) ? decryptage($_COOKIE[$cookiename], $key) : '';
     $newmdp = isset($_COOKIE[$cookiename2]) ? decryptage($_COOKIE[$cookiename2], $key) : '';
-    $email_err_mess = null;
 ?>
 <head>
     <link rel="stylesheet" href="../../assets/css/styleCIRV.css">

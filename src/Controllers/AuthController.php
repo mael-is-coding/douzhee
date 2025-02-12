@@ -12,6 +12,7 @@ require_once("../CRUD/CRUDAcheterTheme.php");
 require_once("../CRUD/CRUDAcheterMusique.php");
 require_once("../CRUD/CRUDSucces.php");
 require_once("../CRUD/CRUDSuccesJoueur.php");
+session_start();
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $request = json_decode(file_get_contents("php://input"), true);
@@ -28,7 +29,7 @@ function routing(mixed $request): void {
 
     switch (getAction($request)) {
         case "READ":
-            connectUser($request["params"]["email"], $request["params"]["pwdHash"]);
+            connectUser($request["params"]["email"], $request["params"]["pwdHash"],$request["params"]["rememberMe"]);
             break;
         case "CREATE":
             createUser($request["params"]["username"], $request["params"]["pwd"], $request["params"]["email"]);
@@ -41,21 +42,28 @@ function routing(mixed $request): void {
 /**
  * Vérifie l'existence d'un utilisateur et connecte si les identifiants sont valides.
  */
-function connectUser(string $email, string $pwdHash): void {
+function connectUser(string $email, string $pwd,bool $check): void {
+    $key = "this-is-a-zikette-key-for-a-pass";
     $joueur = readJoueurByEmail($email);
 
     if (!$joueur) {
         sendResponse(404, ["error" => "Email non trouvé"]);
     }
-    $storedHashedPwd = trim($joueur->getMdp());
-    echo 'Mot de passe envoyé: ' . $pwdHash . PHP_EOL;
-    echo 'Hachage stocké: ' . $storedHashedPwd . PHP_EOL;
-    
-    var_dump(password_verify(trim($pwdHash), trim($storedHashedPwd)));  // Devrait retourner true
-    if (!password_verify($pwdHash, $storedHashedPwd)) {
+
+    if (!password_verify($pwd, $joueur->getMdp())) {
         sendResponse(401, ["error" => "Mot de passe incorrect"]);
     }else{
+        $_SESSION['userId']= $joueur->getIdJoueur();
+        $_SESSION['timeStart'] = microtime(true);
+        if ($check){
+            $emailcrypter = cryptage($email, $key);
+            $passwordcrypter = cryptage($pwd, $key);
+
+            setcookie("Email", $emailcrypter, time() + 7200, "/", "", true, true);  
+            setcookie("Password", $passwordcrypter, time() + 7200, "/", "", true, true);  
+        }
         sendResponse(200, ["success" => "Utilisateur connecté"]);
+        
     }
 
     
@@ -68,10 +76,10 @@ function createUser(string $username, string $pwd, string $email): void {
     if (readJoueurByEmail($email)) {
         sendResponse(409, ["error" => "Email déjà utilisé"]);
     }
-
-    $hashedPwd = password_hash($pwd, PASSWORD_BCRYPT);
-
-    if (createJoueur($username, $hashedPwd, $email)) {
+    if (createJoueur($username, $pwd, $email)) {
+        $joueur = readJoueurByEmail($email);
+        $_SESSION['userId']= $joueur->getIdJoueur();
+        $_SESSION['timeStart'] = microtime(true);
         sendResponse(201, ["success" => "Utilisateur créé"]);
     } else {
         sendResponse(500, ["error" => "Erreur lors de la création"]);

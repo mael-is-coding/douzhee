@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         let spanScore = document.createElement('span');
                         spanScore.classList.add('spanScore');
-                        spanScore.textContent = partie.score;
+                        spanScore.textContent = partie.score + ' points';
                         divJoueur.appendChild(spanScore);
 
                         div.appendChild(divJoueur);
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                             let spanScore = document.createElement('span');
                             spanScore.classList.add('spanScore');
-                            spanScore.textContent = adversaire.score;
+                            spanScore.textContent = adversaire.score + ' points';
                             divAdversaire.appendChild(spanScore);
 
                             div.appendChild(divAdversaire);
@@ -149,15 +149,20 @@ document.addEventListener('DOMContentLoaded', function () {
                             let divJoueur = document.createElement('div');
                             divJoueur.classList.add('joueur');
     
+                            let imgAvatar = document.createElement('img');
+                            imgAvatar.classList.add('imgAvatar');
+                            imgAvatar.src = data.infoJoueur.avatarChemin;
+                            divJoueur.appendChild(imgAvatar);
+    
                             let spanName = document.createElement('span');
                             spanName.classList.add('spanName');
                             spanName.textContent = data.infoJoueur.pseudo;
                             divJoueur.appendChild(spanName);
     
-                            let divAvatar = document.createElement('img');
-                            divAvatar.classList.add('imgAvatar');
-                            divAvatar.src = data.infoJoueur.avatarChemin;
-                            divJoueur.appendChild(divAvatar);
+                            let spanScore = document.createElement('span');
+                            spanScore.classList.add('spanScore');
+                            spanScore.textContent = partie.score + ' points';
+                            divJoueur.appendChild(spanScore);
     
                             div.appendChild(divJoueur);
     
@@ -170,15 +175,20 @@ document.addEventListener('DOMContentLoaded', function () {
                                 let divAdversaire = document.createElement('div');
                                 divAdversaire.classList.add('joueur');
     
+                                let imgAvatar = document.createElement('img');
+                                imgAvatar.classList.add('imgAvatar');
+                                imgAvatar.src = adversaire.avatarChemin;
+                                divAdversaire.appendChild(imgAvatar);
+    
                                 let spanName = document.createElement('span');
                                 spanName.classList.add('spanName');
                                 spanName.textContent = adversaire.pseudo;
                                 divAdversaire.appendChild(spanName);
     
-                                let divAvatar = document.createElement('img');
-                                divAvatar.classList.add('imgAvatar');
-                                divAvatar.src = adversaire.avatarChemin;
-                                divAdversaire.appendChild(divAvatar);
+                                let spanScore = document.createElement('span');
+                                spanScore.classList.add('spanScore');
+                                spanScore.textContent = adversaire.score + ' points';
+                                divAdversaire.appendChild(spanScore);
     
                                 div.appendChild(divAdversaire);
                             });

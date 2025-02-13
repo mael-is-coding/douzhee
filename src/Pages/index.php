@@ -1,5 +1,6 @@
 <?php
     require_once("../Utils/headerInit.php");
+    echo "Current directory: " . __DIR__;
 ?>
     <link rel="stylesheet" href="../../assets/css/Theme.css">
     <link rel="stylesheet" href="../../assets/css/styleindex.css">

@@ -2,9 +2,9 @@
     require_once("../Utils/headerInit.php");
     echo "Current directory: " . __DIR__;
 ?>
-    <link rel="stylesheet" href="<?php echo __DIR__; ?>/../../assets/css/styleindex.css">
-    <link rel="stylesheet" href="../../assets/css/styleindex.css">
-    <link rel="stylesheet" href="../../assets/css/styleHeader.css">
+    <link rel="stylesheet" href="/var/www/douzhee/assets/css/Themes.css">
+    <link rel="stylesheet" href="/var/www/douzhee/assets/css/styleindex.css">
+    <link rel="stylesheet" href="/var/www/douzhee/assets/css/styleHeader.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
 </head>
 <body>

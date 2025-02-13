@@ -31,6 +31,38 @@
         return $stmt->execute();
     }
 
+    function readAllJoueur(): array {
+        $connection = ConnexionSingleton::getInstance();
+        $stmt = $connection->prepare("SELECT * FROM Joueur");
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $joueurs = [];
+    
+        foreach ($results as $result) {
+            $joueurs[] = [
+                'idJoueur' => $result['idJoueur'],
+                'pseudo' => $result['pseudo'],
+                'mdp' => $result['mdp'],
+                'douzCoins' => (int)$result['douzCoins'],
+                'email' => $result['email'],
+                'bio' => $result['bio'],
+                'dateInscription' => $result['dateInscription'],
+                'avatarChemin' => $result['avatarChemin'],
+                'idMusique' => (int)$result['idMusique'],
+                'idTheme' => (int)$result['idTheme'],
+                'nbPartieGagnees' => (int)$result['nbPartieGagnees'],
+                'scoreMax' => (int)$result['scoreMax'],
+                'tempsJeu' => $result['tempsJeu'],
+                'ratioVictoire' => (float)$result['ratioVictoire'],
+                'nbSucces' => (int)$result['nbSucces'],
+                'nbPartiesJouees' => (int)$result['nbPartiesJouees'],
+                'nbDouzhee' => (int)$result['nbDouzhee']
+            ];
+        }
+    
+        return $joueurs;
+    }
+
     /**
      * @brief retourne le joueur ayant l'id id ou null si aucun existe avec cet id
      * @param int $id id du joueur à obtenir

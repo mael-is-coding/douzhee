@@ -112,5 +112,27 @@ class Joueur {
     function getNbDouzhee(): int {
         return $this->nbDouzhee;
     }
+
+    public function toArray(): array {
+        return [
+            'idJoueur' => $this->idJoueur,
+            'pseudo' => $this->pseudo,
+            'mdp' => $this->mdp,
+            'douzCoins' => $this->douzCoins,
+            'email' => $this->email,
+            'bio' => $this->bio,
+            'dateInscription' => $this->dateInscription,
+            'avatarChemin' => $this->avatarChemin,
+            'idMusique' => $this->idMusique,
+            'idTheme' => $this->idTheme,
+            'nbPartieGagnees' => $this->nbPartieGagnees,
+            'scoreMax' => $this->scoreMax,
+            'tempsJeu' => $this->tempsJeu,
+            'ratioVictoire' => $this->ratioVictoire,
+            'nbSucces' => $this->nbSucces,
+            'nbPartiesJouees' => $this->nbPartiesJouees,
+            'nbDouzhee' => $this->nbDouzhee
+        ];
+    }
 }
 ?>

@@ -1,7 +1,5 @@
 <?php
     require_once("../CRUD/CRUDJoueur.php");
-    require_once("../CRUD/CRUDClassement.php");
-
     if ($_SERVER ["REQUEST_METHOD"] === "POST") {
 
         $data = file_get_contents("php://input");

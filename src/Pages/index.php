@@ -50,8 +50,8 @@
                 <img src="../../assets/Images/imgheader/coin_dollar_finance_icon_125510 1.png" alt="">
             </a>
 
-            <a href="./Defis.php" id="defis" class="taches themeItem4">
-                <span>Defis</span>
+            <a href="./historique.php" id="historique" class="taches themeItem4">
+                <span>Historique</span>
             </a>
         </div>
     </div>

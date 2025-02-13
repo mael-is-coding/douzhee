@@ -164,6 +164,45 @@
         return $results['estGagnant'];
     }
 
+    function readHistorique(string $idJ): ?array {
+        $connexion = ConnexionSingleton::getInstance();
+
+        $query = "SELECT * FROM JoueurPartie JOIN Partie ON JoueurPartie.idPartie = Partie.idPartie WHERE JoueurPartie.idJoueur = :idJ AND Partie.statut = 2";
+
+        $statement = $connexion->prepare($query);
+
+        $statement->bindParam(':idJ', $idJ);
+
+        $statement->execute();
+
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        if(gettype($results) != "boolean") {
+            return $results;
+        }
+        return null;
+    }
+
+    function readInfoAdversaires(string $idP, string $idJ): ?array {
+        $connexion = ConnexionSingleton::getInstance();
+
+        $query = "SELECT * FROM JoueurPartie JOIN Joueur ON JoueurPartie.idJoueur = Joueur.idJoueur WHERE JoueurPartie.idPartie = :idP AND JoueurPartie.idJoueur != :idJ";
+
+        $statement = $connexion->prepare($query);
+
+        $statement->bindParam(':idP', $idP);
+        $statement->bindParam(':idJ', $idJ);
+
+        $statement->execute();
+
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        if(gettype($results) != "boolean") {
+            return $results;
+        }
+        return null;
+    }
+
     function updateScore(string $idJ, string $idP, int $score): bool {
         $connexion = ConnexionSingleton::getInstance();
     

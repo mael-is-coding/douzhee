@@ -1,0 +1,68 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+}
+
+#container {
+    position: absolute !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: calc(100% - 9.2%);
+    bottom: 0;
+    border: 1px solid red;
+}
+
+#containerInfo {
+    border: 1px solid black;
+    width: 70%;
+    height: 25%;
+}
+
+#containerHistorique {
+    border: 1px solid white;
+    width: 70%;
+    height: 75%;
+}
+
+#userAvatar, .imgAvatar {
+    width: 7.5vh;
+    height: 7.5vh;
+    border-radius: 50%;
+}
+
+.historiquePartie {
+    display: grid;
+    grid-template-rows: auto;
+    border: 1px solid black;
+}
+
+.victoire {
+    background-color: green;
+}
+
+.defaite {
+    background-color: red;
+}
+
+.joueur {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+}
+
+.spanVersus {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    width: 50px;
+}

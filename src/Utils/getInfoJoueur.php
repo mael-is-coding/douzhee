@@ -4,7 +4,7 @@
     
     if (!empty($_POST['testdesecurité'])) {
         if (!empty($_SESSION['userId'])) {
-            $resultat = getMoneyById($_SESSION['userId']);
+            $resultat = readJoueur($_SESSION['userId']);
             echo json_encode(['status' => 'success', 'resultat' => $resultat]);
             exit();
         } else {

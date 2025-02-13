@@ -29,9 +29,9 @@ document.addEventListener('DOMContentLoaded', function() {
     var imgBoutique = document.querySelector('#boutique img');
     var boolBoutique = true;
 
-    var defis = document.querySelector('#defis');
-    var spanDefis = document.querySelector('#defis span');
-    var boolDefis = true;
+    var historique = document.querySelector('#historique');
+    var spanhistorique = document.querySelector('#historique span');
+    var boolhistorique = true;
 
     regles.addEventListener('mouseover', function() {
         if (boolRegle) {
@@ -67,29 +67,6 @@ document.addEventListener('DOMContentLoaded', function() {
     classement.addEventListener('mouseleave', function() {
         boolClassement = true;
     });
-
-    /*
-    versusbot.addEventListener('mouseover', function() {
-        if (boolVersusBot) {
-            imageGaucheVersBot.classList.add('animateLeft');
-            imageDroiteVersBot.classList.add('animateRight');
-            spanVersusBot.classList.add('animateZoomIn');
-            barVersusBot1.classList.add('fadeIn');
-            boolVersusBot = false;
-        }
-    });
-
-    versusbot.addEventListener('animationend', function() {
-        imageGaucheVersBot.classList.remove('animateLeft');
-        imageDroiteVersBot.classList.remove('animateRight');
-        spanVersusBot.classList.remove('animateZoomIn');
-        barVersusBot1.classList.remove('fadeIn');
-    });
-
-    versusbot.addEventListener('mouseleave', function() {
-        boolVersusBot = true;
-    });
-    */
 
     versushuman.addEventListener('mouseover', function() {
         if (boolVersusHuman) {
@@ -128,18 +105,18 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 
-    defis.addEventListener('mouseover', function() {
-        if (boolDefis) {
-            spanDefis.classList.add('animateJackInTheBox');
-            boolDefis = false;
+    historique.addEventListener('mouseover', function() {
+        if (boolhistorique) {
+            spanhistorique.classList.add('animateJackInTheBox');
+            boolhistorique = false;
         }
     });
 
-    defis.addEventListener('animationend', function() {
-        spanDefis.classList.remove('animateJackInTheBox');
+    historique.addEventListener('animationend', function() {
+        spanhistorique.classList.remove('animateJackInTheBox');
     });
 
-    defis.addEventListener('mouseleave', function() {
-        boolDefis = true;
+    historique.addEventListener('mouseleave', function() {
+        boolhistorique = true;
     });
 });

@@ -1,6 +1,35 @@
 document.addEventListener("DOMContentLoaded", function () {
     const loginForm = document.getElementById("loginForm");
     const signupForm = document.getElementById("signupForm");
+    const passwordInput = document.getElementById("signupPassword");
+    const eyeIcon = document.getElementById("eye-icon");
+
+    eyeIcon.addEventListener("click", function () {
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            eyeIcon.textContent = "🙈"; 
+        } else {
+            passwordInput.type = "password";
+            eyeIcon.textContent = "👁️"; 
+        }
+    });
+
+    passwordInput.addEventListener("input", function (){
+        const password = this.value;
+        const strengthIndicator = document.getElementById("passwordStrength");
+        const strongRegex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}/;
+        
+        if (strongRegex.test(password)) {
+            strengthIndicator.textContent = "💪Fort";
+            strengthIndicator.style.color = "green";
+        } else if (password.length >= 6) {
+            strengthIndicator.textContent = "⚠️ Moyen";
+            strengthIndicator.style.color = "orange";
+        } else {
+            strengthIndicator.textContent = "❌Faible";
+            strengthIndicator.style.color = "red";
+        }
+    });
 
     // Connexion utilisateur
     if (loginForm) {

@@ -22,7 +22,7 @@ body{
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 20px;
     padding: 40px;
-    width: 400px;
+    width: 300px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
     text-align: center;
     color: white;
@@ -36,7 +36,7 @@ body{
 .PCIR input[type = "password"],
 .PCIR input[type = "text"],
 .PCIR input[type = "vérifier"]{
-    width: 80%;
+    width: 100%;
     padding: 10px;
     margin-bottom: 25px;
     border: none;
@@ -98,16 +98,12 @@ a:visited{
 
 .eye-icon {
     position: absolute;
-    right: 30px;
-    top: 61%;
+    right: 8px;
+    top: 63%;
     transform: translateY(-50%);
     cursor: pointer;
     color: white;
 }
-.password-strength{
-    position: absolute;
-    right: 0px;
-    top: 63%;
-}
+
 
 

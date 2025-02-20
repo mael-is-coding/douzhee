@@ -14,7 +14,7 @@ const io = socketIo(server, {
         methods: ["GET", "POST"]
     }
 }); // Créer un serveur Socket.IO en utilisant le serveur HTTP
-app.use(cors()); // Utiliser le middleware CORS
+app.use(cors()); // Utiliser le middleware CORS 
 
 /* a changer sur le VPS :
 const express = require('express'); // Importer le module Express.js

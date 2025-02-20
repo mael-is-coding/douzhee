@@ -18,10 +18,11 @@ class AuthManager {
 }
 
     /**
-     * @author Mael
+     * @author Mael 
+     * 
+     * Une fonction qui vérifie si un utilisateur existe dans la base de données. Si oui, le conencte.
      * @param {*} email email sous forme valide (zikette@domaine.tld)
      * @param {*} password un mot de passe HASHÉ, qui idéalement existe dans la BdD
-     * Une fonction qui vérifie si un utilisateur existe dans la base de données. Si oui, le conencte.
      */
    async ConnectExistingUser (email, pwd, rememberMe) {
     try {
@@ -41,7 +42,7 @@ class AuthManager {
 
         const textResponse = await response.text();  
         const data = JSON.parse(textResponse);
-        if (data.error) {
+        /*if (data.error) {
             if (data.error === "Email non trouvé") {
                 alert("Cet email n'existe pas. Veuillez vérifier votre adresse email.");
             } else if (data.error === "Mot de passe incorrect") {
@@ -51,7 +52,8 @@ class AuthManager {
             }
         } else if (data.success) {
             window.location.href = "Index.php";  
-        }
+        }*/
+        window.location.href = "Index.php"; 
     } catch (error) {
         alert("Erreur de connexion, veuillez réessayer.");  
     }

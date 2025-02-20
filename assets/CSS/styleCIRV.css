@@ -38,7 +38,6 @@ body{
 .PCIR input[type = "vérifier"]{
     width: 100%;
     padding: 10px;
-    margin-bottom: 25px;
     border: none;
     background-color: #c3acce;
     color: white;
@@ -47,6 +46,11 @@ body{
     transform: translateX(-50%);
     font-style: italic;
 }
+
+#emailErrorText, #passwordErrorText {
+    margin-bottom: 25px;
+}
+
 .PCIR button{
     background-color: #ab00e7;
     border: none;

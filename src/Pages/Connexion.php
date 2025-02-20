@@ -15,13 +15,16 @@
         <h2>Connexion</h2>
         <form id="loginForm" method="POST">
             <input id="E-mail" type="email" placeholder="E-mail" required value="<?php echo htmlspecialchars($newemail);?>">
-            <span style = "color : red">
-            </span>
+            <div id = "emailErrorText" style = "color : red"></div>
+
             <input id = "Password" type="password" placeholder="Password" required value="<?php echo htmlspecialchars($newmdp);?>">
-                <div class="checkbox">
+            <div id = "passwordErrorText" style = "color : red"></div>
+
+            <div class="checkbox">
                 <input type ="checkbox" id="check" name="checkbox">
                 <label for="check">Se souvenir de moi</label>
             </div>
+            
             <button type="submit">Connexion</button>
         </form>
         <a href="Reinitialisation.php">Mot de passe oublié ?</a>

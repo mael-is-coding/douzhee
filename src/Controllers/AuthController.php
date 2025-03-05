@@ -29,7 +29,7 @@ function routing(mixed $request): void {
 
     switch (getAction($request)) {
         case "READ":
-            connectUser($request["params"]["email"], $request["params"]["pwd"],$request["params"]["rememberMe"]);
+            connectUser($request["params"]["email"], $request["params"]["pwdHash"],$request["params"]["rememberMe"]);
             break;
         case "CREATE":
             createUser($request["params"]["username"], $request["params"]["pwd"], $request["params"]["email"]);

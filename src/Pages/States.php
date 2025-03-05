@@ -27,7 +27,7 @@
             <?php echo $statsUser->getNbSucces() ?>
         </div>
         <div class="State">
-            <h2>Score <img src="../../assets/images/imageStates/scoremax.png"></img> :</h2>
+            <h2>Score Maximal <img src="../../assets/images/imageStates/scoremax.png"></img> :</h2>
             <?php echo $statsUser->getScoreMax() ?>
         </div>
         <div class="State">

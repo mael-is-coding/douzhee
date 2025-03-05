@@ -31,7 +31,7 @@
         $results = $statement->fetch(PDO::FETCH_ASSOC);
 
         if(gettype($results) != "boolean") {
-            return new JoueurPartie($results['idJoueur'], $results['idPartie'], $results['positionPartie'], $results['score'], $results['estGagant']);
+            return new JoueurPartie($results['idJoueur'], $results['idPartie'], $results['positionPartie'], $results['score'], $results['estGagnant']);
         }
         return null;
     }

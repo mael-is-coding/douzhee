@@ -100,14 +100,16 @@ a:visited{
     border-color: #007bff;
 }
 
-.eye-icon {
+#eye-icon {
     position: absolute;
-    right: 8px;
-    top: 63%;
+    right: 35px;
+    top: 64%;
     transform: translateY(-50%);
     cursor: pointer;
     color: white;
 }
+
+
 
 
 

@@ -1,12 +1,15 @@
 <?php
     require_once "../Classes/SuccesJoueur.php";
     require_once "../Utils/connectionSingleton.php";
+    require_once "CRUDJoueur.php";
 
     function createSuccessJoueur($idJoueur, $idSucces) :bool {
         $conn = ConnexionSingleton::getInstance();
         $stmt = $conn->prepare("INSERT INTO SuccesJoueur (idJoueur, idSucces) VALUES (?, ?)");
         $stmt->bindParam(1, $idJoueur);
         $stmt->bindParam(2, $idSucces);
+
+        updateNbSucces($idJoueur);
 
         return $stmt->execute();
     }

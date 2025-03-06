@@ -2,7 +2,6 @@ import { updateScoreJouerPartie, updateEstGagnantJouerPartie } from "./updateJou
 import { checkSuccess } from "./checkSucces.js";
 import { updateEndOfGame } from "./updateFinDePartie.js";
 import { updateNbDouzhee } from "./updateFinDePartie.js";
-import { setPartieEnCours } from "./scriptIdPartieEnCours.js";
 import { updateStatutPartie, updateScoreTotalPartie} from "./updatePartie.js";
 /**
  * @author Nathan
@@ -807,15 +806,16 @@ async function finDePartie() {
 
         // Mise à jour du statut de la partie et du score total si le joueur actuel est le premier
         if (position === 1) {
-            console.log(gameId, position, scoreTotPartie);
             updateStatutPartie(gameId, 2);
             updateScoreTotalPartie(gameId, scoreTotPartie);
         }
         await updateScoreJouerPartie(gameId, playerId, parseInt(donneesJoueur.scoreTot));
+        updateEndOfGame(gameId);
+        updateNbDouzhee(donneesJoueur.nbDouzhee);
 
         // Suppression des données locales et affichage du classement
         localStorage.removeItem('donneesJoueur');
         window.alert(msg);
-        //window.location.href = './index.php';
+        window.location.href = './index.php';
     }
 }

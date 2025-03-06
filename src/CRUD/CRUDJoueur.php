@@ -239,7 +239,7 @@
     function updateNbDouzhee(string $idUser, int $nbDouzhee): void{
         $connection = ConnexionSingleton::getInstance();
 
-        $updateNbDouzhee = 'UPDATE Joueur SET nbDouzhee = nbDouzhee + :nbDouzhee WHERE id = :idUser';
+        $updateNbDouzhee = 'UPDATE Joueur SET nbDouzhee = nbDouzhee + :nbDouzhee WHERE idJoueur = :idUser';
         $statement = $connection->prepare($updateNbDouzhee);
         $statement->bindParam(':idUser', $idUser, PDO::PARAM_STR);
         $statement->bindParam(':nbDouzhee', $nbDouzhee, PDO::PARAM_INT);
@@ -250,26 +250,26 @@
         $connection = ConnexionSingleton::getInstance();
         $joueur = readJoueur($idUser);
     
-        $updateNbParties = 'UPDATE Joueur SET nbPartiesJouees = nbPartiesJouees + 1 WHERE id = :idUser';
+        $updateNbParties = 'UPDATE Joueur SET nbPartiesJouees = nbPartiesJouees + 1 WHERE idJoueur = :idUser';
         $statement = $connection->prepare($updateNbParties);
         $statement->bindParam(':idUser', $idUser, PDO::PARAM_STR);
         $statement->execute();
     
         if (readEstGagnant($idUser, $idGame)) {
-            $updateVictory = 'UPDATE Joueur SET nbPartiesGagnees = nbPartiesGagnees + 1 WHERE id = :idUser';
+            $updateVictory = 'UPDATE Joueur SET nbPartieGagnees = nbPartieGagnees + 1 WHERE idJoueur = :idUser';
             $statement = $connection->prepare($updateVictory);
             $statement->bindParam(':idUser', $idUser, PDO::PARAM_STR);
             $statement->execute();
         }
     
-        $updateRatio = 'UPDATE Joueur SET ratioVictoire = ROUND(nbPartiesGagnees / nbPartieJoues, 2) WHERE id = :idUser';
+        $updateRatio = 'UPDATE Joueur SET ratioVictoire = ROUND(nbPartieGagnees / nbPartiesJouees, 2) WHERE idJoueur = :idUser';
         $statement = $connection->prepare($updateRatio);
         $statement->bindParam(':idUser', $idUser, PDO::PARAM_STR);
         $statement->execute();
     
         $partie = readJoueurPartie($idUser, $idGame);
         if ($partie->getScore() > $joueur->getScoreMax()) {
-            $updateBestScore = 'UPDATE Joueur SET scoreMax = :newScore WHERE id = :idUser';
+            $updateBestScore = 'UPDATE Joueur SET scoreMax = :newScore WHERE idJoueur = :idUser';
             $statement = $connection->prepare($updateBestScore);
             $scoreJoueur = $partie->getScore();
             $statement->bindParam(':newScore', $scoreJoueur, PDO::PARAM_INT);
@@ -281,13 +281,13 @@
     /**
      * @brief Incrémente de 1 le nombre de succès d'un joueur donné
      * @author Nathan
-     * @param int $idUser identifiant du joueur
+     * @param string $idUser identifiant du joueur
      * @return void
      */
-    function updateNbSucces(int $idUser): void{
+    function updateNbSucces(string $idUser): void{
         $connection = ConnexionSingleton::getInstance();
 
-        $updateSucces = 'UPDATE Joueur SET nbSucces = nbSucces + 1 WHERE id = :idUser';
+        $updateSucces = 'UPDATE Joueur SET nbSucces = nbSucces + 1 WHERE idJoueur = :idUser';
         $statement = $connection->prepare($updateSucces);
         $statement->bindParam(':idUser', $idUser, PDO::PARAM_STR);
         $statement->execute();

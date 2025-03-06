@@ -12,7 +12,11 @@
         $statement->bindParam(':idJoueur', $idJoueur);
         $statement->bindParam(':idTheme', $idTheme);
 
-        return $statement->execute();
+        try {
+            return $statement->execute();
+        } catch (PDOException $ex) {
+            return true;
+        }
     }
 
     function readAllAcheterTheme(string $idJoueur): ?array {

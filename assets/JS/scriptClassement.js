@@ -50,7 +50,6 @@ document.addEventListener("DOMContentLoaded", (DOMevent) => {
 
 
     async function loadTable() {
-        console.log("loadTable called");
 
         removeAllChildren(ldSpan);
 
@@ -60,14 +59,14 @@ document.addEventListener("DOMContentLoaded", (DOMevent) => {
         let isRatioVictoireBT = event.target == ratioBT;
 
         if (isPJBT) {
-            await getTableData("RK", 4);
-            leaderBoardMode.textContent = "Score";
+            await getTableData("VR", 4);
+            leaderBoardMode.textContent = "Parties Jouées";
         } else if (isDouzheeBT) {
-            await getTableData("CRC", 4);
-            leaderBoardMode.textContent = "DouzCoins";
+            await getTableData("DZ", 4);
+            leaderBoardMode.textContent = "Douzhee";
         } else if (isRatioVictoireBT) {
             await getTableData("RV", 4);
-            leaderBoardMode.textContent = "Ratio de Victoires";
+            leaderBoardMode.textContent = "Ratio de Victoires (%)";
         } else if (isSuccesBT) {
             await getTableData("ACH", 4);
             leaderBoardMode.textContent = "Succes";

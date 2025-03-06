@@ -38,7 +38,7 @@
       return 0;
    }
 
-   function readMusic(int $id) :Musique {
+   function readMusic(int $id) :mixed { // mixed : temporaire. Si laissé, CHANGER A "?Musique"
       $connexion = ConnexionSingleton::getInstance();
    
       $query = "SELECT * FROM Musique WHERE idMusique = :id";
@@ -48,12 +48,12 @@
       $statement->bindParam(':id', $id);
    
       $statement->execute();
-   
       $results = $statement->fetch(PDO::FETCH_ASSOC);
    
       if(gettype($results) != "boolean") {
          return new Musique($results['idMusique'], $results['nomMusique'], $results['cheminMusique'], $results['prix'], $results['imgChemin'],);
       }
+
       return null;
    }
 

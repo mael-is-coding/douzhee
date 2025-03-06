@@ -12,7 +12,11 @@
         $statement->bindParam(':idJoueur', $idJoueur);
         $statement->bindParam(':idMusique', $idMusique);
 
-        return $statement->execute();
+        try {
+            return $statement->execute();
+        } catch (PDOException $ex) {
+            return false; // le champs existe probablement déjà avec ces clés primaires
+        }
     }
 
     function readAllAcheterMusique(string $idJoueur): ?array {

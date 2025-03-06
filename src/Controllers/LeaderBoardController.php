@@ -16,14 +16,14 @@
                 echo json_encode($achievmentLeaderBoard);
                 break;
 
-            case "CRC": // Currency
-                $currencyLeaderBoard = leaderBoard("CRC", $json_request["lines"]);
-                echo json_encode($currencyLeaderBoard);
+            case "DZ": // nbDouzhee
+                $douzheeLeaderBoard = leaderBoard("DZ", $json_request["lines"]);
+                echo json_encode($douzheeLeaderBoard);
                 break;
 
-            case "RK": // Rank
-                $rankLeaderBoard = leaderBoard("RK", $json_request["lines"]);
-                echo json_encode($rankLeaderBoard);
+            case "VR": // Victoires
+                $victoryLeaderBoard = leaderBoard("VR", $json_request["lines"]);
+                echo json_encode($victoryLeaderBoard);
                 break;
 
             case "RV": // Ratio Victoire 

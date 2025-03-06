@@ -11,11 +11,20 @@
 
         if ($_POST['type'] === 'Theme') {
             $resultat = readThemePrice($id);
-            echo json_encode(['status' => 'success', 'resultat' => $resultat, 'chemin' => null]);
+            if ($resultat != null) {
+                echo json_encode(['status' => 'success', 'resultat' => $resultat, 'chemin' => null, "id" => $id]);
+            } else {
+                echo json_encode(['status' => 'failure', 'resultat' => $resultat, 'chemin' => null, "id" => $id]);
+            }
         } else {
             $resultat = readMusicPrice($id);
             $chemin = readCheminMusique($id);
-            echo json_encode(['status' => 'success', 'resultat' => $resultat, 'chemin' => $chemin]);
+
+            if ($resultat == null || $chemin == null) {
+                echo json_encode(['status' => 'failure', 'resultat' => $resultat, 'chemin' => null, "id" => $id]);
+            } else {
+                echo json_encode(['status' => 'success', 'resultat' => $resultat, 'chemin' => $chemin, "id" => $id]);
+            }
         }
     } else {
         echo json_encode(['status' => 'error', 'message' => 'Invalid request']);

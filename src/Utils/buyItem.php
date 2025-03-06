@@ -17,13 +17,18 @@
             $newMoney = $userMoney - $cost;
             updateDouzCoin($userId, $newMoney);
             if ($_POST['type'] === 'Theme') {
-                creatAcheterTheme($userId, $idItem);
+                $C_AT_Success = creatAcheterTheme($userId, $idItem);
+                if (!$C_AT_Success) {
+                    echo json_encode(["status" => "failure", "error" => "échec d'achat", "CAT" => $C_AT_Success, "idUser" => $userId, "idItem" => $idItem]);
+                } else {
+                    echo json_encode(['status' => 'success', 'cost' => $cost]);
+                }
             } else {
-                creatAcheterMusique($userId, $idItem);
+                $C_AM_Success = creatAcheterMusique($userId, $idItem);
+                echo json_encode(['status' => 'success', 'cost' => $cost, 'CAM' => $C_AM_Success, 'type' => $_POST['type']]);
             }
-            echo json_encode(['status' => 'success']);
         } else {
-            echo json_encode(['status' => 'unsuccess', 'error' => 'Fonds insuffisants.']);
+            echo json_encode(['status' => 'failure', 'error' => 'Fonds insuffisants.']);
         }
     } else {
         echo "tu t'es cru ou toi, hein?";

@@ -341,35 +341,34 @@
      */
     function leaderBoard(string $mode, int $limit): mixed {
 
-        $column = "";
+        $modularQuery = "";
 
         switch ($mode) {
-            case "RK": // RanK
-                $column = "nbDouzhee";
+            case "DZ": // DouZhee
+                $modularQuery = "SELECT pseudo, nbDouzhee as stat FROM Joueur ORDER BY nbDouzhee DESC LIMIT :limit";
                 break;
             case "RV": // Ratio de Victoires
-                $column = "ratioVictoire";
+                $modularQuery = "SELECT pseudo, ratioVictoire as stat FROM Joueur ORDER BY ratioVictoire DESC LIMIT :limit";
                 break;
             case "ACH": // ACHievment
-                $column = "nbSucces"; 
+                $modularQuery = "SELECT pseudo, nbSucces as stat FROM Joueur ORDER BY nbSucces DESC LIMIT :limit";
                 break;
             case "VR": // VictoiRes
-                $column = "nbPartieGagnees";
+                $modularQuery = "SELECT pseudo, nbPartieGagnees as stat FROM Joueur ORDER BY nbPartieGagnees DESC LIMIT :limit";
                 break;
             default:
-                $column = "nbDouzhee";
+                $modularQuery = "SELECT pseudo, nbDouzhee as stat FROM Joueur ORDER BY nbDouzhee DESC LIMIT :limit";
                 break;
         }
         
 
         $connexion = ConnexionSingleton::getInstance();
 
-        $query = "SELECT pseudo, " . $column . " as stat FROM Joueur ORDER BY " . $column . " ASC LIMIT :limit";
-
-        $statement = $connexion->prepare($query);
+        $statement = $connexion->prepare($modularQuery);
         $statement->bindParam("limit", $limit, PDO::PARAM_INT);
 
         $success = $statement->execute();
+        $transcendant_results = null;
 
         if (gettype($success)) {
             $results = $statement->fetchAll(PDO::FETCH_ASSOC);
